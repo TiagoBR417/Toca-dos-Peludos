@@ -1,4 +1,4 @@
-.login_container{
+.cadastro_container{
   display: flex;
 }
 
@@ -12,16 +12,16 @@
   margin-top: 25px;
 }
 
-.login_form {
+.cadastro_form {
     text-align: center;
     background-color: #D9D9D9;
     margin: 100px auto;
     padding: 20px;
     width: 400px;
-    height: 395px;
+    height: px;
 }
 
-.btn_login {
+.btn_cadastro {
     background: black;
     color: #fff;
     border: none;
@@ -40,11 +40,6 @@ input {
   border-radius: 4px;
   padding: 10px 15px;
   border-color: #BEBEBE;
-}
-
-.login_form a {
-  margin-top: 5px;
-  font-size: 12px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
