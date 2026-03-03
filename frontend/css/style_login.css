@@ -47,6 +47,10 @@ input {
   font-size: 12px;
 }
 
+.btn-email-cadastro{
+  margin-right: 15px;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
