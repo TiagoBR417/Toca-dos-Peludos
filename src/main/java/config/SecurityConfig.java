@@ -1,4 +1,4 @@
-package br.edu.eniac.api_toca_dos_peludos;
+package config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

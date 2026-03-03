@@ -7,6 +7,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "tb_denuncias")
 public class Denuncia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

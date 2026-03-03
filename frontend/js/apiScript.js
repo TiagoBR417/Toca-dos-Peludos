@@ -1,8 +1,9 @@
-const API_URL = "http://localhost:8080/api/docaoes";
+const API_URL = "http://localhost:8080/api/doacoes";
 
 async function enviarDoacao(valor) {
     const doacao = {
-        doador: "Doador Anônimo",
+        nomeDoador: "Doador Anônimo",
+        emailDoador: "anonimo@toca.com",
         valor: valor
     };
 
@@ -15,7 +16,9 @@ async function enviarDoacao(valor) {
 
         if (response.ok) {
             alert('Doação registrada com sucesso!');
-            carregarDoacoes();
+            carregarDoacoes(); 
+        } else {
+            console.error("Erro na resposta da API:", response.status);
         }
     } catch (error) {
         console.error("Erro ao enviar doação:", error);
@@ -33,7 +36,8 @@ async function carregarDoacoes() {
         lista.innerHTML = "";
         doacoes.forEach(d => {
             const li = document.createElement('li');
-            li.textContent = `🐾 R$ ${d.valor.toFixed(2)} recebidos`;
+            const valorFormatado = (d.valor || 0).toFixed(2);
+            li.textContent = `🐾 R$ ${valorFormatado} recebidos`;
             lista.appendChild(li);
         });
     } catch (error) {
@@ -42,3 +46,18 @@ async function carregarDoacoes() {
 }
 
 document.addEventListener("DOMContentLoaded", carregarDoacoes);
+
+function doarValorAberto()  {
+    const campoValor = document.getElementById("valorPersonalizado");
+
+    const valorDigitado = parseFloat(campoValor.value);
+
+    if (isNaN(valorDigitado) || valorDigitado <= 0) {
+        alert("Por favor, insira um valor valido para a doacao. ");
+        return;
+    }
+
+    enviarDoacao(valorDigitado);
+
+    campoValor.value = "";
+}

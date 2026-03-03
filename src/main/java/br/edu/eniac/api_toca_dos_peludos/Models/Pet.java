@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "tb_pets")
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package br.edu.eniac.api_toca_dos_peludos;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
