@@ -154,3 +154,29 @@ footer a{
     color: #666;
     margin: 5px 0;
 }
+
+@media (max-width: 768px) {
+  .nav-content {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .links {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .container {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+  .footer #itens_footer {
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+  #logo_footer {
+    width: 100%;
+  }
+}

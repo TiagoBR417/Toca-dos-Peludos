@@ -75,9 +75,9 @@
         <div class="form-container">
             <h2>Formulário de Denúncia</h2>
     
-            <form>
+            <form id="formDenuncia">
                 <label class="label_text">Tipo de Denúncia *</label>
-                <select required>
+                <select id="tipoDenuncia" required>
                     <option value="">Selecione o tipo</option>
                     <option>Maus-tratos</option>
                     <option>Abandono</option>
@@ -86,15 +86,17 @@
                 </select>
     
                 <label class="label_text">Descreva a Situação *</label>
-                <textarea placeholder="Forneça o máximo de detalhes possível sobre a situação." required></textarea>
+                <textarea id="descricaoDenuncia" placeholder="Forneça o máximo de detalhes possível sobre a situação." required></textarea>
     
                 <label class="label_text">Local da Ocorrência</label>
-                <input type="text" placeholder="Endereço ou ponto de referência">
+                <input id="localDenuncia" type="text" placeholder="Endereço ou ponto de referência">
                 <div id="options_container">
                   <label for="anonimo">Fazer denúncia anônima</label>
                   <input type="checkbox" id="anonimo">
 
                 </div>
+                <label class="label_text">Contato</label>
+                <input id="contatoDenuncia" type="text" placeholder="E-mail ou telefone (opcional)">
                   <button class="btn-accent" type="submit">Cadastrar Denuncia</button>
                 
             </form>
@@ -144,4 +146,5 @@
   </footer>
 
 </body>
+<script src="js/apiScript.js"></script>
 </html>

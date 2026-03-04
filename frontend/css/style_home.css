@@ -64,7 +64,7 @@ body {
 }
 .slider-depoimentos {
   width: 100%;
-  overflow: hidden; /* Esconde o que sai da tela */
+  overflow: hidden;
   padding: 40px 0;
   position: relative;
 }
@@ -72,13 +72,12 @@ body {
 .slide-track {
   padding-top: 50px;
   display: flex;
-  width: calc(320px * 6); /* (Largura do card + margem) * total de itens */
-  animation: scroll-depoimentos 25s linear infinite;
+  transition: transform 0.5s ease;
 }
 
 /* Pausa quando o usuário passa o mouse para ler o depoimento */
 .slide-track:hover {
-  animation-play-state: paused;
+  /* sem animação no JS */
 }
 
 .container-foto {
@@ -96,11 +95,22 @@ body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Animação */
-@keyframes scroll-depoimentos {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-320px * 3)); } /* Move metade da track (os itens originais) */
+/* Controles do carrossel */
+.carousel-prev, .carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #6f42c1;
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 3;
 }
+.carousel-prev { left: 10px; }
+.carousel-next { right: 10px; }
 
 /* Cards de Fotos/Links */
 .cards {

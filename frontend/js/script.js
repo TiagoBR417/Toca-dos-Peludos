@@ -37,3 +37,36 @@ function animarTexto() {
 }
 
 animarTexto();
+
+function initCarousel() {
+  const container = document.getElementById('depoimentos');
+  if (!container) return;
+  const track = container.querySelector('.slide-track');
+  const items = Array.from(track.children);
+  const prev = container.querySelector('.carousel-prev');
+  const next = container.querySelector('.carousel-next');
+  let index = 0;
+  let autoplay = true;
+
+  function goTo(i) {
+    index = (i + items.length) % items.length;
+    const target = items[index];
+    const offset = target.offsetLeft;
+    track.style.transform = 'translateX(' + (-offset) + 'px)';
+  }
+
+  function onNext() { goTo(index + 1); }
+  function onPrev() { goTo(index - 1); }
+
+  if (prev) prev.addEventListener('click', onPrev);
+  if (next) next.addEventListener('click', onNext);
+  container.addEventListener('mouseenter', function() { autoplay = false; });
+  container.addEventListener('mouseleave', function() { autoplay = true; });
+
+  goTo(0);
+  setInterval(function() {
+    if (autoplay) onNext();
+  }, 3000);
+}
+
+document.addEventListener('DOMContentLoaded', initCarousel);

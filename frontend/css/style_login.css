@@ -165,3 +165,38 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 3px 5px;
     text-align: center;
   }
+
+@media (max-width: 768px) {
+  .nav-content {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .links {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .login_container {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+  }
+  .login_form {
+    width: 100%;
+    max-width: 380px;
+    margin: 40px 0;
+  }
+  .img_esquerda, .img_direita {
+    display: none;
+  }
+  .footer #itens_footer {
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+  #logo_footer {
+    width: 100%;
+  }
+}

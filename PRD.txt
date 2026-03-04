@@ -35,44 +35,33 @@ Um animal cadastrado deve aparecer imediatamente na lista pública.
 O formulário de interesse não pode ser enviado sem um e-mail válido.
 Apenas usuários autenticados (Admin) podem deletar registros de animais.
 
-7.Estrutura do Banco Postgresql SQL
--- Tabela de Animais (RF01)
-CREATE TABLE pets (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    especie ENUM('CACHORRO', 'GATO') NOT NULL,
-    porte ENUM('PEQUENO', 'MEDIO', 'GRANDE') NOT NULL,
-    sexo ENUM('MACHO', 'FEMEA') NOT NULL,
-    idade_estimada INT, -- Em meses ou anos
-    descricao TEXT,
-    status ENUM('DISPONIVEL', 'ADOTADO', 'EM_PROCESSO') DEFAULT 'DISPONIVEL',
-    url_foto VARCHAR(255),
-    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+7. Estrutura do Banco (PostgreSQL via JPA)
+O schema é gerenciado automaticamente pelo Hibernate (ddl-auto=update), a partir das entidades:
+- tb_pets: id, nome, tipo, raca, porte (ENUM texto), cor, imagemUrl, descricao, status (ENUM texto)
+- doacao: id, nomeDoador, emailDoador, valor, dataDoacao
+- tb_voluntarios: id, nome, email, telefone, motivos, competencias
+- tb_denuncias: id, descricao, localizacao, contato, anonimo
+- tb_eventos: id, titulo, data, local, descricao, parceiro
+- tb_usuarios_db: id, nome, email (único), senha, endereco, preferencias, tipo (ENUM texto)
 
--- Tabela de Interessados/Adoções (RF03)
-CREATE TABLE solicitacoes_adocao (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    pet_id BIGINT,
-    nome_interessado VARCHAR(150) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    whatsapp VARCHAR(20),
-    mensagem TEXT,
-    data_solicitacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (pet_id) REFERENCES pets(id)
-);
-
-8. Design da API (Endpoints)
-Baseado nos Requisitos Funcionais (RF) do PRD, estes seriam os principais recursos da sua API Spring Boot:
-Público (Adotantes)
-GET /api/v1/pets: Lista todos os animais.
-Filtros (Query Params): ?especie=GATO&porte=PEQUENO
-GET /api/v1/pets/{id}: Detalhes de um animal específico.
-POST /api/v1/adocoes: Envia o formulário de interesse (corpo JSON com pet_id e dados do adotante).
-Administrativo (ONG)
-POST /api/v1/admin/pets: Cadastra um novo animal.
-PUT /api/v1/admin/pets/{id}: Atualiza dados ou status (ex: mudar para "ADOTADO").
-GET /api/v1/admin/solicitacoes: Lista todas as pessoas que mostraram interesse.
+8. Design da API (Endpoints atuais)
+Público
+GET /api/pets (filtros: tipo, raca, porte, cor)
+GET /api/pets/{id}
+POST /api/doacoes
+GET /api/eventos
+GET /api/voluntarios
+POST /api/voluntarios
+POST /api/denuncias
+Usuários
+POST /api/usuarios/cadastro
+POST /api/usuarios/login
+Administrativo (Pets)
+GET /api/pets/admin
+POST /api/pets
+PUT /api/pets/{id}
+PATCH /api/pets/{id}/status
+DELETE /api/pets/{id}
 
 
 
@@ -96,7 +85,7 @@ Comunicação
 REST API (JSON)
 Formato de troca de dados entre o navegador e o servidor.
 
-A API deverá ser documentada utilizando Swagger/OpenAPI, permitindo que o frontend visualize os endpoints disponíveis de forma interativa.
+A documentação via Swagger/OpenAPI poderá ser adicionada futuramente.
 
 Segurança é um dos pilares mais importantes de um PRD, especialmente quando você lida com dados de adotantes (nome, telefone, e-mail) e acesso administrativo para gerenciar os animais. No seu projeto Toca dos Peludos, a segurança deve ser dividida em duas frentes: Autenticação (quem você é) e Autorização (o que você pode fazer).
 Aqui está como você deve adicionar a seção de Segurança no seu PRD:
@@ -108,10 +97,8 @@ O sistema terá dois níveis de permissão distintos:
 ROLE_USER (Público): Pode apenas visualizar pets e enviar formulários de interesse. Não precisa de login.
 ROLE_ADMIN (ONG): Requer login e senha para cadastrar, editar ou excluir pets, além de visualizar a lista de interessados.
 10.2. Proteção da API (Spring Security)
-Como você está usando Spring Boot, a implementação deve focar em:
-JWT (JSON Web Token): Para manter a sessão do administrador no frontend (HTML/JS) de forma segura sem usar cookies tradicionais que são vulneráveis a CSRF.
-CORS (Cross-Origin Resource Sharing): Configurar o backend para aceitar requisições apenas do domínio onde seu frontend está hospedado.
-BCrypt: As senhas dos administradores nunca devem ser salvas em texto plano no banco de dados; devem ser criptografadas com BCryptPasswordEncoder.
+Ambiente atual de desenvolvimento: rotas liberadas (permitAll) para facilitar integração.
+Próxima etapa: adicionar autenticação JWT para rotas administrativas e armazenar senhas com BCrypt.
 10.3. Privacidade de Dados (LGPD)
 Minimização: Coletar apenas o necessário no formulário de interesse (Nome, E-mail, WhatsApp).
 Consentimento: Adicionar um checkbox de "Aceito os termos de privacidade" no formulário de contato.
@@ -172,15 +159,18 @@ Texto: #333333 (Grafite) – textos principais.
 157→
 158→12.1. Endpoints Implementados
 159→Público
-160→GET /api/v1/pets
-161→GET /api/v1/pets/{id}
-162→POST /api/v1/adocoes (valida e-mail e consentimento no frontend)
-163→Autenticação
-164→POST /api/v1/auth/login (retorna JWT)
-165→Administrativo
-166→POST /api/v1/admin/pets
-167→PUT /api/v1/admin/pets/{id}
-168→GET /api/v1/admin/solicitacoes
+GET /api/pets
+GET /api/pets/{id}
+POST /api/doacoes
+Usuários
+POST /api/usuarios/cadastro
+POST /api/usuarios/login
+Administrativo (Pets)
+GET /api/pets/admin
+POST /api/pets
+PUT /api/pets/{id}
+PATCH /api/pets/{id}/status
+DELETE /api/pets/{id}
 169→
 170→12.2. Critérios de Aceite – Implementação
 171→Cadastro de animal aparece na listagem pública imediatamente após criação.
@@ -195,8 +185,44 @@ Texto: #333333 (Grafite) – textos principais.
 180→cors.allowed-origins: http://localhost:8081, http://127.0.0.1:8081.
 181→server.port: 8080 por padrão.
 182→
-183→12.5. Próximos Passos
-184→Dashboard Admin com métricas RF04.
-185→Fluxo de voluntários e denúncias anônimas.
-186→Autenticação de usuários reais via banco (em vez de usuário em memória).
+12.5. Próximos Passos
+Dashboard Admin com métricas RF04.
+Fluxo de voluntários e denúncias anônimas.
+Autenticação de usuários reais via banco (em vez de usuário em memória).
+
+13. Ambiente de Banco de Dados (PostgreSQL)
+13.1. Com Docker Compose
+- Pré-requisito: Docker Desktop instalado e em execução
+- Arquivo: docker-compose.yml na raiz do projeto
+- Comando: docker compose up -d
+- Serviço: db (postgres:16-alpine)
+- Credenciais padrão:
+  - Host: localhost
+  - Porta: 5432
+  - Database: tocadospeludos
+  - User: postgres
+  - Password: postgres
+
+13.2. Sem Docker (instalação local)
+- Criar o database tocadospeludos
+- Aplicar o schema SQL:
+  - psql -h localhost -U postgres -d tocadospeludos -f backend/src/main/resources/db/scripts/schema.sql
+
+13.3. Variáveis de Ambiente do Backend
+- DB_URL=jdbc:postgresql://localhost:5432/tocadospeludos
+- DB_USERNAME=postgres
+- DB_PASSWORD=postgres
+- O Hibernate (spring.jpa.hibernate.ddl-auto=update) mantém o schema sincronizado com os Models.
+
+14. Responsividade e Mobile
+- Navegação: quebra em múltiplas linhas e centralização em telas pequenas
+- Grids e listas: 1 coluna no mobile com paddings reduzidos
+- Imagens decorativas laterais: ocultadas em login/cadastro para foco no formulário
+- Páginas ajustadas:
+  - Eventos: frontend/css/style_eventos.css
+  - Denúncias informativas: frontend/css/style_denuncias.css
+  - Formulário de denúncias: frontend/css/style_forms_denuncias.css
+  - Pets: frontend/css/style_pets.css
+  - Login: frontend/css/style_login.css
+  - Cadastro: frontend/css/style_cadastro.css
 

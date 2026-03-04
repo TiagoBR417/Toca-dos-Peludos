@@ -37,18 +37,16 @@
 
     <div class="cadastro_form">
       <h3>Cadastro</h3>
-      <form action="" method="post">
-        <input type="text" placeholder="Nome Completo">
+      <form id="formCadastro">
+        <input id="nomeCadastro" type="text" placeholder="Nome Completo" required>
         <input type="number" pattern="\d*" inputmode="numeric" placeholder="CPF">
         <input type="number" placeholder="Data de Nascimento">
-        <input type="text" placeholder="Email">
+        <input id="emailCadastro" type="email" placeholder="Email" required>
         <input type="number" placeholder="Telefone">
         <input type="text" placeholder="Gênero">
-        <input type="password" placeholder="Senha">
-        <input type="password" placeholder="Confirme a Senha">
-        <a href="login.html">
-          <button class="btn_cadastro">Cadastrar-se</button>
-        </a>
+        <input id="senhaCadastro" type="password" placeholder="Senha" required>
+        <input id="confirmaSenhaCadastro" type="password" placeholder="Confirme a Senha" required>
+        <button type="submit" class="btn_cadastro">Cadastrar-se</button>
       </form>
     </div>
   </div>
@@ -95,4 +93,5 @@
   </footer>
 
 </body>
+<script src="js/apiScript.js"></script>
 </html>

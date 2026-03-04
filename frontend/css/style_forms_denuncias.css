@@ -200,3 +200,35 @@ textarea {
     padding: 3px 5px;
     text-align: center;
   }
+
+@media (max-width: 768px) {
+  .nav-content {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .links {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .container {
+    flex-direction: column;
+    padding: 16px;
+  }
+  .sidebar {
+    width: 100%;
+  }
+  .form-container {
+    padding: 20px;
+  }
+  .footer #itens_footer {
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+  #logo_footer {
+    width: 100%;
+  }
+}
