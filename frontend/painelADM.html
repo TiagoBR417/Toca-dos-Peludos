@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Toca dos Peludos</title>
+    <link rel="stylesheet" href="css/style_adm.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Toca dos Peludos">
+            </div>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="sobre_nos.html">Sobre</a>
+                <a href="pets.html">Pets ></a>
+                <a href="eventos.html">Eventos</a>
+                <a href="denuncias.html">Denúncias</a>
+                <a href="contatos.html">Contatos</a>
+                <a href="login.html"><button  class="btn-entrar">Entrar</button></a>
+                
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Painel Administrativo</h1>
+        <p>Gerencie pets, adoções, voluntariados e mais.</p>
+        <section class="dashboard-grid">
+            <div class="card" data-tipo="pets">
+                <span class="icon">🐾</span>
+                <div class="card-info">
+                    <span class="number" id="count-pets">4</span>
+                    <span class="label">Pets disponíveis</span>
+                </div>
+            </div>
+        
+            <div class="card" data-tipo="voluntarios">
+                <span class="icon">👥</span>
+                <div class="card-info">
+                    <span class="number" id="count-voluntarios">8</span>
+                    <span class="label">Voluntários</span>
+                </div>
+            </div>
+        
+            <div class="card" data-tipo="doacoes">
+                <span class="icon">❤️</span>
+                <div class="card-info">
+                    <span class="number" id="count-doacoes">4</span>
+                    <span class="label">Doações recebidas</span>
+                </div>
+            </div>
+        
+            <div class="card" data-tipo="denuncias">
+                <span class="icon">⚠️</span>
+                <div class="card-info">
+                    <span class="number" id="count-denuncias">2</span>
+                    <span class="label">denúncias recebidas</span>
+                </div>
+            </div>
+        </section>
+        
+        <section id="secao-detalhes" class="content-section" style="display: none;">
+            <div class="section-header">
+                <h2 id="titulo-secao">Título</h2>
+                <button class="btn-add" id="btn-adicionar">+ Adicionar</button>
+            </div>
+        
+            <table class="voluntarios-table">
+                <thead>
+                    <tr id="cabecalho-tabela">
+                        </tr>
+                </thead>
+                <tbody id="corpo-tabela">
+                    </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="logo.png" alt="Logo Rodapé" class="footer-logo">
+                <p>CNPJ: XX.XXX.XXX/XXXX-XX</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Pets Disponíveis</h3>
+                <ul>
+                    <li><a href="#">Gatos</a></li>
+                    <li><a href="#">Cachorros</a></li>
+                    <li><a href="#">Outros</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Tópicos</h3>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Sobre Nós</a></li>
+                    <li><a href="#">Eventos</a></li>
+                    <li><a href="#">Denúncias</a></li>
+                    <li><a href="#">Contatos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-action">
+                <h3>Apoie-Nós</h3>
+                <p>Nos Ajude A Salvar Mais Vidas</p>
+                <button class="btn-pix">Pix Copia e Cola</button>
+                <div class="socials">
+                    <p>Redes Sociais</p>
+                    <i class="fab fa-tiktok"></i> </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/apiScript.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

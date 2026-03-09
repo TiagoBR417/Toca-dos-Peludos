@@ -113,21 +113,39 @@ async function carregarEventos() {
 }
 
 
-// FUNÇÕES DE FORMULÁRIOS
+//denuncia
+
+//pega os valores
+// const tipo = document.getElementById('tipoDenuncia').value;
+// const descricao = document.getElementById('descricaoDenuncia').value;
+// const local = document.getElementById('localDenuncia').value;
+// const anonimo = document.getElementById('anonimo').checked;
+// const contato = document.getElementById('contatoDenuncia').value;
+
 function setupDenunciaForm() {
     const form = document.getElementById('formDenuncia');
     if (!form) return;
     
     form.addEventListener('submit', async (ev) => {
         ev.preventDefault();
-        const tipo = document.getElementById('tipoDenuncia')?.value || '';
-        const descricao = document.getElementById('descricaoDenuncia')?.value || '';
-        const local = document.getElementById('localDenuncia')?.value || '';
-        const anonimo = document.getElementById('anonimo')?.checked || false;
-        const contato = document.getElementById('contatoDenuncia')?.value || '';
         
+        // Pegando os valores direto do HTML
+        const tipo = document.getElementById('tipoDenuncia').value;
+        const descricao = document.getElementById('descricaoDenuncia').value;
+        const local = document.getElementById('localDenuncia').value;
+        const anonimo = document.getElementById('anonimo').checked;
+        const contato = document.getElementById('contatoDenuncia').value;
+        
+    
+        if (!tipo) {
+            alert("Mano, seleciona o tipo de denúncia ali em cima primeiro.");
+            return;
+        }
+        
+    
         const payload = {
-            descricao: tipo ? `${tipo}: ${descricao}` : descricao,
+            tipo: tipo,
+            descricao: descricao,
             localizacao: local,
             contato: anonimo ? '' : contato,
             anonimo: anonimo
@@ -139,14 +157,18 @@ function setupDenunciaForm() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
+            
             if (resp.ok) {
-                alert('Denúncia enviada com sucesso');
+                alert('Boa! Denúncia enviada com sucesso.');
                 form.reset();
             } else {
-                alert('Falha ao enviar denúncia');
+                // Tenta ler o erro que o PHP cuspiu
+                const dados = await resp.json();
+                alert('Falha ao enviar denúncia: ' + (dados.erro || 'Erro na API'));
             }
         } catch (e) {
-            console.error('Erro ao enviar denúncia:', e);
+            console.error('Erro na requisição (Denúncia):', e);
+            alert("Deu ruim de conectar com o servidor. Vê se o XAMPP tá rodando.");
         }
     });
 }
@@ -339,3 +361,4 @@ if (inputBusca) {
         renderizarPets(petsFiltrados);
     });
 }
+

@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+}
+
+/* Header */
+header {
+    background-color: #fdd835;
+    padding: 10px 50px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo img {
+    height: 60px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #5e35b1;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.btn-entrar {
+    background-color: #7e57c2;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Main Content */
+main {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+main h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+main p {
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(250px, 400px));
+    gap: 30px;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.icon {
+    font-size: 2.5rem;
+    margin-right: 20px;
+}
+
+.card-info {
+    text-align: left;
+}
+
+.number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.label {
+    color: #555;
+}
+
+/* Footer */
+footer {
+    background-color: #7e57c2;
+    color: white;
+    padding: 40px 50px;
+    margin-top: 50px;
+    border-top: 10px solid #fdd835;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.footer-logo {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    height: 100px;
+}
+
+.footer-links h3, .footer-action h3 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links a {
+    color: #ddd;
+    text-decoration: none;
+    line-height: 2;
+}
+
+.btn-pix {
+    background-color: #fdd835;
+    color: #333;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Ajuste no seletor do Card */
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    text-decoration: none; /* Remove sublinhado do link */
+    color: inherit; /* Mantém a cor do texto original */
+    transition: all 0.3s ease; /* Suaviza a animação */
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+/* Efeito ao passar o mouse */
+.card:hover {
+    transform: translateY(-5px); /* Move levemente para cima */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    border-color: #7e57c2; /* Adiciona uma borda roxa sutil */
+}
+
+/* Efeito ao clicar */
+.card:active {
+    transform: scale(0.98);
+}

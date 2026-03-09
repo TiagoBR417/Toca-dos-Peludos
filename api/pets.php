@@ -1,12 +1,12 @@
 <?php
 
 
-// Configurações de cabeçalho
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST");
 
-// 2. Chama a conexão
+
 require 'conexao.php';
 
 $metodo = $_SERVER['REQUEST_METHOD'];
@@ -15,7 +15,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 // ROTA GET
 if ($metodo === 'GET') {
     try {
-        // Busca usando os nomes das colunas novas que criamos hoje
+        //busca os animais cadastrados e ordena eles
         $sql = "SELECT id, nome, tipo, raca, porte, status, imagemUrl FROM pets ORDER BY id DESC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
@@ -32,7 +32,7 @@ if ($metodo === 'GET') {
 }
 
 
-// ROTA POST
+//rota POST
 elseif ($metodo === 'POST') {
     
     $dados = json_decode(file_get_contents("php://input"));
@@ -43,7 +43,7 @@ elseif ($metodo === 'POST') {
                     VALUES (:nome, :tipo, :raca, :porte, :status, :imagemUrl)";
             $stmt = $pdo->prepare($sql);
             
-            // Define valores padrão se tiver campo vazio
+            //limpa os campos
             $raca = !empty($dados->raca) ? $dados->raca : 'Desconhecida';
             $porte = !empty($dados->porte) ? $dados->porte : 'Médio';
             $status = !empty($dados->status) ? $dados->status : 'DISPONÍVEL';
