@@ -45,7 +45,7 @@
                   <input id="emailLogin" type="email" placeholder="Email" required><br>
                   <input id="senhaLogin" type="password" placeholder="Senha" required><br>
                   <button type="submit" class="btn_login">Login</button><br><br>
-                  <a href="email_cadastrado.html" class="btn-email-cadastro">Esqueceu sua senha?</a>
+                  <a href="#" class="btn-email-cadastro" onclick="abrirRecuperação()">Esqueceu sua senha?</a>
                   <a href="telefone_cadastrado.html">Esqueceu seu email?</a><br><br>
                   <a href="cadastro.html">Não possui cadastro?</a>
               </form>
@@ -55,6 +55,51 @@
       </aside>
     </div>
 
+    <div id="modalSenha" class="modalEsqueceuSenha">
+
+      <div class="modalContentEsqueceuSenha">
+
+        <span class="fecharModal" onclick="fecharRecuperacao()">&times;</span>
+
+        <div id="telaEmail">
+
+          <form action="" method="" class="popup_form">
+            <h3>Esqueceu sua senha?</h3>
+            <p>Para redefinir sua senha, siga os seguintes passos.</p><br>
+            <p>Qual seu email cadastrado?</p>
+            <input type="text" placeholder="Email"><br>
+            <button type="button" class="btn_login" onclick="irCodigo()">Enviar Código</button>
+          </form>
+
+        </div>
+
+        <div id="telaCodigo" style="display: none;">
+
+          <form action="" method="" class="popup_form">
+            <h3>Verifique sua caixa de entrada do Email</h3>
+            <p>Enviamos um código para que a senha possa ser redefinida.</p><br>
+            <p>Insira o código</p>
+            <input type="number" placeholder="Código"><br>
+            <button type="button" class="btn-login" onclick="irRedefinirSenha()">Confirmar</button>
+          </form>
+
+        </div>
+
+        <div id="telaRedefinirSenha" style="display: none;">
+
+         <form action="" method="" class="popup_form"> 
+            <h3>Redefinir Senha</h3>
+            <p>Agora, defina uma nova senha.</p><br>
+            <input type="password" placeholder="Nova senha"><br>
+            <input type="password" placeholder="Confirme a senha"><br>
+            <button type="button" class="btn-login">Redefinir Senha</button>
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
 
   <footer class="footer">
     <div id="itens_footer">
@@ -97,6 +142,28 @@
  
   </footer>
   <script src="js/apiScript.js"></script>
+
+  <script>
+
+    function abrirRecuperação(){
+      document.getElementById("modalSenha").style.display = "block";
+    }
+
+    function fecharRecuperacao(){
+      document.getElementById("modalSenha").style.display = "none";
+    }
+
+    function irCodigo(){
+      document.getElementById("telaEmail").style.display = "none";
+      document.getElementById("telaCodigo").style.display = "block";
+    }
+
+    function irRedefinirSenha(){
+      document.getElementById("telaCodigo").style.display = "none";
+      document.getElementById("telaRedefinirSenha").style.display = "block";
+    }
+
+  </script>
 
 </body>
 </html>
