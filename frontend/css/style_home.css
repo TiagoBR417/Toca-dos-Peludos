@@ -133,22 +133,17 @@ body {
   transition: transform 0.5s ease;
 }
 
-/* Pausa quando o usuário passa o mouse para ler o depoimento */
-.slide-track:hover {
-  /* sem animação no JS */
-}
-
 .container-foto {
-  width: 300px; /* Largura fixa para o cálculo funcionar */
+  width: 300px; 
   margin: 0 10px;
   text-align: center;
-  flex-shrink: 0; /* Impede que o flexbox amasse a imagem */
+  flex-shrink: 0; 
 }
 
 .container-foto img {
   width: 100%;
   height: 300px;
-  object-fit: cover; /* Mantém a proporção da foto do pet/adotante */
+  object-fit: cover;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
@@ -170,7 +165,7 @@ body {
 .carousel-prev { left: 10px; }
 .carousel-next { right: 10px; }
 
-/* Cards de Fotos/Links */
+
 .cards {
     display: flex;
     justify-content: center;
@@ -265,7 +260,7 @@ body {
 }
 
 .doacao-imagem img {
-    max-width: 100%;
+    max-width: 60%;
     height: auto;
     border-radius: 5px;
     border: 4px solid #ffcc33;
@@ -325,7 +320,7 @@ body {
     }
 
     .doacao-info h2, .doacao-info p {
-        padding-left: 0; /* Remove paddings fixos */
+        padding-left: 0; 
     }
 
     .doacao-grid {
