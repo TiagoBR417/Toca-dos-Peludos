@@ -20,6 +20,13 @@ body {
   top: 0;
   z-index: 20;
 }
+.nav {
+  background: var(--primary);
+  color: #18212f;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
 .nav-content {
   max-width: 1100px;
   margin: 0 auto;
@@ -28,6 +35,10 @@ body {
   align-items: center;
   gap: 20px;
   justify-content: space-between;
+}
+.nav img {
+  width: 60px;
+  height: 60px;
 }
 .brand {
   display: flex;

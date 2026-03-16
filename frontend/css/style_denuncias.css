@@ -30,6 +30,10 @@ body {
   gap: 20px;
   justify-content: space-between;
 }
+.nav img {
+  width: 60px;
+  height: 60px;
+}
 .brand {
   display: flex;
   align-items: center;
