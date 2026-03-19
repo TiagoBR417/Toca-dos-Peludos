@@ -117,6 +117,29 @@
                     <span>Doe R$50,00</span>
                     <button onclick="enviarDoacao(50)">Doar</button>
                 </div>
+                <div class="doacao-card">
+                  <span>Doar via PIX</span>
+                  <button onclick="abrirModalPix()">Doar</button>
+              </div>
+             
+              <div id="popupPix" class="modalPixFundo">
+                 
+                  <div class="modalPixConteudo">
+                     
+                      <div class="popup_form_pix">
+                          <span class="fecharModalPix" onclick="fecharModalDoacao()">&times;</span>
+                         
+                          <h3>Doar via PIX</h3>
+                          <input type="number" id="valorDoacao" placeholder="Digite o valor (R$)">
+                         
+                          <button class="btn-pix" onclick="gerarPix()">Gerar QR Code</button>
+                         
+                          <div id="qrcode" style="margin-top:20px; display:flex; justify-content:center;"></div>
+                      </div>
+                     
+                  </div>
+              </div>
+
             </div>
 
             <div style="margin-top: 20px;">
@@ -215,6 +238,7 @@
     <script src="js/script.js"></script>
     <script src="js/painelADMScript.js"></script>
     <script src="js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 
 </html>
