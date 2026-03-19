@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toca dos Peludos</title>
-  <link rel="stylesheet" href="css/style_denuncias.css">
+  <link rel="stylesheet" href="css/style_forms_denuncias.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="nav">
+ <header class="nav">
     <div class="nav-content">
       <div class="brand">
         <a href="index.html">
-          <img src="img/logo-tdp.jpg"Logo>
+          <img src="img/logo-tdp.jpg" alt="Logo">
         </a>
         <span>Toca dos Peludos</span>
       </div>
@@ -35,21 +35,79 @@
     </div>
   </header>
 
-  <section id="txt_denuncias">
-    <div>
-      <div>
-        <img src="img/denuncias/img_denuncias1.png" alt="">
-      </div>
-      <p>Denunciar maus-tratos a animais é um ato de responsabilidade e cidadania, pois a violência contra animais é crime e precisa ser comunicada para que as medidas cabíveis sejam tomadas. A denúncia é realizada de forma totalmente anônima, garantindo sua segurança e evitando qualquer tipo de exposição. É fundamental agir com seriedade e compromisso com a verdade, já que denúncias falsas prejudicam investigações e podem gerar penalidades legais. Ao denunciar, procure informar com clareza o que está acontecendo, a localização correta, a data e o horário aproximado dos fatos, além de possíveis evidências, como fotos, vídeos ou relatos detalhados.</p>
-    </div>
-    <div class="area_btn">
-    <a href="form_denuncias.html">
-      <button class="btn-denunciar">Denuncie Aqui!</button>
-    </a>
-    </div>
-  </section>
+
+    <div class="container">
+
+        <!-- Coluna esquerda -->
+        <div class="sidebar">
+            <h3>Contatos de Emergência</h3>
     
-<footer class="footer">
+            <div class="card">
+                <div class="icon">🛡</div>
+                <div>
+                    <strong>IBAMA</strong><br>
+                    0800 618 080
+                </div>
+            </div>
+    
+            <div class="card">
+                <div class="icon">⚠</div>
+                <div>
+                    <strong>Polícia Ambiental</strong><br>
+                    190
+                </div>
+            </div>
+    
+            <div class="card">
+                <div class="icon">❤</div>
+                <div>
+                    <strong>CCZ - Centro de Zoonoses</strong><br>
+                    (11) 3397-8900
+                </div>
+            </div>
+    
+            <div class="card important">
+                <div>
+                    <strong>Importante</strong><br>
+                    Em casos de emergência, ligue imediatamente para os órgãos competentes.
+                </div>
+            </div>
+        </div>
+    
+        <!-- Coluna direita -->
+        <div class="form-container">
+            <h2>Formulário de Denúncia</h2>
+    
+            <form id="formDenuncia">
+                <label class="label_text">Tipo de Denúncia *</label>
+                <select id="tipoDenuncia" required>
+                    <option value="seleciona_tipo">Selecione o tipo</option>
+                    <option>Maus-tratos</option>
+                    <option>Abandono</option>
+                    <option>Desmatamento</option>
+                    <option value="outros">Outros</option>
+                </select>
+    
+                <label class="label_text">Descreva a Situação *</label>
+                <textarea id="descricaoDenuncia" placeholder="Forneça o máximo de detalhes possível sobre a situação." required></textarea>
+    
+                <label class="label_text">Local da Ocorrência</label>
+                <input id="localDenuncia" type="text" placeholder="Endereço ou ponto de referência">
+                <div id="options_container">
+                  <label for="anonimo">Fazer denúncia anônima</label>
+                  <input type="checkbox" id="anonimo">
+
+                </div>
+                <label class="label_text">Contato</label>
+                <input id="contatoDenuncia" type="text" placeholder="E-mail ou telefone (opcional)">
+                  <button class="btn-accent" type="submit">Cadastrar Denuncia</button>
+                
+            </form>
+        </div>
+    
+    </div>
+
+ <footer class="footer">
   <div id="itens_footer">
     <div id="logo_footer">
       <img src="img/logo-tdp.jpg" alt="Logo Toca dos Peludos" id="img_logo_footer">
@@ -102,8 +160,9 @@
   </div>
 </footer>
 
-<script src="js/apiScript.js"></script>
-<script src="js/denuncias.js"></script>
+
+  <script src="js/apiScript.js"></script>
+  <script src="js/form_denuncias.js"></script>
 
 </body>
 </html>
