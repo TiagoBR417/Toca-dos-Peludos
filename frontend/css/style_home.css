@@ -234,36 +234,88 @@ body {
 .dot.current{
   background-color: var(--secondary);
 }
+
+/*inicio cards primarios*/
 .cards {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 40px 5%;
 }
 
+/* card inteiro clicável */
 .card {
-    width: 250px; /* Largura fixa para manter consistência */
-    text-align: center;
-    margin-bottom: 30px;
+  position: relative;
+  width: 280px;
+  height: 280px;
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.4s ease;
 }
 
-.imagem-link {
+/* imagem */
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s ease;
+}
+
+/* overlay escuro elegante */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.7),
+    rgba(0,0,0,0.2),
+    transparent
+  );
+  z-index: 1;
+}
+
+/* texto dentro do card */
+.card-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  z-index: 2;
+}
+
+.card-overlay h3 {
+  margin: 0 0 6px;
+  font-size: 1.4rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.card-overlay span {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* hover refinado */
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.card:hover img {
+  transform: scale(1.08);
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .card {
     width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: 5px;
-    border: 4px solid #7b61ff;
-    transition: 0.5s;
+    max-width: 320px;
+    height: 260px;
+  }
 }
-
-.imagem-link:hover {
-    transform: scale(1.05);
-    border-color: #ffcc33;
-    box-shadow: 0 10px 30px rgba(231, 235, 6, 0.4);
-    filter: brightness(1.1);
-}
-
 /* Seção de Doação */
 .doacao-container {
     background-color: var(--accent);

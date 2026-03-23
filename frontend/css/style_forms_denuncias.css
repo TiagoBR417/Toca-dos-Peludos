@@ -184,6 +184,21 @@ textarea {
   width: 100%;
  }
 
+.btn-accent:hover { transform: scale(1.05); }
+ .form-container button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 25px;
+ }
+ .form-container button:hover{
+    transform: scale(1.03);
+ }
+
 
 /* Rodapé */
 .footer {
