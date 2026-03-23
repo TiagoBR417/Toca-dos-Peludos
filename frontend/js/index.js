@@ -261,7 +261,7 @@ const btnNext = document.getElementById('nextSlide')
     document.getElementById('popupPix').style.display = 'none';
   }
  
-  // Função exigida pelo Banco Central para validar o QR Code
+  // Gerar QRcode de valor qualquer
   function calcularCRC16(payload) {
     let resultado = 0xFFFF;
     let polinomio = 0x1021;
@@ -277,58 +277,47 @@ const btnNext = document.getElementById('nextSlide')
   }
  
   function gerarPix() {
-    let valorInput = document.getElementById("valorDoacao").value;
-    // Converte o valor para 2 casas decimais (ex: 10.50)
+    let valorInput = document.getElementById("valorDoacao").value.replace(',', '.');
     let valor = parseFloat(valorInput).toFixed(2);
- 
+
     if (valor <= 0 || isNaN(valor)) {
         alert("Digite um valor válido");
         return;
     }
- 
-    const chavePix = "11959565783";
+
+    const chavePix = "48712800805";
     const nome = "TIAGO OLIVEIRA DOS SANTOS";
     const cidade = "SAO PAULO";
- 
-    // Função auxiliar para formatar os blocos do código do Pix (ID + Tamanho + Valor)
+
     const formatField = (id, value) => {
-      let size = String(value.length).padStart(2, '0');
-      return id + size + value;
+        let size = String(value.length).padStart(2, '0');
+        return id + size + value;
     };
- 
-    // Montando a string do Pix (Padrão EMV)
-    const gui = formatField("00", "br.gov.bcb.pix") + formatField("01", chavePix);
-    const merchantAccountInfo = formatField("26", gui);
-    const merchantCategoryCode = formatField("52", "0000");
-    const transactionCurrency = formatField("53", "032"); // Código do Real (BRL)
-    const transactionAmount = formatField("54", valor);
-    const countryCode = formatField("58", "BR");
-    const merchantName = formatField("59", nome);
-    const merchantCity = formatField("60", cidade);
-    const additionalDataFieldTemplate = formatField("62", formatField("05", "***"));
- 
-    // Junta tudo com o final "6304" (indicando que o próximo passo é a validação CRC16)
+
+    const merchantAccountInfo = formatField("26",
+        formatField("00", "br.gov.bcb.pix") + formatField("01", chavePix)
+    );
+
+    const additionalDataFieldTemplate = formatField("62", formatField("05", "doacao-20260323-001"));
+
     let payloadBase = "000201" +
                       merchantAccountInfo +
-                      merchantCategoryCode +
-                      transactionCurrency +
-                      transactionAmount +
-                      countryCode +
-                      merchantName +
-                      merchantCity +
+                      formatField("52", "0000") +
+                      formatField("53", "986") +
+                      formatField("54", valor) +
+                      formatField("58", "BR") +
+                      formatField("59", nome) +
+                      formatField("60", cidade) +
                       additionalDataFieldTemplate +
                       "6304";
- 
-    // Calcula a assinatura final e adiciona à string
+
     const payloadFinal = payloadBase + calcularCRC16(payloadBase);
- 
-    // Limpa o QR Code antigo (se houver)
+
     document.getElementById("qrcode").innerHTML = "";
- 
-    // Gera o novo QR Code
+
     new QRCode(document.getElementById("qrcode"), {
         text: payloadFinal,
         width: 200,
         height: 200
     });
-  }  
+}
