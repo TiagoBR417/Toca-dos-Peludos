@@ -88,6 +88,123 @@
 .actions button {
   margin: 0; 
 }
+/* CSS do Painel Administrativo */
+/* CONTAINER PRINCIPAL */
+.dashboard {
+  width: 100%;
+  text-align: center;
+}
+
+/* TÍTULO */
+.dashboard h2 {
+  margin-bottom: 10px;
+}
+
+.dashboard p {
+  margin-bottom: 40px;
+  color: #555;
+}
+
+/* CARDS */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, 250px);
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: #f2f2f2;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+
+  /* efeito "neumorphism" */
+  box-shadow: 5px 5px 10px #cfcfcf,
+              -5px -5px 10px #ffffff;
+
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card.active {
+  border: 2px solid #ccc;
+}
+
+.icon {
+  font-size: 22px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.numero {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.label {
+  font-size: 14px;
+}
+
+/* SEÇÃO */
+.secao-detalhes {
+  position: relative;
+  text-align: center;
+}
+
+/* HEADER VOLUNTÁRIOS */
+.secao-detalhes h3 {
+  display: inline-block;
+  border-bottom: 2px solid black;
+}
+
+.btn-add {
+  position: absolute;
+  right: 0;
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* TABELA */
+.tabela-adm {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.tabela-adm thead th {
+  text-align: center;
+  padding: 10px;
+}
+
+.tabela-adm tbody tr {
+  background: #dcdcdc;
+  border-radius: 10px;
+}
+
+.tabela-adm tbody td {
+  padding: 10px;
+}
+
+/* Avatar (caso use imagem depois) */
+.tabela-adm td:first-child {
+  width: 40px;
+}
+
 /* Rodapé */
 /* Rodapé */
 .footer {
