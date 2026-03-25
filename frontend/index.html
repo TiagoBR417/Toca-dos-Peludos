@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toca dos Peludos</title>
+    <link rel="stylesheet" href="css/style_home.css">
+   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap"> 
+
+</head>
+
+<body>
+ <header class="nav">
+    <div class="nav-content">
+      <div class="brand">
+        <a href="index.html">
+          <img src="img/logo-tdp.jpg" alt="Logo Toca dos Peludos">
+        </a>
+        <span>Toca dos Peludos</span>
+      </div>
+      <nav class="links">
+        <a href="index.html" class="active">Início</a>
+        <a href="sobre_nos.html">Sobre</a>
+        <a href="pets.html">Pets</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="denuncias.html">Denúncias</a>
+        <a href="contatos.html">Contatos</a>
+      </nav>
+      <div class="actions">
+        <a href="login.html">
+            <button class="btn-accent">Entrar</button>
+        </a>
+        <a href="#ajude">
+            <button class="btn-accent">Doar</button>
+        </a>
+
+      </div>
+    </div>
+  </header>
+
+
+
+    <div class="container-cabecalho">
+        <img src="img/capa-home.png" alt="">
+        <div class="texto">
+            <h2>Encontre Seu Novo Melhor Amigo e Adote um Animal de Estimação</h2>
+            <p>Mais de 12.000 Histórias Salvas</p>
+        </div>
+    </div>
+
+    <div class="secao-cards">
+        <div class="cards">
+          <a href="#" class="card">
+            <img src="img/adotando.jpg" alt="">
+            <div class="card-overlay">
+              <h3>Pets Adotados</h3>
+              <span>Ver histórias →</span>
+            </div>
+          </a>
+
+          <a href="#" class="card">
+            <img src="img/resgatando.jpg" alt="">
+            <div class="card-overlay">
+              <h3>Nossos Resgates</h3>
+              <span>Ver resgates →</span>
+            </div>
+          </a>
+
+          <a href="#" class="card">
+            <img src="img/foto-evento-banner.png" alt="">
+            <div class="card-overlay">
+              <h3>Próximos Eventos</h3>
+              <span>Saiba mais →</span>
+            </div>
+          </a>
+        </div>
+    </div>
+<section class="depoimentos">
+
+    <section id="moments">
+          <h2 class="titulo-depoimentos">
+    <span id="texto-animado">Veja Alguns Depoimentos Dos Nossos Adotantes</span><span class="cursor">|</span>
+  </h2>
+    <div class="slide">
+      <div class="slider">
+        <div class="content">
+          <img src="img/eventos/foto1_carrossel.png" alt="">
+          <img src="img/eventos/foto2_carrossel.png" alt="">
+          <img src="img/eventos/foto3_carrossel.png" alt="">
+          <img src="img/eventos/foto4_carrossel.png" alt="">
+          <img src="img/eventos/foto5_carrossel.png" alt="">
+          <img src="img/eventos/foto6_carrossel.png" alt="">
+        </div>
+      </div>
+      <button id="previousSlide">◀</button>
+      <button id="nextSlide">▶</button>
+      <div class="length-dots">
+        <span class="dot"></span>
+      </div>
+    </div>
+  </section>
+
+</section>
+  </a>
+  
+<section class="doacao-container">
+    <div id="ajude">
+      <h2 id="ajude"></h2>
+        <div class="doacao-info">
+            <h2>Ajude A Toca Dos Peludos</h2>
+            <p>Sua doação ajuda no resgate, alimentação e cuidados veterinários.</p>
+
+            <div class="doacao-grid">
+                <div class="doacao-card">
+                    <span>Doe R$10,00</span>
+                    <button onclick="enviarDoacao(10)">Doar</button>
+                </div>
+                <div class="doacao-card">
+                    <span>Doe R$20,00</span>
+                    <button onclick="enviarDoacao(20)">Doar</button>
+                </div>
+                <div class="doacao-card">
+                    <span>Doe R$50,00</span>
+                    <button onclick="enviarDoacao(50)">Doar</button>
+                </div>
+                <div class="doacao-card">
+                  <span>Doar via PIX</span>
+                  <button onclick="abrirModalPix()">Doar</button>
+              </div>
+             
+              <div id="popupPix" class="modalPixFundo">
+                 
+                  <div class="modalPixConteudo">
+                     
+                      <div class="popup_form_pix">
+                          <span class="fecharModalPix" onclick="fecharModalDoacao()">&times;</span>
+                         
+                          <h3>Doar via PIX</h3>
+                          <input type="number" id="valorDoacao" placeholder="Digite o valor (R$)">
+                         
+                          <button class="btn-pix" onclick="gerarPix()">Gerar QR Code</button>
+                         
+                          <div id="qrcode" style="margin-top:20px; display:flex; justify-content:center;"></div>
+                      </div>
+                     
+                  </div>
+              </div>
+
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3>Doações Recentes:</h3>
+                <ul id="listaDoacoes"></ul> 
+            </div>
+        </div>
+    </div>
+        <div class="doacao-imagem">
+        <img src="img/resgatando-doacao.jpg" alt="Resgate">
+    </div>
+</section>
+
+  <section id="txt_denuncias">
+    <div>
+      <div>
+        <img src="img/denuncias/img_denuncias1.png" alt="">
+      </div>
+      <p>Denunciar maus-tratos a animais é um ato de responsabilidade e cidadania, pois a violência contra animais é crime e precisa ser comunicada para que as medidas cabíveis sejam tomadas. A denúncia é realizada de forma totalmente anônima, garantindo sua segurança e evitando qualquer tipo de exposição. É fundamental agir com seriedade e compromisso com a verdade, já que denúncias falsas prejudicam investigações e podem gerar penalidades legais. Ao denunciar, procure informar com clareza o que está acontecendo, a localização correta, a data e o horário aproximado dos fatos, além de possíveis evidências, como fotos, vídeos ou relatos detalhados.</p>
+    </div>
+    <div class="area_btn">
+    <a href="denuncias.html">
+      <button class="btn-denunciar">Denuncie Aqui!</button>
+    </a>
+    </div>
+  </section>
+
+    <section class="parceiros">
+        <h2>Nossas ONGs Parceiras</h2>
+
+        <div class="grid-parceiros">
+            <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
+            <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
+            <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
+            <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
+            <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
+            <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
+            <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
+        </div>
+    </section>
+
+  <footer class="footer">
+  <div id="itens_footer">
+    <div id="logo_footer">
+      <img src="img/logo-tdp.jpg" alt="Logo Toca dos Peludos" id="img_logo_footer">
+
+      <p>
+        Somos uma ONG dedicada ao resgate, cuidado e adoção responsável de animais.
+        Nossa missão é dar uma segunda chance para cada peludo encontrar um lar cheio de amor.
+      </p>
+    </div>
+
+    <div id="redes_footer">
+      <h3>Redes Sociais</h3>
+
+      <div id="icons_redes">
+        <a href="https://www.instagram.com/toca_dos_peludos/" target="_blank" rel="noopener noreferrer">
+          <img src="img/icons8-instagram-50.svg" alt="Instagram">
+        </a>
+
+        <a href="https://www.tiktok.com/@toca_dos_peludos" target="_blank" rel="noopener noreferrer">
+          <img src="img/icons8-tiktok-50.svg" alt="TikTok">
+        </a>
+
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <img src="img/icons8-whatsapp-50.svg" alt="WhatsApp">
+        </a>
+
+        <a href="https://www.facebook.com/tocadospeludos/?locale=pt_BR" target="_blank" rel="noopener noreferrer">
+          <img src="img/icons8-facebook-50.svg" alt="Facebook">
+        </a>
+      </div>
+    </div>
+    <div id="links_footer">
+      <h3>Links Rápidos</h3>
+      <a href="pets.html">Adotar um Pet</a>
+      <a href="#ajude">Fazer Doação</a>
+      <a href="denuncias.html">Fazer uma denúncia</a>
+      <a href="eventos.html">Eventos</a>
+    </div>
+
+    <div id="contato_footer">
+      <h3>Contatos</h3>
+      <a href="mailto:contato@tocadospeludos.org">contato@tocadospeludos.org</a>
+      <a href="tel:+5511999999999">(11) 99999 - 9999</a>
+      <span>São Paulo, SP</span>
+    </div>
+  </div>
+
+  <div id="copyright">
+    <p>© 2026 Toca dos Peludos. Feito com S2 para os animais.</p>
+  </div>
+</footer>
+
+    <script src="js/apiScript.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/painelADMScript.js"></script>
+    <script src="js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+
+</html>
