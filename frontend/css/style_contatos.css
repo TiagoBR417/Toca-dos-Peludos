@@ -29,6 +29,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 20;
+  border-radius: 0 0 12px 12px;
 }
 .nav-content {
   max-width: 1100px;
@@ -119,7 +120,7 @@ body {
   border: 3px solid var(--accent);
   border-radius: var(--radius);
   padding: 20px;
-  background-color: var(--card-bg); /* Branco mais escuro */
+  background-color: #fff; /* Branco */
   max-width: 100%;
 }
 
@@ -128,6 +129,11 @@ body {
   max-width: 300px;
   height: auto;
   display: block;
+}
+
+.logo {
+  border-radius: 12px; /* controla a curvatura */
+  object-fit: cover; /* mantém proporção da imagem */
 }
 
 .info-contato {
@@ -184,6 +190,7 @@ iframe {
 .footer {
   width: 100%;
   background-color: var(--accent);
+  border-radius: 12px 12px 0 0;
 }
 
 /* Container principal */

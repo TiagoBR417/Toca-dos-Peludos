@@ -14,12 +14,16 @@ body {
   background: var(--bg);
 }
 /*cabecalho*/
+header {
+  box-shadow: 0 6px 0 var(--primary);
+}
 .nav {
   background: var(--primary);
   color: #18212f;
   position: sticky;
   top: 0;
   z-index: 20;
+  border-radius: 0 0 12px 12px;
 }
 .nav-content {
   max-width: 1100px;
@@ -33,6 +37,10 @@ body {
 .nav img {
   width: 60px;
   height: 60px;
+}
+.logo {
+  border-radius: 12px; /* controla a curvatura */
+  object-fit: cover; /* mantém proporção da imagem */
 }
 .brand {
   display: flex;
@@ -280,6 +288,7 @@ select option {
 .footer {
   width: 100%;
   background-color: var(--accent);
+  border-radius: 12px 12px 0 0;
 }
 
 /* Container principal */
