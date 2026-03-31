@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes - Toca dos Peludos</title>
     <link rel="icon" type="image/png" href="img/logo-tdp.jpg">
-    <link rel="stylesheet" href="css/style_home.css">
+    <link rel="stylesheet" href="css/detalhes.css">
    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,13 @@
         <a href="denuncias.html">Denúncias</a>
         <a href="contatos.html">Contatos</a>
       </nav>
+
+      <div class="menu-sanduiche">
+        <div class="linha"></div>
+        <div class="linha"></div>
+        <div class="linha"></div>
+      </div>
+
       <div class="actions">
         <a href="login.html">
             <button class="btn-accent">Entrar</button>
@@ -47,7 +54,22 @@
     </div>
   </header>
 
+    <main class="container-principal">
+      <section id="detalhesPet"></section>
 
+      <section class="form-container">
+        <h2>Agendar visita</h2>
+        <form id="formAgendamento">
+          <input type="text" id="nomeInteressado" placeholder="Seu nome" required>
+          <input type="email" id="emailInteressado" placeholder="Seu email" required>
+          <input type="tel" id="telefoneInteressado" placeholder="Seu telefone" required>
+          <input type="date" id="dataVisita" required>
+          <input type="time" id="horarioVisita" required>
+          <textarea id="observacoesAgendamento" placeholder="Observações (opcional)"></textarea>
+          <button type="submit" class="btn-accent">Agendar visita</button>
+        </form>
+      </section>
+    </main>
 
 
   <footer class="footer">
