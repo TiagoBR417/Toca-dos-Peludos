@@ -1,26 +1,17 @@
 <?php
-header('Content-Type: application/json; charset=utf-8');
 
-// CONEXÃO
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "toca_dos_peludos";
+declare(strict_types=1);
 
-$conn = new mysqli($host, $user, $pass, $db);
+require_once __DIR__ . '/bootstrap/app.php';
 
-if ($conn->connect_error) {
-    http_response_code(500);
-    echo json_encode(["erro" => "Erro na conexão com o banco"], JSON_UNESCAPED_UNICODE);
-    exit;
-}
+use App\Config\Database;
+use App\Support\JsonResponse;
 
-$conn->set_charset("utf8mb4");
+$conn = Database::getConnection();
 
-// FILTRO OPCIONAL
 $status = $_GET['status'] ?? null;
 
-if ($status) {
+if ($status !== null && $status !== '') {
     $stmt = $conn->prepare("SELECT * FROM pets WHERE status = ?");
     $stmt->bind_param("s", $status);
     $stmt->execute();
@@ -29,21 +20,22 @@ if ($status) {
     $result = $conn->query("SELECT * FROM pets");
 }
 
-// TRATAR ERRO
 if (!$result) {
-    http_response_code(500);
-    echo json_encode(["erro" => "Erro ao buscar pets"], JSON_UNESCAPED_UNICODE);
-    exit;
+    JsonResponse::send([
+        'success' => false,
+        'message' => 'Erro ao buscar pets',
+        'data' => null,
+    ], 500);
 }
 
-// MONTAR RESPOSTA
 $pets = [];
 
 while ($row = $result->fetch_assoc()) {
     $pets[] = $row;
 }
 
-// RETORNO
-echo json_encode($pets, JSON_UNESCAPED_UNICODE);
-
-$conn->close();
+JsonResponse::send([
+    'success' => true,
+    'message' => 'Pets encontrados com sucesso',
+    'data' => $pets,
+]);

@@ -3,30 +3,28 @@
 namespace App\Config;
 
 use mysqli;
+use mysqli_sql_exception;
 
 class Database
 {
-    public static function connect(): mysqli
+    private static ?mysqli $connection = null;
+
+    public static function getConnection(): mysqli
     {
-        $host = "localhost";
-        $user = "root";
-        $pass = "";
-        $db = "toca_dos_peludos";
+        if (self::$connection === null) {
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-        $conn = new mysqli($host, $user, $pass, $db);
+            self::$connection = new mysqli(
+                $_ENV['DB_HOST'] ?? '127.0.0.1',
+                $_ENV['DB_USERNAME'] ?? 'root',
+                $_ENV['DB_PASSWORD'] ?? '',
+                $_ENV['DB_DATABASE'] ?? 'toca_dos_peludos',
+                (int) ($_ENV['DB_PORT'] ?? 3306)
+            );
 
-        if ($conn->connect_error) {
-            http_response_code(500);
-            echo json_encode([
-                "success" => false,
-                "message" => "Erro na conexão com o banco",
-                "data" => null
-            ], JSON_UNESCAPED_UNICODE);
-            exit;
+            self::$connection->set_charset('utf8mb4');
         }
 
-        $conn->set_charset("utf8mb4");
-
-        return $conn;
+        return self::$connection;
     }
 }

@@ -1,31 +1,32 @@
 <?php
-header('Content-Type: application/json');
 
-// CONEXÃO COM O BANCO
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "toca_dos_peludos";
+declare(strict_types=1);
 
-$conn = new mysqli($host, $user, $pass, $db);
+require_once __DIR__ . '/bootstrap/app.php';
 
-// VERIFICA ERRO
-if ($conn->connect_error) {
-    http_response_code(500);
-    echo json_encode(["erro" => "Erro na conexão com o banco"]);
-    exit;
+use App\Config\Database;
+use App\Support\JsonResponse;
+
+$conn = Database::getConnection();
+
+$result = $conn->query("SELECT * FROM eventos");
+
+if (!$result) {
+    JsonResponse::send([
+        'success' => false,
+        'message' => 'Erro ao buscar eventos',
+        'data' => null,
+    ], 500);
 }
 
-// QUERY
-$sql = "SELECT * FROM eventos";
-$result = $conn->query($sql);
-
-// ARRAY DE RESPOSTA
 $eventos = [];
 
 while ($row = $result->fetch_assoc()) {
     $eventos[] = $row;
 }
 
-// RETORNO
-echo json_encode($eventos, JSON_UNESCAPED_UNICODE);
+JsonResponse::send([
+    'success' => true,
+    'message' => 'Eventos encontrados com sucesso',
+    'data' => $eventos,
+]);
