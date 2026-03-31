@@ -225,4 +225,3 @@ Autenticação de usuários reais via banco (em vez de usuário em memória).
   - Pets: frontend/css/style_pets.css
   - Login: frontend/css/style_login.css
   - Cadastro: frontend/css/style_cadastro.css
-

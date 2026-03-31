@@ -51,7 +51,9 @@
         <div class="form-container">
             <h2>Formulário de Presença</h2>
     
-            <form id="formEventos">    
+            <form id="formEventos">  
+                <label for="label_text">Evento:</label>
+                  <input type="hidden" id="eventoId"> 
                 <label class="label_text">Nome *</label>
                     <input id="nome" type="text" placeholder="Nome completo" required>
                 <label class="label_text">Email *</label>
@@ -59,10 +61,10 @@
                 <label class="label_text">Telefone *</label>
                     <input id="telefone" type="tel" placeholder="Telefone" required>
                 <label class="label_text">Quantidade de Pessoas *</label>
-                    <input id="quantidadePessoas" type="text" placeholder="Digite a quantidade de pessoas que irão lhe acompanhar" required>
+                   <input id="quantidadePessoas" type="number" min="0" value="0" placeholder="Digite a quantidade de pessoas que irão lhe acompanhar" required>
     
                 <label class="label_text">Observações</label>
-                    <textarea id="observações" placeholder="Observações adicionais (opcional)"></textarea>
+                    <textarea id="observacoes" placeholder="Observações adicionais (opcional)"></textarea>
                     <button class="btn-confirm" type="submit">Confirmar Presença</button>
             </form>
         </div>
