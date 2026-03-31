@@ -348,6 +348,59 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Eventos Disponíveis */
+#eventos {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.eventos-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+}
+
+.evento-card {
+  background: #fff;
+  width: 280px;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.evento-card img {
+  width: 100%;
+  border-radius: 10px;
+  height: 160px;
+  object-fit: cover;
+}
+
+.evento-card h3 {
+  margin: 10px 0;
+}
+
+.evento-card p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.evento-card button {
+  margin-top: 10px;
+  background: var(--secondary);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.evento-card button:hover {
+  background: #5e3c85;
+}
+
 /* Rodapé */
 .footer {
   width: 100%;

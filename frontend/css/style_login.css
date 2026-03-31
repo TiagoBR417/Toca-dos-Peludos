@@ -14,9 +14,6 @@ body {
   background: var(--bg);
 }
 /*cabecalho*/
-header {
-  box-shadow: 0 20px 0 var(--primary);
-}
 .nav {
   background: var(--primary);
   color: #18212f;

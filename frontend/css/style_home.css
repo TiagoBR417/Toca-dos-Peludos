@@ -7,6 +7,7 @@
   --text: #333333;
   --radius: 12px;
 }/* Configurações Gerais */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -22,9 +23,6 @@ body {
 }
 
 /* Cabeçalho */
-header {
-  box-shadow: 0 20px 0 var(--primary);
-}
 .nav {
   background: var(--primary);
   color: #18212f;
@@ -33,6 +31,7 @@ header {
   z-index: 20;
   border-radius: 0 0 12px 12px;
 }
+
 .nav-content {
   max-width: 1100px;
   margin: 0 auto;
@@ -42,14 +41,17 @@ header {
   gap: 20px;
   justify-content: space-between;
 }
+
 .nav img {
   width: 60px;
   height: 60px;
 }
+
 .logo {
   border-radius: 12px; /* controla a curvatura */
   object-fit: cover; /* mantém proporção da imagem */
 }
+
 .brand {
   display: flex;
   align-items: center;
@@ -57,6 +59,7 @@ header {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
+
 .links a {
   position: relative;
   color: #7956a6;
@@ -83,6 +86,7 @@ header {
 .links a:hover {
   color: var(--accent);
 }
+
 .links a.active {
   color: var(--accent);
 }
@@ -90,6 +94,7 @@ header {
 .links a.active::after {
   width: 100%;
 }
+
 .btn-accent {
   background: var(--accent);
   color: #fff;
@@ -99,6 +104,7 @@ header {
   cursor: pointer;
   font-weight: 700;
 }
+
 .btn-accent:hover { transform: scale(1.05); }
 
 .actions {
@@ -205,7 +211,7 @@ header {
     position: relative;
     width: 100%;
     overflow: hidden;
-    border-radius: 0 0 12px 12px;
+    border-radius: 12px;
     cursor: pointer;
 }
 
@@ -245,7 +251,6 @@ header {
     font-style: bold;
 
 }
-
 
 #moments {
   background-color: var(--primary);
@@ -785,7 +790,6 @@ header {
   z-index: 1000;
 }
 
-
 /* CAIXA CENTRALIZADA */
 .modalPixConteudo {
   position: absolute;
@@ -793,7 +797,6 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 
 /* ESTILOS DO FORMULÁRIO DO POP-UP */
 .popup_form_pix {
@@ -814,7 +817,6 @@ header {
   font-size: 25px;
   font-weight: 0px;
 }
-
 
 /* BOTÃO DE GERAR QR CODE (Preto) */
 .btn-pix {
@@ -861,7 +863,6 @@ input::placeholder {
   font-style: italic;
 }
 
-
 /* BOTÃO FECHAR (O X) */
 .fecharModalPix {
   position: absolute;
@@ -874,7 +875,6 @@ input::placeholder {
   z-index: 999;
 }
 
-
 /* RESPONSIVO */
 @media (max-width: 768px) {
   .popup_form_pix {
@@ -882,45 +882,9 @@ input::placeholder {
   }
 }
 
-
 .popup_form_pix h3{
   color: #333333;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* --- FUNDO ESCURO DO POP-UP DO PIX --- */
-.modalPixFundo {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  z-index: 1000;
-}
-
-
-/* CAIXA CENTRALIZADA */
-.modalPixConteudo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 
 /* ESTILOS DO FORMULÁRIO DO POP-UP */
 .popup_form_pix {
@@ -942,22 +906,6 @@ input::placeholder {
   font-weight: 0px;
 }
 
-
-/* BOTÃO DE GERAR QR CODE */
-.btn-pix {
-  width: 100%;
-  padding: 12px 0;
-  background: linear-gradient(90deg, var(--secondary), #7956a6);
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 25px;
-}
-
 .btn-login:hover {
   background: linear-gradient(90deg, #7956a6, #6A1B9A);
   transform: translateY(-2px);
@@ -975,7 +923,6 @@ input::placeholder {
   z-index: 999;
 }
 
-
 /* RESPONSIVO */
 @media (max-width: 768px) {
   .popup_form_pix {
@@ -988,5 +935,3 @@ input::placeholder {
   height: 100%;
   touch-action: none;
 }
-
-
