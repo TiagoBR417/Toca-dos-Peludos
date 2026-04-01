@@ -57,7 +57,7 @@ function renderizarPets(pets) {
   container.innerHTML = "";
 
   if (!pets.length) {
-    container.innerHTML = `<p>Nenhum pet encontrado.</p>`;
+    container.innerHTML = `<p class="mensagem-vazia">Nenhum pet encontrado.</p>`;
     return;
   }
 
@@ -65,18 +65,58 @@ function renderizarPets(pets) {
     const card = document.createElement("div");
     card.className = "card-pet";
 
+    const imagem = pet.imagem_url && pet.imagem_url.trim() !== ""
+      ? pet.imagem_url
+      : "https://placehold.co/400x260?text=Sem+Foto";
+
+    const statusTexto = pet.status ? pet.status : "disponivel";
+    const statusClasse = `status-${statusTexto.toLowerCase()}`;
+
     card.innerHTML = `
-      <img src="${pet.imagem_url || "https://placehold.co/300x200?text=Sem+Foto"}" alt="${pet.nome}">
-      <div class="card-pet-info">
-        <h3>${pet.nome}</h3>
-        <p>${pet.tipo} • ${pet.porte || "porte não informado"}</p>
-        <p>${pet.raca || "raça não informada"}</p>
-        <a href="detalhes.html?id=${pet.id}" class="link-ver-mais">Ver mais &rarr;</a>
-      </div>
-    `;
+  <div class="card-pet-image-wrapper">
+    <img 
+      src="${imagem}" 
+      alt="${pet.nome}"
+      onerror="this.src='https://placehold.co/400x260?text=Sem+Foto'"
+    >
+    <span class="badge-status ${statusClasse}">
+      ${statusTexto}
+    </span>
+  </div>
+
+  <div class="card-pet-content">
+    <h3>${pet.nome}</h3>
+
+    <div class="pet-meta">
+      <span>${pet.tipo}</span>
+      <span>${pet.porte}</span>
+    </div>
+
+    <p class="pet-raca">
+      <strong>Raça:</strong> ${pet.raca}
+    </p>
+
+    <p class="pet-local">
+      <strong>Local:</strong> ${pet.bairro}, ${pet.cidade}
+    </p>
+
+    <p class="pet-descricao">
+      ${pet.descricao}
+    </p>
+
+    <a href="detalhes.html?id=${pet.id}" class="btn-ver-mais">
+      Ver detalhes
+    </a>
+  </div>
+`;
 
     container.appendChild(card);
   });
+}
+
+function limitarTexto(texto, limite) {
+  if (texto.length <= limite) return texto;
+  return texto.slice(0, limite).trim() + "...";
 }
 
 function aplicarFiltros() {
