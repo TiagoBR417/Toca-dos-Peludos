@@ -1,19 +1,24 @@
 :root {
---primary: #ffcc33;
+  --primary: #ffcc33;
   --secondary: #6A1B9A;
   --accent: #7956a6;
   --bg: #F5F5F5;
   --text: #333333;
   --radius: 12px;
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Roboto', system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: var(--bg);
 }
-/*cabeçalho*/
+
+/* Cabeçalho */
 .nav {
   background: var(--primary);
   color: #18212f;
@@ -22,6 +27,7 @@ body {
   z-index: 20;
   border-radius: 0 0 12px 12px;
 }
+
 .nav-content {
   max-width: 1100px;
   margin: 0 auto;
@@ -31,14 +37,17 @@ body {
   gap: 20px;
   justify-content: space-between;
 }
+
 .nav img {
   width: 60px;
   height: 60px;
 }
+
 .logo {
   border-radius: 12px; /* controla a curvatura */
   object-fit: cover; /* mantém proporção da imagem */
 }
+
 .brand {
   display: flex;
   align-items: center;
@@ -46,6 +55,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
+
 .links a {
   position: relative;
   color: #7956a6;
@@ -72,6 +82,7 @@ body {
 .links a:hover {
   color: var(--accent);
 }
+
 .links a.active {
   color: var(--accent);
 }
@@ -79,6 +90,7 @@ body {
 .links a.active::after {
   width: 100%;
 }
+
 .btn-accent {
   background: var(--accent);
   color: #fff;
@@ -88,7 +100,10 @@ body {
   cursor: pointer;
   font-weight: 700;
 }
-.btn-accent:hover { transform: scale(1.05); }
+
+.btn-accent:hover {
+  transform: scale(1.05);
+}
 
 .actions {
   display: flex;
@@ -100,15 +115,12 @@ body {
   margin: 0; 
 }
 
-
-
 /* =========================================
    MENU SANDUÍCHE (Invisível no Desktop)
 ========================================= */
 .nav-content {
   position: relative; /* Segura o menu dropdown no lugar certo */
 }
-
 
 .menu-sanduiche {
   display: none;
@@ -118,7 +130,6 @@ body {
   z-index: 1000; /* Garante que o clique funcione por cima de tudo */
 }
 
-
 .menu-sanduiche .linha {
   width: 30px;
   height: 4px;
@@ -126,7 +137,6 @@ body {
   border-radius: 5px;
   transition: all 0.3s ease;
 }
-
 
 /* =========================================
    REGRAS PARA CELULAR (Até 600px)
@@ -136,7 +146,6 @@ body {
   .menu-sanduiche {
     display: flex;
   }
-
 
   /* Transforma a barra de links em um menu que cai da tela */
   .nav .links {
@@ -152,7 +161,6 @@ body {
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1); /* Sombrinha para destacar */
     z-index: 999;
   }
-
 
   .nav .links a {
     margin: 15px 0;
@@ -182,15 +190,11 @@ body {
     color: #fff;
   }
 
-
   /* A classe 'ativo' que o JavaScript vai ligar e desligar */
   .nav .links.ativo {
     display: flex !important;
   }
 }
-
-
-
  
 /*cards iniciais*/
 #cards {
@@ -276,6 +280,7 @@ body {
   max-width: 100%; 
   box-sizing: border-box;
 }
+
 .slider {
   overflow-x: hidden;
   border-radius: 20px;
@@ -289,13 +294,12 @@ body {
   transition: all 0.5s ease;
 }
 
-
-
 .content img {
   width: 950px;
   height: 350px;
   object-fit: cover;
 }
+
 #moments button{
   width: 50px;
   height: 50px;
@@ -304,29 +308,32 @@ body {
   background-color: #ffcc33;
   color: #000000;
   position: absolute;
-  top: 50%;
-  
+  top: 50%; 
 }
-#moments button:first-of-type{
+
+#moments button:first-of-type {
   left: 0;
   transform: translate(-50%, -50%);
 }
-#moments button:last-of-type{
+
+#moments button:last-of-type {
   right: 0;
   transform: translate(50%, -50%);
 }
-#moments button:hover{
+
+#moments button:hover {
   background-color: #ffc107;
 }
-.dot{
+
+.dot {
   display: inline-block;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background-color: #ccc;
-
 }
-.length-dots{
+
+.length-dots {
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -338,6 +345,7 @@ body {
 .dot.current{
   background-color: #ffcc33;
 }
+
   /*fim carrossel copiavel*/
 #title_carrossel {
   text-align: center;
@@ -413,7 +421,6 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px 5% 15px;
-
   display: grid;
   grid-template-columns: repeat(4, auto);
   justify-content: space-between;
@@ -449,6 +456,7 @@ body {
   line-height: 1.4;
   max-width: 260px;
 }
+
 /* Títulos */
 .footer h3 {
   color: var(--primary);
@@ -503,7 +511,6 @@ body {
   display: block;
 }
 
-
 #copyright {
   background-color: var(--primary);
   text-align: center;
@@ -517,7 +524,6 @@ body {
   font-weight: 500;
   line-height: 1.2;       /* deixa mais compacto */
 }
-
 
 @media (max-width: 900px) {
   .footer #itens_footer {

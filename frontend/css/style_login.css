@@ -1,4 +1,4 @@
- :root {
+:root {
   --primary: #ffcc33;
   --secondary: #6A1B9A;
   --accent: #7956a6;
@@ -6,14 +6,19 @@
   --text: #333333;
   --radius: 12px;
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Roboto', system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: var(--bg);
 }
-/*cabecalho*/
+
+/* Cabeçalho*/
 .nav {
   background: var(--primary);
   color: #18212f;
@@ -22,6 +27,7 @@ body {
   z-index: 20;
   border-radius: 0 0 12px 12px;
 }
+
 .nav-content {
   max-width: 1100px;
   margin: 0 auto;
@@ -31,14 +37,17 @@ body {
   gap: 20px;
   justify-content: space-between;
 }
+
 .nav img {
   width: 60px;
   height: 60px;
 }
+
 .logo {
   border-radius: 12px; /* controla a curvatura */
   object-fit: cover; /* mantém proporção da imagem */
 }
+
 .brand {
   display: flex;
   align-items: center;
@@ -46,6 +55,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
+
 .links a {
   position: relative;
   color: #7956a6;
@@ -72,6 +82,7 @@ body {
 .links a:hover {
   color: var(--accent);
 }
+
 .btn-accent {
   background: var(--accent);
   color: #fff;
@@ -81,7 +92,10 @@ body {
   cursor: pointer;
   font-weight: 700;
 }
-.btn-accent:hover { transform: scale(1.05); }
+
+.btn-accent:hover {
+  transform: scale(1.05);
+}
 
 .actions {
   display: flex;
@@ -93,16 +107,12 @@ body {
   margin: 0; 
 }
 
-
-
-
-/* =========================================
-   MENU SANDUÍCHE (Invisível no Desktop)
-========================================= */
+/* =====================================
+  MENU SANDUÍCHE (Invisível no Desktop)
+===================================== */
 .nav-content {
   position: relative; /* Segura o menu dropdown no lugar certo */
 }
-
 
 .menu-sanduiche {
   display: none;
@@ -112,7 +122,6 @@ body {
   z-index: 1000; /* Garante que o clique funcione por cima de tudo */
 }
 
-
 .menu-sanduiche .linha {
   width: 30px;
   height: 4px;
@@ -121,16 +130,14 @@ body {
   transition: all 0.3s ease;
 }
 
-
-/* =========================================
-   REGRAS PARA CELULAR (Até 600px)
-   ========================================= */
+/* ===============================
+  REGRAS PARA CELULAR (Até 600px)
+=============================== */
 @media screen and (max-width: 600px) {
   /* Mostra o ícone do sanduíche */
   .menu-sanduiche {
     display: flex;
   }
-
 
   /* Transforma a barra de links em um menu que cai da tela */
   .nav .links {
@@ -146,7 +153,6 @@ body {
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1); /* Sombrinha para destacar */
     z-index: 999;
   }
-
 
   .nav .links a {
     margin: 15px 0;
@@ -176,26 +182,20 @@ body {
     color: #fff;
   }
 
-
   /* A classe 'ativo' que o JavaScript vai ligar e desligar */
   .nav .links.ativo {
     display: flex !important;
   }
 }
 
-
-
-
-
-
-.login_form h3{
+.login_form h3 {
   color: black; 
   margin-bottom: 25px;
   font-size: 25px;
   font-weight: none;
 }
 
-.login_container{
+.login_container {
   position: relative; 
   min-height: calc(100vh - 70px);
   display: flex;
@@ -232,7 +232,6 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
 
 .login_form {
   background: #ffffff; 
@@ -276,7 +275,7 @@ input {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); 
 }
 
-input:focus{
+input:focus {
   border-color: #7956a6;               /* roxo de destaque */
   box-shadow: 0 0 8px rgba(121,86,166,0.3); /* glow suave */
   background-color: #fdfdfd;
@@ -292,31 +291,20 @@ input::placeholder {
   font-size: 12px;
 }
 
-.login_form a:hover{
+.login_form a:hover {
   transform: translateY(-2px);
 }
 
-.btn-email-cadastro{
+.btn-email-cadastro {
   margin-right: 15px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-:root {
-    --primary: #FFCC00;
-    --secondary: #6A1B9A;
-    --accent: #7956a6;
-    --bg: #F5F5F5;
-    --text: #333333;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; }
-
-  /*rodape*/
 /* Rodapé */
 .footer {
   width: 100%;
@@ -329,7 +317,6 @@ input[type="number"]::-webkit-outer-spin-button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px 5% 15px;
-
   display: grid;
   grid-template-columns: repeat(4, auto);
   justify-content: space-between;
@@ -365,6 +352,7 @@ input[type="number"]::-webkit-outer-spin-button {
   line-height: 1.4;
   max-width: 260px;
 }
+
 /* Títulos */
 .footer h3 {
   color: var(--primary);
@@ -384,10 +372,9 @@ input[type="number"]::-webkit-outer-spin-button {
   text-decoration: underline;
 }
 
-/* ===================== */
-/*   REDES SOCIAIS       */
-/* ===================== */
-
+/* ============== 
+  REDES SOCIAIS       
+============== */
 #redes_footer {
   align-items: center;
   text-align: center;
@@ -419,7 +406,6 @@ input[type="number"]::-webkit-outer-spin-button {
   display: block;
 }
 
-
 #copyright {
   background-color: var(--primary);
   text-align: center;
@@ -433,7 +419,6 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: 500;
   line-height: 1.2;       /* deixa mais compacto */
 }
-
 
 @media (max-width: 900px) {
   .footer #itens_footer {
@@ -514,9 +499,9 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 8px;
   }
 }
-/* FUNDO ESCURO DO POP-UP */
 
-.modalEsqueceuSenha{
+/* FUNDO ESCURO DO POP-UP */
+.modalEsqueceuSenha {
   transition: opacity 0.3s ease;
   display: none;
   position: fixed;
@@ -532,20 +517,17 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* CAIXA DO POP-UP */
-
-.modalContentEsqueceuSenha{
+.modalContentEsqueceuSenha {
   display: flex;
 }
 
 /* RESPONSIVO */
-
-@media (max-width:768px){
-
+@media (max-width:768px) {
   .popup_form{
     width: 90%;
   }
-
 }
+
 /* --- FUNDO ESCURO DO POP-UP (CONFIGURAÇÃO GERAL) --- */
 .modalEsqueceuSenha,
 .modalEsqueceuEmail {
@@ -589,7 +571,7 @@ input[type="number"]::-webkit-outer-spin-button {
   position: relative;
 }
 
-.popup_form h3{
+.popup_form h3 {
   color: black; 
   margin-bottom: 25px;
   font-size: 25px;
@@ -630,7 +612,7 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); 
 }
 
-input:focus{
+input:focus {
   border-color: #7956a6;               /* roxo de destaque */
   box-shadow: 0 0 8px rgba(121,86,166,0.3); /* glow suave */
   background-color: #fdfdfd;

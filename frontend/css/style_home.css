@@ -1,5 +1,5 @@
 :root {
- --primary: #ffcc33;
+  --primary: #ffcc33;
   --secondary: #6A1B9A;
   --accent: #7956a6;
   --bg: #f5f5f5; 
@@ -9,9 +9,9 @@
 }/* Configurações Gerais */
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -105,7 +105,9 @@ body {
   font-weight: 700;
 }
 
-.btn-accent:hover { transform: scale(1.05); }
+.btn-accent:hover {
+  transform: scale(1.05);
+}
 
 .actions {
   display: flex;
@@ -117,13 +119,12 @@ body {
   margin: 0; 
 }
 
-/* =========================================
-   MENU SANDUÍCHE (Invisível no Desktop)
-========================================= */
+/* =====================================
+  MENU SANDUÍCHE (Invisível no Desktop)
+===================================== */
 .nav-content {
   position: relative; /* Segura o menu dropdown no lugar certo */
 }
-
 
 .menu-sanduiche {
   display: none;
@@ -133,7 +134,6 @@ body {
   z-index: 1000; /* Garante que o clique funcione por cima de tudo */
 }
 
-
 .menu-sanduiche .linha {
   width: 30px;
   height: 4px;
@@ -142,16 +142,14 @@ body {
   transition: all 0.3s ease;
 }
 
-
-/* =========================================
-   REGRAS PARA CELULAR (Até 600px)
-   ========================================= */
+/* ===============================
+  REGRAS PARA CELULAR (Até 600px)
+=============================== */
 @media screen and (max-width: 600px) {
   /* Mostra o ícone do sanduíche */
   .menu-sanduiche {
     display: flex;
   }
-
 
   /* Transforma a barra de links em um menu que cai da tela */
   .nav .links {
@@ -167,7 +165,6 @@ body {
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1); /* Sombrinha para destacar */
     z-index: 999;
   }
-
 
   .nav .links a {
     margin: 15px 0;
@@ -197,59 +194,54 @@ body {
     color: #fff;
   }
 
-
   /* A classe 'ativo' que o JavaScript vai ligar e desligar */
   .nav .links.ativo {
     display: flex !important;
   }
 }
-
-
-
  
 .container-cabecalho {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 12px;
-    cursor: pointer;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 .container-cabecalho img {
-    width: 100%;
-    display: block;
-    background-color: white;
-    transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
+  width: 100%;
+  display: block;
+  background-color: white;
+  transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
 }
 
 .texto {
-    position: absolute;
-    top: 50%;
-    left: 5%;
-    transform: translateY(-50%);
-    width: 90%; /* Ajustado para mobile */
-    max-width: 450px;
-    color: white;
-    font-size: clamp(14px, 4vw, 18px); /* Fonte adaptável */
-    z-index: 2;
-    pointer-events: none;
-    transition: transform 0.5s ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  width: 90%; /* Ajustado para mobile */
+  max-width: 450px;
+  color: white;
+  font-size: clamp(14px, 4vw, 18px); /* Fonte adaptável */
+  z-index: 2;
+  pointer-events: none;
+  transition: transform 0.5s ease-in-out;
 }
 
 .container-cabecalho:hover img {
-    filter: blur(8px) brightness(0.6);
-    transform: scale(1.1);
+  filter: blur(8px) brightness(0.6);
+  transform: scale(1.1);
 }
 
 .container-cabecalho:hover .texto {
-    transform: translateY(-50%) scale(1.05);
+  transform: translateY(-50%) scale(1.05);
 }
 
 /**/
 #texto-animado {
     font-size: clamp(24px, 5vw, 36px);
     font-style: bold;
-
 }
 
 #moments {
@@ -263,7 +255,7 @@ body {
   border-radius: 12px 12px 0 0;
 }
 
-#moments h2{
+#moments h2 {
   color: var(--accent);
   margin-bottom: 40px;
 }
@@ -275,6 +267,7 @@ body {
   max-width: 100%; 
   box-sizing: border-box;
 }
+
 .slider {
   overflow-x: hidden;
   border-radius: 20px;
@@ -288,14 +281,13 @@ body {
   transition: all 0.5s ease;
 }
 
-
-
 .content img {
   width: 950px;
   height: 350px;
   object-fit: cover;
 }
-#moments button{
+
+#moments button {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -304,28 +296,31 @@ body {
   color: #000000;
   position: absolute;
   top: 50%;
-  
 }
-#moments button:first-of-type{
+
+#moments button:first-of-type {
   left: 0;
   transform: translate(-50%, -50%);
 }
-#moments button:last-of-type{
+
+#moments button:last-of-type {
   right: 0;
   transform: translate(50%, -50%);
 }
-#moments button:hover{
+
+#moments button:hover {
   background-color: var(--secondary);
 }
-.dot{
+
+.dot {
   display: inline-block;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background-color: #ccc;
-
 }
-.length-dots{
+
+.length-dots {
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -334,7 +329,7 @@ body {
   gap: 10px;
 }
 
-.dot.current{
+.dot.current {
   background-color: var(--secondary);
 }
 
@@ -419,97 +414,101 @@ body {
     height: 260px;
   }
 }
+
 /* Seção de Doação */
 .doacao-container {
-    background-color: var(--accent);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 60px 5%;
-    color: white;
-    font-family: sans-serif;
-    gap: 40px;
-    border-radius: 0 0 12px 12px;
+  background-color: var(--accent);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 60px 5%;
+  color: white;
+  font-family: sans-serif;
+  gap: 40px;
+  border-radius: 0 0 12px 12px;
 }
 
 .doacao-info {
-    flex: 1;
-    min-width: 300px;
+  flex: 1;
+  min-width: 300px;
 }
 
 .doacao-info h2 {
-    font-size: clamp(30px, 8vw, 50px);
-    margin-bottom: 20px;
+  font-size: clamp(30px, 8vw, 50px);
+  margin-bottom: 20px;
 }
 
 .doacao-info p {
-    margin-bottom: 30px;
-    font-size: 16px;
+  margin-bottom: 30px;
+  font-size: 16px;
 }
 
 .doacao-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .doacao-card button {
-    background-color: #ffcc33;
-    color: #6f42c1;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    width: 100%; /* Ocupa o espaço do grid */
-    max-width: 300px;
-    cursor: pointer;
-    transition: 0.5s;
+  background-color: #ffcc33;
+  color: #6f42c1;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  width: 100%; /* Ocupa o espaço do grid */
+  max-width: 300px;
+  cursor: pointer;
+  transition: 0.5s;
 }
 
 .doacao-card button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    filter: brightness(1.1);
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.1);
 }
 
 .doacao-card span {
-    padding-left: 30px;
+  padding-left: 30px;
 }
 
 .doacao-imagem {
-    flex: 1;
-    min-width: 300px;
-    display: flex;
-    justify-content: center;
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
 }
 
 .doacao-imagem img {
-    max-width: 60%;
-    height: auto;
-    border-radius: 5px;
-    border: 4px solid #ffcc33;
-    transition: 0.5s;
+  max-width: 60%;
+  height: auto;
+  border-radius: 5px;
+  border: 4px solid #ffcc33;
+  transition: 0.5s;
 }
 
-#txt_denuncias p{
+#txt_denuncias p {
   font-size: 20px;
   padding: 100px 200px;
   font-weight: bold;
   text-align: center;
 }
-#txt_denuncias img{
+
+#txt_denuncias img {
   padding-top: 50px;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-.area_btn{
+
+.area_btn {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 100px;
 }
-.btn-denunciar{
+
+.btn-denunciar {
   background: black;
   color:#ffffff;
   border: none;
@@ -569,19 +568,20 @@ body {
 
 /* Media Queries para ajustes finos */
 @media (max-width: 768px) {
-    .doacao-container {
-        text-align: center;
-        flex-direction: column;
-    }
+  .doacao-container {
+    text-align: center;
+    flex-direction: column;
+  }
 
-    .doacao-info h2, .doacao-info p {
-        padding-left: 0; 
-    }
+  .doacao-info h2, .doacao-info p {
+    padding-left: 0; 
+  }
 
-    .doacao-grid {
-        justify-items: center;
-    }
+  .doacao-grid {
+    justify-items: center;
+  }
 }
+
 /* Rodapé */
 .footer {
   width: 100%;
@@ -593,7 +593,6 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px 5% 15px;
-
   display: grid;
   grid-template-columns: repeat(4, auto);
   justify-content: space-between;
@@ -629,6 +628,7 @@ body {
   line-height: 1.4;
   max-width: 260px;
 }
+
 /* Títulos */
 .footer h3 {
   color: var(--primary);
@@ -648,10 +648,9 @@ body {
   text-decoration: underline;
 }
 
-/* ===================== */
-/*   REDES SOCIAIS       */
-/* ===================== */
-
+/* ============= 
+  REDES SOCIAIS       
+============= */
 #redes_footer {
   align-items: center;
   text-align: center;
@@ -682,7 +681,6 @@ body {
   height: 26px;
   display: block;
 }
-
 
 #copyright {
   background-color: var(--primary);

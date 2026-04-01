@@ -1,22 +1,28 @@
 :root {
---primary: #ffcc33;
+  --primary: #ffcc33;
   --secondary: #6A1B9A;
   --accent: #7956a6;
   --bg: #F5F5F5;
   --text: #333333;
   --radius: 12px;
 }
+
 html {
   overflow-y: scroll;
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Roboto', system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: var(--bg);
 }
-/*cabecalho*/
+
+/* Cabecalho */
 .nav {
   background: var(--primary);
   color: #18212f;
@@ -25,6 +31,7 @@ body {
   z-index: 20;
   border-radius: 0 0 12px 12px;
 }
+
 .nav-content {
   max-width: 1100px;
   margin: 0 auto;
@@ -33,15 +40,19 @@ body {
   align-items: center;
   gap: 20px;
   justify-content: space-between;
+  position: relative; /* Para o menu sanduíche */
 }
+
 .nav img {
   width: 60px;
   height: 60px;
 }
+
 .logo {
   border-radius: 12px; /* controla a curvatura */
   object-fit: cover; /* mantém proporção da imagem */
 }
+
 .brand {
   display: flex;
   align-items: center;
@@ -49,6 +60,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
+
 .links a {
   position: relative;
   color: #7956a6;
@@ -71,6 +83,7 @@ body {
 .links a:hover::after {
   width: 100%;
 }
+
 .links a.active {
   color: var(--accent);
 }
@@ -78,9 +91,11 @@ body {
 .links a.active::after {
   width: 100%;
 }
+
 .links a:hover {
   color: var(--accent);
 }
+
 .btn-accent {
   background: var(--accent);
   color: #fff;
@@ -90,7 +105,10 @@ body {
   cursor: pointer;
   font-weight: 700;
 }
-.btn-accent:hover { transform: scale(1.05); }
+
+.btn-accent:hover {
+  transform: scale(1.05);
+}
 
 .actions {
   display: flex;
@@ -105,11 +123,6 @@ body {
 /* =========================================
    MENU SANDUÍCHE (Invisível no Desktop)
 ========================================= */
-.nav-content {
-  position: relative; /* Segura o menu dropdown no lugar certo */
-}
-
-
 .menu-sanduiche {
   display: none;
   cursor: pointer;
@@ -117,7 +130,6 @@ body {
   gap: 5px;
   z-index: 1000; /* Garante que o clique funcione por cima de tudo */
 }
-
 
 .menu-sanduiche .linha {
   width: 30px;
@@ -127,7 +139,6 @@ body {
   transition: all 0.3s ease;
 }
 
-
 /* =========================================
    REGRAS PARA CELULAR (Até 600px)
    ========================================= */
@@ -136,7 +147,6 @@ body {
   .menu-sanduiche {
     display: flex;
   }
-
 
   /* Transforma a barra de links em um menu que cai da tela */
   .nav .links {
@@ -152,7 +162,6 @@ body {
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1); /* Sombrinha para destacar */
     z-index: 999;
   }
-
 
   .nav .links a {
     margin: 15px 0;
@@ -182,15 +191,11 @@ body {
     color: #fff;
   }
 
-
   /* A classe 'ativo' que o JavaScript vai ligar e desligar */
   .nav .links.ativo {
     display: flex !important;
   }
 }
-
-
-
 
 /* Rodapé */
 .footer {
@@ -204,7 +209,6 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px 5% 15px;
-
   display: grid;
   grid-template-columns: repeat(4, auto);
   justify-content: space-between;
@@ -240,6 +244,7 @@ body {
   line-height: 1.4;
   max-width: 260px;
 }
+
 /* Títulos */
 .footer h3 {
   color: var(--primary);
@@ -294,7 +299,6 @@ body {
   display: block;
 }
 
-
 #copyright {
   background-color: var(--primary);
   text-align: center;
@@ -308,7 +312,6 @@ body {
   font-weight: 500;
   line-height: 1.2;       /* deixa mais compacto */
 }
-
 
 @media (max-width: 900px) {
   .footer #itens_footer {
@@ -420,7 +423,7 @@ body {
 .filtro-container {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 15px;
   flex-wrap: wrap;
 }
 
@@ -526,7 +529,6 @@ body {
     padding: 40px 5%;
 }
 
-
 .card-pet {
     background: #fff;
     border: 1px solid #e0e0e0;
@@ -547,6 +549,7 @@ body {
     height: 250px;
     object-fit: cover;
 }
+
 .card-pet-content {
     padding: 20px;
 }
@@ -600,11 +603,4 @@ body {
 
 .campo-busca:focus {
     border-color: #8854d0; /* Roxo padrão do seu site */
-}
-
-.filtro-container {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-wrap: wrap; /* Garante que em telas menores os campos se ajustem */
 }
