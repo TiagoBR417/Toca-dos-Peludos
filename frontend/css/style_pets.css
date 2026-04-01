@@ -484,13 +484,6 @@ body {
   box-shadow: 0 8px 16px rgba(121, 86, 166, 0.25);
 }
 
-/* grid dos pets */
-.grid-pets {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  padding: 0;
-}
 
 /* responsivo */
 @media (max-width: 768px) {
@@ -518,93 +511,142 @@ body {
   }
 }
 
-/*cards */
+/* ======================
+   GRID DE PETS
+====================== */
 .grid-pets {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
     padding: 40px 5%;
 }
 
-
+/* ======================
+   CARD
+====================== */
 .card-pet {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
+    background: #ffffff;
+    border-radius: 18px;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     display: flex;
     flex-direction: column;
+    min-height: 460px;
 }
 
 .card-pet:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
-.card-pet img {
+/* ======================
+   IMAGEM
+====================== */
+.card-pet-image-wrapper {
+    position: relative;
     width: 100%;
-    height: 250px;
+    height: 230px;
+    overflow: hidden;
+    background: #f1f1f1;
+}
+
+.card-pet-image-wrapper img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
+
+/* ======================
+   BADGE
+====================== */
+.badge-status {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.status-disponivel {
+    background: #2e7d32;
+}
+
+.status-adotado {
+    background: #c62828;
+}
+
+.status-indisponivel {
+    background: #616161;
+}
+
+/* ======================
+   CONTEÚDO
+====================== */
 .card-pet-content {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .card-pet-content h3 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    color: #333;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.5rem;
-    margin-bottom: 8px;
 }
 
-.card-pet-content p {
-    color: #777;
-    margin: 4px 0;
+/* TAGS */
+.pet-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
 }
 
-.link-ver-mais {
-    display: block;
-    margin-top: 15px;
-    color: #111;
-    font-weight: 700;
-    text-decoration: none;
+.pet-meta span {
+    background: #f3e9ff;
+    color: #6A1B9A;
+    padding: 6px 12px;
+    border-radius: 999px;
     font-size: 0.9rem;
-}
-
-/*filtro*/
-.filtro-secao {
-    padding: 20px 5%;
-    background: #f9f9f9;
-}
-
-.btn-filtrar {
-    background: #8854d0; 
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 8px;
-    cursor: pointer;
     font-weight: 600;
 }
 
-/*barra de busca*/
-.campo-busca {
-    padding: 10px 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    outline: none;
-    width: 250px;
-    font-family: 'Roboto', sans-serif;
-    transition: border-color 0.3s;
+/* TEXTOS */
+.pet-raca,
+.pet-local,
+.pet-descricao {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 10px;
 }
 
-.campo-busca:focus {
-    border-color: #8854d0; /* Roxo padrão do seu site */
+.pet-descricao {
+    flex-grow: 1;
 }
 
-.filtro-container {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-wrap: wrap; /* Garante que em telas menores os campos se ajustem */
+/* BOTÃO */
+.btn-ver-mais {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--secondary);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    transition: 0.25s ease;
 }
+
+.btn-ver-mais:hover {
+    background: var(--accent);
+    transform: scale(1.03);
+}
+/*filtro*/
