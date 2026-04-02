@@ -275,15 +275,9 @@ input {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); 
 }
 
-<<<<<<< HEAD
 input:focus {
   border-color: #7956a6;               /* roxo de destaque */
   box-shadow: 0 0 8px rgba(121,86,166,0.3); /* glow suave */
-=======
-input:focus{
-  border-color: #7956a6;             
-  box-shadow: 0 0 8px rgba(121,86,166,0.3); 
->>>>>>> c220ed41920b5a47cb90ff69c811dd7296239796
   background-color: #fdfdfd;
 }
 
@@ -311,10 +305,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-<<<<<<< HEAD
-=======
 /* FUNDO ESCURO DO POP-UP */
-
 .modalEsqueceuSenha{
   transition: opacity 0.3s ease;
   display: none;
@@ -331,20 +322,17 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* CAIXA DO POP-UP */
-
 .modalContentEsqueceuSenha{
   display: flex;
 }
 
 /* RESPONSIVO */
-
-@media (max-width:768px){
-
+@media (max-width:768px) {
   .popup_form{
     width: 90%;
   }
-
 }
+
 /* --- FUNDO ESCURO DO POP-UP (CONFIGURAÇÃO GERAL) --- */
 .modalEsqueceuSenha,
 .modalEsqueceuEmail {
@@ -465,18 +453,6 @@ input::placeholder {
   touch-action: none;
 }
 
-
-:root {
-    --primary: #FFCC00;
-    --secondary: #6A1B9A;
-    --accent: #7956a6;
-    --bg: #F5F5F5;
-    --text: #333333;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; }
-
->>>>>>> c220ed41920b5a47cb90ff69c811dd7296239796
 /* Rodapé */
 .footer {
   width: 100%;
@@ -671,7 +647,6 @@ input::placeholder {
     padding: 8px;
   }
 }
-<<<<<<< HEAD
 
 /* FUNDO ESCURO DO POP-UP */
 .modalEsqueceuSenha {
@@ -820,5 +795,3 @@ input::placeholder {
   height: 100vh;
   touch-action: none;
 }
-=======
->>>>>>> c220ed41920b5a47cb90ff69c811dd7296239796
