@@ -23,7 +23,7 @@
         <a href="index.html">Início</a>
         <a href="sobre_nos.html">Sobre</a>
         <a href="pets.html">Pets</a>
-        <a href="eventos.html">Eventos</a>
+        <a href="eventos.html" class="active">Eventos</a>
         <a href="denuncias.html">Denúncias</a>
         <a href="contatos.html">Contatos</a>
       </nav>
@@ -49,8 +49,10 @@
     <div class="form-container">
     <h2>Formulário de Presença</h2>
       <form id="formEventos">  
-        <label for="label_text">Evento:</label>
-        <input type="hidden" id="eventoId"> 
+        <p class="evento-selecionado">
+          <strong>Evento:</strong> <span id="nomeEventoSelecionado">Carregando evento...</span>
+        </p>
+        <input type="hidden" id="eventoId">
         <label class="label_text">Nome *</label>
         <input id="nome" type="text" placeholder="Nome completo" required>
         <label class="label_text">Email *</label>
@@ -58,11 +60,12 @@
         <label class="label_text">Telefone *</label>
         <input id="telefone" type="tel" placeholder="Telefone" required>
         <label class="label_text">Quantidade de Pessoas *</label>
-        <input id="quantidadePessoas" type="number" min="0" value="0" placeholder="Digite a quantidade de pessoas que irão lhe acompanhar" required>
+        <input id="quantidadePessoas" type="number" min="1" value="1" placeholder="Digite a quantidade de pessoas que irão lhe acompanhar" required>
         <label class="label_text">Observações</label>
         <textarea id="observacoes" placeholder="Observações adicionais (opcional)"></textarea>
         <button class="btn-confirm" type="submit">Confirmar Presença</button>
       </form>
+      <p id="mensagemFormulario"></p>
     </div>
   </div>
 

@@ -30,50 +30,41 @@ async function carregarDetalhesPet(petId) {
       return;
     }
 
-    const nome = valorSeguro(pet.nome, "Pet sem nome");
-    const tipo = valorSeguro(pet.tipo, "tipo não informado");
-    const raca = valorSeguro(pet.raca, "Não informada");
-    const porte = valorSeguro(pet.porte, "Não informado");
-    const cor = valorSeguro(pet.cor, "Não informada");
-    const idade = valorSeguro(pet.idade, "Não informada");
-    const descricao = valorSeguro(
-      pet.descricao,
-      "Esse pet está esperando por um novo lar cheio de amor."
-    );
+    const imagem = pet.imagem_url && pet.imagem_url.trim() !== ""
+      ? pet.imagem_url
+      : "https://placehold.co/800x500?text=Sem+Foto";
 
     const local = montarLocalizacao(pet.bairro, pet.cidade);
-
-    const imagem =
-      pet.imagem_url && pet.imagem_url.trim() !== ""
-        ? pet.imagem_url
-        : "https://placehold.co/800x500?text=Sem+Foto";
 
     container.innerHTML = `
       <img 
         src="${imagem}" 
-        alt="${nome}" 
+        alt="${pet.nome}" 
         class="detalhes-pet-imagem"
         onerror="this.src='https://placehold.co/800x500?text=Sem+Foto'"
       >
 
       <div class="detalhes-pet-conteudo">
-        <h1>${nome}</h1>
+        <h1>${valorSeguro(pet.nome, "Pet sem nome")}</h1>
 
         <div class="detalhes-tags">
-          <span>${tipo}</span>
-          <span>${porte}</span>
-          <span>${pet.status || "disponível"}</span>
+          <span>${valorSeguro(pet.tipo, "tipo não informado")}</span>
+          <span>${valorSeguro(pet.porte, "porte não informado")}</span>
+          <span>${valorSeguro(pet.status, "disponivel")}</span>
         </div>
 
         <div class="detalhes-info">
-          <p><strong>Raça:</strong> ${raca}</p>
-          <p><strong>Cor:</strong> ${cor}</p>
-          <p><strong>Idade:</strong> ${idade}</p>
+          <p><strong>Raça:</strong> ${valorSeguro(pet.raca, "Não informada")}</p>
+          <p><strong>Cor:</strong> ${valorSeguro(pet.cor, "Não informada")}</p>
+          <p><strong>Idade:</strong> ${valorSeguro(pet.idade, "Não informada")}</p>
           <p><strong>Local:</strong> ${local}</p>
         </div>
 
         <p class="detalhes-descricao">
-          <strong>Descrição:</strong> ${descricao}
+          <strong>Descrição:</strong> ${valorSeguro(
+            pet.descricao,
+            "Esse pet está esperando por um novo lar cheio de amor."
+          )}
         </p>
       </div>
     `;
@@ -138,7 +129,6 @@ function configurarFormularioAgendamento(petId) {
 
 function valorSeguro(valor, fallback) {
   if (valor === null || valor === undefined) return fallback;
-
   const texto = String(valor).trim();
   return texto !== "" ? texto : fallback;
 }
@@ -147,17 +137,9 @@ function montarLocalizacao(bairro, cidade) {
   const bairroSeguro = bairro ? String(bairro).trim() : "";
   const cidadeSegura = cidade ? String(cidade).trim() : "";
 
-  if (bairroSeguro && cidadeSegura) {
-    return `${bairroSeguro}, ${cidadeSegura}`;
-  }
-
-  if (bairroSeguro) {
-    return bairroSeguro;
-  }
-
-  if (cidadeSegura) {
-    return cidadeSegura;
-  }
+  if (bairroSeguro && cidadeSegura) return `${bairroSeguro}, ${cidadeSegura}`;
+  if (bairroSeguro) return bairroSeguro;
+  if (cidadeSegura) return cidadeSegura;
 
   return "Local não informado";
 }

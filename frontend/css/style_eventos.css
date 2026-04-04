@@ -409,6 +409,145 @@ body {
   background: #5e3c85;
 }
 
+/* eventos gerados pelo js */
+
+.container-eventos-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 5% 60px;
+}
+
+.secao-eventos h2 {
+  margin: 0 0 28px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.2rem;
+  color: #2f2f2f;
+}
+
+.lista-eventos {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+}
+
+.evento-card {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(280px, 420px);
+  align-items: stretch;
+  width: 100%;
+  max-width: 950px;
+  background: #fff;
+  border: 1px solid #d7d7d7;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.evento-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+}
+
+.evento-card-info {
+  padding: 26px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.evento-card-info h3 {
+  margin: 0 0 18px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: var(--secondary);
+}
+
+.evento-card-info p {
+  margin: 0 0 10px;
+  color: #333;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.evento-descricao {
+  margin-top: 10px;
+  margin-bottom: 22px;
+  color: #4a4a4a;
+}
+
+.btn-evento {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: auto;
+  background: var(--primary);
+  color: #222;
+  text-decoration: none;
+  width: 100%;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-evento:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(255, 204, 51, 0.30);
+}
+
+.evento-card-imagem {
+  width: 100%;
+  min-height: 280px;
+  background: #f2f2f2;
+}
+
+.evento-card-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+  .evento-card {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .evento-card-imagem {
+    order: -1;
+    min-height: 240px;
+  }
+
+  .evento-card-info h3 {
+    font-size: 1.6rem;
+  }
+}
+
+/* CELULAR */
+@media (max-width: 600px) {
+  .container-eventos-page {
+    padding: 28px 5% 40px;
+  }
+
+  .secao-eventos h2 {
+    font-size: 1.8rem;
+  }
+
+  .evento-card-info {
+    padding: 20px 18px;
+  }
+
+  .btn-evento {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
 /* Rodapé */
 .footer {
   width: 100%;

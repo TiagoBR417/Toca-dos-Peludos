@@ -169,16 +169,16 @@
 }
 
 
+
 .container-detalhes {
-  max-width: 1200px;
+  max-width: 1250px;
   margin: 0 auto;
-  padding: 40px 5%;
+  padding: 50px 5%;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 30px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.85fr);
+  gap: 36px;
   align-items: start;
 }
-
 .detalhes-pet-card,
 .agendamento-card {
   background: #fff;
@@ -193,12 +193,11 @@
 
 .detalhes-pet-imagem {
   width: 100%;
-  height: 360px;
+  height: 420px;
   object-fit: cover;
   display: block;
-  background: #f0f0f0;
+  background: #f1f1f1;
 }
-
 .detalhes-pet-conteudo {
   padding: 24px;
 }
@@ -240,7 +239,13 @@
 }
 
 .agendamento-card {
-  padding: 28px;
+  padding: 30px;
+  position: sticky;
+  top: 100px;
+}
+
+.agendamento-card {
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .agendamento-card h2 {
@@ -267,6 +272,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+}
+
+.grupo-unico {
+  grid-template-columns: 1fr;
 }
 
 .form-agendamento input,
@@ -330,6 +339,10 @@
     grid-template-columns: 1fr;
   }
 
+  .agendamento-card {
+    position: static;
+  }
+
   .grupo-campos {
     grid-template-columns: 1fr;
   }
@@ -342,6 +355,8 @@
     font-size: 1.8rem;
   }
 }
+
+
 
 
 /* Rodapé */

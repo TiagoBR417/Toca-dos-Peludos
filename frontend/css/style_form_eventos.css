@@ -260,7 +260,27 @@ form button {
 .form-container button:hover {
   transform: scale(1.03);
 }
-        
+   
+#mensagemFormulario {
+  margin-top: 14px;
+  font-weight: 600;
+  min-height: 24px;
+}
+
+#mensagemFormulario.sucesso {
+  color: #2e7d32;
+}
+
+#mensagemFormulario.erro {
+  color: #c62828;
+}
+
+.evento-selecionado {
+  margin-bottom: 16px;
+  font-size: 1rem;
+  color: #444;
+}
+
 /* Rodapé */
 .footer {
   width: 100%;

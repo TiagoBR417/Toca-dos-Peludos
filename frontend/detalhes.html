@@ -25,9 +25,9 @@
         <span>Toca dos Peludos</span>
       </div>
       <nav class="links">
-        <a href="index.html" class="active">Início</a>
+        <a href="index.html" >Início</a>
         <a href="sobre_nos.html">Sobre</a>
-        <a href="pets.html">Pets</a>
+        <a href="pets.html" class="active">Pets</a>
         <a href="eventos.html">Eventos</a>
         <a href="denuncias.html">Denúncias</a>
         <a href="contatos.html">Contatos</a>
@@ -52,39 +52,38 @@
     </div>
   </header>
 
-   <main class="container-detalhes">
-      <section id="detalhesPet" class="detalhes-pet-card"></section>
+  <main class="container-detalhes">
+    <section id="detalhesPet" class="detalhes-pet-card"></section>
 
-      <section class="agendamento-card">
-        <h2>Agendar visita</h2>
-        <p class="agendamento-subtitulo">
-          Preencha os dados abaixo para solicitar uma visita e conhecer esse pet de perto.
-        </p>
+    <aside class="agendamento-card">
+      <h2>Agendar visita</h2>
+      <p class="agendamento-subtitulo">
+        Preencha os dados abaixo para solicitar uma visita e conhecer esse pet.
+      </p>
 
-        <form id="formAgendamento" class="form-agendamento">
-          <div class="grupo-campos">
-            <input type="text" id="nomeInteressado" placeholder="Seu nome" required>
-            <input type="email" id="emailInteressado" placeholder="Seu e-mail" required>
-          </div>
+      <form id="formAgendamento" class="form-agendamento">
+        <div class="grupo-campos">
+          <input type="text" id="nomeInteressado" placeholder="Seu nome" required>
+          <input type="email" id="emailInteressado" placeholder="Seu e-mail" required>
+        </div>
 
-          <div class="grupo-campos">
-            <input type="tel" id="telefoneInteressado" placeholder="Seu telefone" required>
-            <input type="date" id="dataVisita" required>
-          </div>
+        <div class="grupo-campos">
+          <input type="tel" id="telefoneInteressado" placeholder="Seu telefone" required>
+          <input type="date" id="dataVisita" required>
+        </div>
 
-          <div class="grupo-campos">
-            <input type="time" id="horarioVisita" required>
-          </div>
+        <div class="grupo-campos grupo-unico">
+          <input type="time" id="horarioVisita" required>
+        </div>
 
-          <textarea id="observacoesAgendamento" placeholder="Observações (opcional)"></textarea>
+        <textarea id="observacoesAgendamento" placeholder="Observações (opcional)"></textarea>
 
-          <button type="submit" class="btn-agendar">Agendar visita</button>
-        </form>
+        <button type="submit" class="btn-agendar">Agendar visita</button>
+      </form>
 
-        <p id="mensagemAgendamento" class="mensagem-agendamento"></p>
-      </section>
-    </main>
-
+      <p id="mensagemAgendamento" class="mensagem-agendamento"></p>
+    </aside>
+  </main>
 
   <footer class="footer">
   <div id="itens_footer">

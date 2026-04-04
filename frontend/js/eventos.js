@@ -121,19 +121,37 @@ async function carregarEventos() {
     }
 
     eventos.forEach((evento) => {
-      const card = document.createElement("div");
+      const card = document.createElement("article");
       card.className = "evento-card";
 
       const dataFormatada = evento.data_evento
         ? new Date(evento.data_evento).toLocaleDateString("pt-BR")
         : "Data não informada";
 
+      const imagem = evento.imagem_url && evento.imagem_url.trim() !== ""
+        ? evento.imagem_url
+        : "https://placehold.co/420x260?text=Evento";
+
       card.innerHTML = `
-        <h3>${evento.titulo}</h3>
-        <p><strong>Data:</strong> ${dataFormatada}</p>
-        <p><strong>Local:</strong> ${evento.local}</p>
-        <p>${evento.descricao || ""}</p>
-        <a href="form_eventos.html?evento_id=${evento.id}" class="btn-accent">Participar</a>
+        <div class="evento-card-info">
+          <h3>${evento.titulo}</h3>
+
+          <p><strong>Data:</strong> ${dataFormatada}</p>
+          <p><strong>Local:</strong> ${evento.local}</p>
+          <p class="evento-descricao">${evento.descricao || "Evento sem descrição."}</p>
+
+          <a href="form_eventos.html?evento_id=${evento.id}" class="btn-evento">
+            Confirme sua presença
+          </a>
+        </div>
+
+        <div class="evento-card-imagem">
+          <img 
+            src="${imagem}" 
+            alt="${evento.titulo}"
+            onerror="this.src='https://placehold.co/420x260?text=Evento'"
+          >
+        </div>
       `;
 
       container.appendChild(card);
