@@ -110,3 +110,41 @@ function irCodigoSms(){
 
   travarScroll();
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("formLogin");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("emailLogin").value.trim();
+    const senha = document.getElementById("senhaLogin").value.trim();
+
+    const payload = { email, senha };
+
+    try {
+      const response = await fetch(API_LOGIN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const resultado = await response.json();
+
+      if (!resultado.success) {
+        alert(resultado.message);
+        return;
+      }
+
+      localStorage.setItem("usuarioLogado", JSON.stringify(resultado.data));
+      alert("Login realizado com sucesso!");
+      window.location.href = "index.html";
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      alert("Erro ao fazer login.");
+    }
+  });
+});

@@ -7,6 +7,9 @@ USE toca_dos_peludos;
 CREATE TABLE IF NOT EXISTS usuarios (
     id BIGINT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(150) NOT NULL,
+    sobrenome VARCHAR(150) NULL AFTER nome,
+    data_nascimento DATE NULL AFTER sobrenome,
+    genero VARCHAR(20) NULL AFTER telefone;
     email VARCHAR(150) NOT NULL,
     senha_hash VARCHAR(255) NOT NULL,
     telefone VARCHAR(20),
@@ -74,6 +77,7 @@ CREATE TABLE IF NOT EXISTS inscricoes_evento (
 
 CREATE TABLE IF NOT EXISTS denuncias (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    tipo varchar(50) NOT NULL,
     descricao TEXT NOT NULL,
     localizacao VARCHAR(255) NOT NULL,
     contato VARCHAR(150),
@@ -197,15 +201,17 @@ VALUES
 -- =========================================
 -- DENÚNCIAS
 -- =========================================
-INSERT INTO denuncias (descricao, localizacao, contato, anonimo, status)
+INSERT INTO denuncias (descricao, tipo, localizacao, contato, anonimo, status)
 VALUES
 ('Animal abandonado em situação de risco.',
+ 'abandono',
  'Rua das Flores, 123 - Guarulhos',
  '11944444444',
  0,
  'pendente'),
 
 ('Cachorro preso sem comida.',
+ 'maus-tratos',
  'Av. Brasil, 456 - Guarulhos',
  NULL,
  1,
