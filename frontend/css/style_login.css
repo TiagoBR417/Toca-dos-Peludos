@@ -244,7 +244,8 @@ body {
   z-index: 2;
 }
 
-.btn_login {
+/* BOTÕES */
+.btn-login {
   width: 100%;
   padding: 12px 0;
   background: linear-gradient(90deg, #6A1B9A, #7956a6);
@@ -258,7 +259,7 @@ body {
   margin-top: 25px;
 }
 
-.btn_login:hover {
+.btn-login:hover {
   background: linear-gradient(90deg, #7956a6, var(--secondary));
   transform: translateY(-2px);
 }
@@ -323,7 +324,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* CAIXA DO POP-UP */
-.modalContentEsqueceuSenha{
+.modalContentEsqueceuSenha {
   display: flex;
 }
 
@@ -384,26 +385,6 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: 0px;
 }
 
-/* BOTÕES */
-.btn-login {
-  width: 100%;
-  padding: 12px 0;
-  background: linear-gradient(90deg, var(--secondary), #7956a6);
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 25px;
-}
-
-.btn_login:hover {
-  background: linear-gradient(90deg, #7956a6, #6A1B9A);
-  transform: translateY(-2px);
-}
-
 /* INPUTS */
 .popup_form input {
   width: 100%;
@@ -422,11 +403,6 @@ input:focus{
   border-color: #7956a6;               
   box-shadow: 0 0 8px rgba(121,86,166,0.3); 
   background-color: #fdfdfd;
-}
-
-input::placeholder {
-  color: #aaa;
-  font-style: italic;
 }
 
 /* BOTÃO FECHAR (O X) */
@@ -751,26 +727,6 @@ input::placeholder {
   font-weight: 0px;
 }
 
-/* BOTÕES */
-.btn-login {
-  width: 100%;
-  padding: 12px 0;
-  background: linear-gradient(90deg, var(--secondary), #7956a6);
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 25px;
-}
-
-.btn_login:hover {
-  background: linear-gradient(90deg, #7956a6, #6A1B9A);
-  transform: translateY(-2px);
-}
-
 /* INPUTS */
 .popup_form input {
   width: 100%;
@@ -783,17 +739,6 @@ input::placeholder {
   outline: none;
   background-color: #fafafa;             
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); 
-}
-
-input:focus {
-  border-color: #7956a6;               /* roxo de destaque */
-  box-shadow: 0 0 8px rgba(121,86,166,0.3); /* glow suave */
-  background-color: #fdfdfd;
-}
-
-input::placeholder {
-  color: #aaa;
-  font-style: italic;
 }
 
 /* BOTÃO FECHAR (O X) */
