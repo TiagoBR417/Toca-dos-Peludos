@@ -1,19 +1,18 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const menuSanduiche = document.querySelector('.menu-sanduiche');
-    const navLinks = document.querySelector('.links');
-  
-  
-    if (menuSanduiche && navLinks) {
-      menuSanduiche.addEventListener('click', () => {
-        navLinks.classList.toggle('ativo');
-      });
-    } else {
-      console.error("Erro: Não encontrei o menu ou os links no HTML.");
-    }
-  });
+document.addEventListener("DOMContentLoaded", function () {
+  const menuSanduiche = document.querySelector(".menu-sanduiche");
+  const navLinks = document.querySelector(".links");
 
-    const form = document.getElementById("form-cadastro");
-  if (!form) return;
+  if (menuSanduiche && navLinks) {
+    menuSanduiche.addEventListener("click", () => {
+      navLinks.classList.toggle("ativo");
+    });
+  }
+
+  const form = document.getElementById("form-cadastro");
+  if (!form) {
+    console.error("Formulário de cadastro não encontrado.");
+    return;
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -65,6 +64,4 @@ document.addEventListener("DOMContentLoaded", function() {
       alert("Erro ao cadastrar.");
     }
   });
-
-  
-  
+});

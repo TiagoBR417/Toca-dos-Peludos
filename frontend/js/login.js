@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function() {
   const menuSanduiche = document.querySelector('.menu-sanduiche');
   const navLinks = document.querySelector('.links');
