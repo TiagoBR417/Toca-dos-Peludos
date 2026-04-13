@@ -244,7 +244,7 @@ body {
   transform: translateY(-50%) scale(1.05);
 }
 
-/**/
+/*Texto Animado*/
 #texto-animado {
     font-size: clamp(24px, 5vw, 36px);
     font-style: bold;
@@ -419,6 +419,21 @@ body {
     max-width: 320px;
     height: 260px;
   }
+  .doacao-container {
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .doacao-info h2, .doacao-info p {
+    padding-left: 0; 
+  }
+
+  .doacao-grid {
+    justify-items: center;
+  }
+  .popup_form_pix {
+    width: 90vw;
+  }
 }
 
 /* Seção de Doação */
@@ -570,7 +585,7 @@ body {
     border-radius: 12px;
 }
 
-.logo-ong img{
+.logo-ong img {
     width: 120px;
     height: 120px;
     transition: 0.5s;
@@ -580,22 +595,6 @@ body {
 .logo-ong:hover {
     transform: scale(1.1);
     box-shadow: 0 10px 30px #6f42c166;
-}
-
-/* Media Queries para ajustes finos */
-@media (max-width: 768px) {
-  .doacao-container {
-    text-align: center;
-    flex-direction: column;
-  }
-
-  .doacao-info h2, .doacao-info p {
-    padding-left: 0; 
-  }
-
-  .doacao-grid {
-    justify-items: center;
-  }
 }
 
 /* Rodapé */
@@ -825,8 +824,8 @@ body {
   position: relative;
 }
 
-.popup_form_pix h3{
-  color: black; 
+.popup_form_pix h3 {
+  color: #000; 
   margin-bottom: 25px;
   font-size: 25px;
   font-weight: 0px;
@@ -866,7 +865,7 @@ body {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); 
 }
 
-input:focus{
+input:focus {
   border-color: #7956a6;
   box-shadow: 0 0 8px rgba(121,86,166,0.3); 
   background-color: #fdfdfd;
@@ -889,59 +888,9 @@ input::placeholder {
   z-index: 999;
 }
 
-/* RESPONSIVO */
-@media (max-width: 768px) {
-  .popup_form_pix {
-    width: 90vw;
-  }
-}
-
-.popup_form_pix h3{
-  color: #333333;
-}
-
-/* ESTILOS DO FORMULÁRIO DO POP-UP */
-.popup_form_pix {
-  background: #ffffff; 
-  padding: 40px 30px;
-  width: 380px;
-  border-radius: 16px;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-  text-align: center;
-  z-index: 2;
-  margin-top: 108px;
-  position: relative;
-}
-
-.popup_form_pix h3{
-  color: #333; 
-  margin-bottom: 25px;
-  font-size: 25px;
-  font-weight: 0px;
-}
-
 .btn-login:hover {
   background: linear-gradient(90deg, #7956a6, #6A1B9A);
   transform: translateY(-2px);
-}
-
-/* BOTÃO FECHAR (O X) */
-.fecharModalPix {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #333;
-  z-index: 999;
-}
-
-/* RESPONSIVO */
-@media (max-width: 768px) {
-  .popup_form_pix {
-    width: 90vw;
-  }
 }
 
 .no-scroll {

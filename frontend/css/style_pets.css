@@ -488,7 +488,6 @@ body {
   box-shadow: 0 8px 16px rgba(121, 86, 166, 0.25);
 }
 
-
 /* responsivo */
 @media (max-width: 768px) {
   .container-principal {
@@ -601,11 +600,7 @@ body {
     margin-bottom: 10px;
 }
 
-.campo-busca:focus {
-    border-color: #8854d0; /* Roxo padrão do seu site */
-}
-
-.btn-ver-mais{
+.btn-ver-mais {
     margin-top: auto;
     background: var(--secondary);
     color: #fff;
