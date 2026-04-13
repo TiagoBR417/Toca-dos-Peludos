@@ -9,13 +9,23 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const form = document.getElementById("form-cadastro");
+  const mensagem = document.getElementById("mensagemCadastro");
+
   if (!form) {
     console.error("Formulário de cadastro não encontrado.");
     return;
   }
 
+  if (!mensagem) {
+    console.error("Elemento de mensagem do cadastro não encontrado.");
+    return;
+  }
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    mensagem.textContent = "";
+    mensagem.className = "mensagem-feedback";
 
     const nome = document.getElementById("nomeCadastro").value.trim();
     const sobrenome = document.getElementById("sobrenomeCadastro").value.trim();
@@ -27,7 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmaSenha = document.getElementById("confirmaSenhaCadastro").value.trim();
 
     if (senha !== confirmaSenha) {
-      alert("As senhas não coincidem.");
+      mensagem.textContent = "As senhas não coincidem.";
+      mensagem.classList.add("erro");
       return;
     }
 
@@ -53,15 +64,22 @@ document.addEventListener("DOMContentLoaded", function () {
       const resultado = await response.json();
 
       if (!resultado.success) {
-        alert(resultado.message);
+        mensagem.textContent = resultado.message;
+        mensagem.classList.add("erro");
         return;
       }
 
-      alert("Cadastro realizado com sucesso!");
-      window.location.href = "login.html";
+      mensagem.textContent = "Cadastro realizado com sucesso! Redirecionando para o login...";
+      mensagem.classList.add("sucesso");
+
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1800);
+
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
-      alert("Erro ao cadastrar.");
+      mensagem.textContent = "Erro ao cadastrar.";
+      mensagem.classList.add("erro");
     }
   });
 });

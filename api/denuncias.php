@@ -43,7 +43,6 @@ if ($tipo === '' || $descricao === '' || $localizacao === '') {
     ], 400);
 }
 
-// 🔥 Regra importante (isso que te diferencia de amador)
 if ($anonimo === 1) {
     $contato = null;
 } else {
