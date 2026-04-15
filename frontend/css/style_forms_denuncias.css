@@ -36,6 +36,7 @@ body {
   align-items: center;
   gap: 20px;
   justify-content: space-between;
+  position: relative;
 }
 
 .nav img {
@@ -116,13 +117,7 @@ body {
   margin: 0; 
 }
 
-/* =====================================
-  MENU SANDUÍCHE (Invisível no Desktop)
-===================================== */
-.nav-content {
-  position: relative; 
-}
-
+/* MENU SANDUÍCHE (Invisível no Desktop) */
 .menu-sanduiche {
   display: none;
   cursor: pointer;
@@ -139,16 +134,13 @@ body {
   transition: all 0.3s ease;
 }
 
-/* ===============================
-  REGRAS PARA CELULAR (Até 600px)
-=============================== */
+/* REGRAS PARA CELULAR (Até 600px) */
 @media screen and (max-width: 600px) {
-  
   .menu-sanduiche {
     display: flex;
   }
 
-  /* Transforma a barra de links em um menu que cai da tela */
+/* Transforma a barra de links em um menu que cai da tela */
   .nav .links {
     display: none; 
     position: absolute;
@@ -191,7 +183,7 @@ body {
     color: #fff;
   }
 
-  /* A classe 'ativo' que o JavaScript vai ligar e desligar */
+/* A classe 'ativo' que o JavaScript vai ligar e desligar */
   .nav .links.ativo {
     display: flex !important;
   }
@@ -367,9 +359,7 @@ form button {
   text-decoration: underline;
 }
 
-/* ============= 
-  REDES SOCIAIS       
-============= */
+/* REDES SOCIAIS */
 #redes_footer {
   align-items: center;
   text-align: center;
@@ -415,6 +405,7 @@ form button {
   line-height: 1.2;       
 }
 
+/* TABLET */
 @media (max-width: 900px) {
   .footer #itens_footer {
     grid-template-columns: 1fr 1fr;
@@ -444,6 +435,7 @@ form button {
   }
 }
 
+/* CELULAR */
 @media (max-width: 600px) {
   .footer #itens_footer {
     grid-template-columns: 1fr;

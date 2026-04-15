@@ -6,7 +6,7 @@
   --card-bg: #f9f9f9; 
   --text: #333333;
   --radius: 12px;
-}/* Configurações Gerais */
+} /* Configurações Gerais */
 
 * {
   box-sizing: border-box;
@@ -40,6 +40,7 @@ body {
   align-items: center;
   gap: 20px;
   justify-content: space-between;
+  position: relative;
 }
 
 .nav img {
@@ -120,13 +121,7 @@ body {
   margin: 0; 
 }
 
-/* =====================================
-  MENU SANDUÍCHE (Invisível no Desktop)
-===================================== */
-.nav-content {
-  position: relative; /* Segura o menu dropdown no lugar certo */
-}
-
+/* MENU SANDUÍCHE (Invisível no Desktop) */
 .menu-sanduiche {
   display: none;
   cursor: pointer;
@@ -143,11 +138,8 @@ body {
   transition: all 0.3s ease;
 }
 
-/* ===============================
-  REGRAS PARA CELULAR (Até 600px)
-=============================== */
+/* REGRAS PARA CELULAR (Até 600px) */
 @media screen and (max-width: 600px) {
-
   .nav {
     position: sticky;
     top: 0;
@@ -162,7 +154,7 @@ body {
   .nav .links {
     display: none;
     position: absolute;
-    top: 70px; /* altura real do header */
+    top: 70px; /* Altura real do header */
     left: 0;
     width: 100%;
     background-color: #7956a6;
@@ -244,7 +236,7 @@ body {
   transform: translateY(-50%) scale(1.05);
 }
 
-/*Texto Animado*/
+/* Texto Animado */
 #texto-animado {
     font-size: clamp(24px, 5vw, 36px);
     font-style: bold;
@@ -256,7 +248,7 @@ body {
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; /* centraliza horizontalmente */
+  align-items: center; /* Centraliza horizontalmente */
   justify-content: center;
   border-radius: 12px 12px 0 0;
 }
@@ -339,7 +331,7 @@ body {
   background-color: var(--secondary);
 }
 
-/*inicio cards primarios*/
+/* Inicio dos cards primários */
 .cards {
   display: flex;
   justify-content: center;
@@ -348,7 +340,7 @@ body {
   padding: 40px 5%;
 }
 
-/* card inteiro clicável */
+/* Card inteiro clicável */
 .card {
   position: relative;
   width: 280px;
@@ -360,7 +352,7 @@ body {
   transition: 0.4s ease;
 }
 
-/* imagem */
+/* Imagem */
 .card img {
   width: 100%;
   height: 100%;
@@ -368,7 +360,7 @@ body {
   transition: 0.5s ease;
 }
 
-/* overlay escuro elegante */
+/* Overlay escuro elegante */
 .card::before {
   content: "";
   position: absolute;
@@ -382,7 +374,7 @@ body {
   z-index: 1;
 }
 
-/* texto dentro do card */
+/* Texto dentro do card */
 .card-overlay {
   position: absolute;
   bottom: 20px;
@@ -402,7 +394,7 @@ body {
   opacity: 0.85;
 }
 
-/* hover refinado */
+/* Hover refinado */
 .card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
@@ -412,7 +404,7 @@ body {
   transform: scale(1.08);
 }
 
-/* mobile */
+/* Mobile */
 @media (max-width: 768px) {
   .card {
     width: 100%;
@@ -663,9 +655,7 @@ body {
   text-decoration: underline;
 }
 
-/* ============= 
-  REDES SOCIAIS       
-============= */
+/* REDES SOCIAIS */
 #redes_footer {
   align-items: center;
   text-align: center;
@@ -704,13 +694,14 @@ body {
 }
 
 #copyright p {
-  margin: 0;              /* REMOVE o espaço invisível */
+  margin: 0;        /* REMOVE o espaço invisível */
   font-size: 13px;
   color: #222;
   font-weight: 500;
-  line-height: 1.2;       /* deixa mais compacto */
+  line-height: 1.2; /* deixa mais compacto */
 }
 
+/* TABLET */
 @media (max-width: 900px) {
   .footer #itens_footer {
     grid-template-columns: 1fr 1fr;
@@ -740,6 +731,7 @@ body {
   }
 }
 
+/* CELULAR */
 @media (max-width: 600px) {
   .footer #itens_footer {
     grid-template-columns: 1fr;

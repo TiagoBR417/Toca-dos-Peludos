@@ -1,19 +1,28 @@
 :root {
-   --primary: #ffcc33;
-    --secondary: #6A1B9A;
-    --accent: #7956a6;
-    --bg: #F5F5F5;
-    --text: #333333;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: 'Roboto', system-ui, -apple-system, sans-serif;
-    color: var(--text);
-    background: var(--bg);
-  }
-  /*cabecalho*/
+  --primary: #ffcc33;
+  --secondary: #6A1B9A;
+  --accent: #7956a6;
+  --bg: #F5F5F5;
+  --text: #333333;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box; 
+}
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* Cabeçalho */
 .nav {
   background: var(--primary);
   color: #18212f;
@@ -22,6 +31,7 @@
   z-index: 20;
   border-radius: 0 0 12px 12px;
 }
+
 .nav-content {
   max-width: 1100px;
   margin: 0 auto;
@@ -30,15 +40,19 @@
   align-items: center;
   gap: 20px;
   justify-content: space-between;
+  position: relative;
 }
+
 .nav img {
   width: 60px;
   height: 60px;
 }
+
 .logo {
   border-radius: 12px; 
   object-fit: cover; 
 }
+
 .brand {
   display: flex;
   align-items: center;
@@ -46,6 +60,7 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
+
 .links a {
   position: relative;
   color: #7956a6;
@@ -53,6 +68,7 @@
   margin: 0 8px;
   font-weight: 600;
 }
+
 .links a::after {
   content: "";
   position: absolute;
@@ -63,12 +79,15 @@
   background-color: #7956a6;
   transition: width 0.6s ease;
 }
+
 .links a:hover::after {
   width: 100%;
 }
+
 .links a:hover {
   color: var(--accent);
 }
+
 .btn-accent {
   background: var(--accent);
   color: #fff;
@@ -79,23 +98,22 @@
   font-weight: 700;
   transition: 0.3s;
 }
-.btn-accent:hover { transform: scale(1.05); }
+
+.btn-accent:hover { 
+  transform: scale(1.05); 
+}
+
 .actions {
   display: flex;
   align-items: center;
   gap: 8px;
 }
+
 .actions button {
   margin: 0;
 }
 
-/*Menu Sanduíche*/
-
-.nav-content {
-  position: relative; 
-}
-
-
+/* Menu Sanduíche */
 .menu-sanduiche {
   display: none;
   cursor: pointer;
@@ -103,7 +121,6 @@
   gap: 5px;
   z-index: 1000; 
 }
-
 
 .menu-sanduiche .linha {
   width: 30px;
@@ -113,8 +130,7 @@
   transition: all 0.3s ease;
 }
 
-@media screen and (max-width: 600px) {
-  
+@media screen and (max-width: 600px) {  
   .menu-sanduiche {
     display: flex;
   }
@@ -132,7 +148,6 @@
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1); 
     z-index: 999;
   }
-
 
   .nav .links a {
     margin: 15px 0;
@@ -161,16 +176,13 @@
   .links a:hover {
     color: #fff;
   }
-
-
   
   .nav .links.ativo {
     display: flex !important;
   }
 }
 
-
-
+/* Container Principal */
 .container-detalhes {
   max-width: 1250px;
   margin: 0 auto;
@@ -180,6 +192,7 @@
   gap: 36px;
   align-items: start;
 }
+
 .detalhes-pet-card,
 .agendamento-card {
   background: #fff;
@@ -188,97 +201,7 @@
   overflow: hidden;
 }
 
-.detalhes-pet-card {
-  padding-bottom: 24px;
-}
-
-.detalhes-pet-imagem {
-  width: 100%;
-  height: 420px;
-  object-fit: cover;
-  display: block;
-  background: #f1f1f1;
-}
-.detalhes-pet-conteudo {
-  padding: 24px;
-}
-
-.detalhes-pet-conteudo h1 {
-  margin: 0 0 18px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2.2rem;
-  color: #2f2f2f;
-}
-
-.detalhes-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.detalhes-tags span {
-  background: #f3e9ff;
-  color: var(--secondary);
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.detalhes-info {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.detalhes-info p,
-.detalhes-descricao {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-:root {
-  --primary: #ffcc33;
-  --secondary: #6A1B9A;
-  --accent: #7956a6;
-  --bg: #F5F5F5;
-  --text: #333333;
-  --radius: 16px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  overflow-y: scroll;
-}
-
-body {
-  margin: 0;
-  font-family: 'Roboto', system-ui, sans-serif;
-  color: var(--text);
-  background: var(--bg);
-}
-
-/* =========================
-   CONTAINER PRINCIPAL
-========================= */
-.container-detalhes {
-  max-width: 1250px;
-  margin: 0 auto;
-  padding: 50px 5%;
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.85fr);
-  gap: 36px;
-  align-items: start;
-}
-
-/* =========================
-   CARD DO PET (ESQUERDA)
-========================= */
+/* CARD DO PET (ESQUERDA) */
 .detalhes-pet-card {
   background: #fff;
   border-radius: 20px;
@@ -337,9 +260,7 @@ body {
   color: #333;
 }
 
-/* =========================
-   CARD DO FORMULÁRIO (DIREITA)
-========================= */
+/* CARD DO FORMULÁRIO (DIREITA) */
 .agendamento-card {
   background: #fff;
   border-radius: 20px;
@@ -444,10 +365,123 @@ body {
   color: #c62828;
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
+/* Rodapé */
+.footer {
+  width: 100%;
+  background-color: var(--accent);
+  border-radius: 12px 12px 0 0;
+}
+
+/* Container principal */
+.footer #itens_footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 5% 15px;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  align-items: start;
+  gap: 40px;
+}
+
+/* Todas as colunas */
+#logo_footer,
+#redes_footer,
+#links_footer,
+#contato_footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Logo / texto */
+#logo_footer {
+  max-width: 260px;
+  align-items: center;
+  text-align: center;
+}
+
+#img_logo_footer {
+  width: 70px;
+  height: auto;
+}
+
+#logo_footer p {
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.4;
+  max-width: 260px;
+}
+
+/* Títulos */
+.footer h3 {
+  color: var(--primary);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+/* Links */
+.footer a,
+.footer span {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* REDES SOCIAIS */
+#redes_footer {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+#icons_redes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+#icons_redes a {
+  background: rgba(255,255,255,0.15);
+  padding: 6px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+#icons_redes a:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+#icons_redes img {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+#copyright {
+  background-color: var(--primary);
+  text-align: center;
+  padding: 8px;
+}
+
+#copyright p {
+  font-size: 13px;
+  color: #222;
+  font-weight: 500;
+}
+
+/* TABLET */
 @media (max-width: 900px) {
+  .grupo-campos {
+    grid-template-columns: 1fr;
+  }
+
   .container-detalhes {
     grid-template-columns: 1fr;
   }
@@ -467,168 +501,36 @@ body {
   .agendamento-form-container {
     padding: 24px 20px;
   }
-}
-.mensagem-agendamento {
-  margin-top: 14px;
-  font-weight: 600;
-  min-height: 24px;
-}
 
-.mensagem-agendamento.sucesso {
-  color: #2e7d32;
-}
-
-.mensagem-agendamento.erro {
-  color: #c62828;
-}
-
-@media (max-width: 900px) {
-  .container-detalhes {
-    grid-template-columns: 1fr;
-  }
-
-  .agendamento-card {
-    position: static;
-  }
-
-  .grupo-campos {
-    grid-template-columns: 1fr;
-  }
-
-  .detalhes-pet-imagem {
-    height: 280px;
-  }
-
-  .detalhes-pet-conteudo h1 {
-    font-size: 1.8rem;
-  }
-}
-
-
-
-
-
-/* Rodapé */
-.footer {
-  width: 100%;
-  background-color: var(--accent);
-  border-radius: 12px 12px 0 0;
-}
-/* Container principal */
-.footer #itens_footer {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 5% 15px;
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  justify-content: space-between;
-  align-items: start;
-  gap: 40px;
-}
-/* Todas as colunas */
-#logo_footer,
-#redes_footer,
-#links_footer,
-#contato_footer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-/* Logo / texto */
-#logo_footer {
-  max-width: 260px;
-  align-items: center;
-  text-align: center;
-}
-#img_logo_footer {
-  width: 70px;
-  height: auto;
-}
-#logo_footer p {
-  color: #fff;
-  font-size: 13px;
-  line-height: 1.4;
-  max-width: 260px;
-}
-/* Títulos */
-.footer h3 {
-  color: var(--primary);
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-/* Links */
-.footer a,
-.footer span {
-  color: #fff;
-  font-size: 14px;
-  text-decoration: none;
-}
-.footer a:hover {
-  text-decoration: underline;
-}
-/* ===================== */
-/*   REDES SOCIAIS       */
-/* ===================== */
-#redes_footer {
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-}
-#icons_redes {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 16px;
-}
-#icons_redes a {
-  background: rgba(255,255,255,0.15);
-  padding: 6px;
-  border-radius: 8px;
-  transition: 0.3s;
-}
-#icons_redes a:hover {
-  background: rgba(255,255,255,0.3);
-}
-#icons_redes img {
-  width: 26px;
-  height: 26px;
-  display: block;
-}
-#copyright {
-  background-color: var(--primary);
-  text-align: center;
-  padding: 8px;
-}
-#copyright p {
-  font-size: 13px;
-  color: #222;
-  font-weight: 500;
-}
-@media (max-width: 900px) {
   .footer #itens_footer {
     grid-template-columns: 1fr 1fr;
     gap: 18px;
   }
+
   #logo_footer {
     grid-column: 1 / -1;
     max-width: 100%;
     align-items: center;
     text-align: center;
   }
+
   #logo_footer p {
     max-width: 520px;
   }
+
   #redes_footer,
   #links_footer,
   #contato_footer {
     align-items: center;
     text-align: center;
   }
+
   #icons_redes {
     justify-content: center;
   }
 }
+
+/* CELULAR */
 @media (max-width: 600px) {
   .footer #itens_footer {
     grid-template-columns: 1fr;
@@ -636,6 +538,7 @@ body {
     padding: 14px 20px 12px;
     gap: 16px;
   }
+
   #logo_footer,
   #redes_footer,
   #links_footer,
@@ -644,29 +547,36 @@ body {
     align-items: center;
     text-align: center;
   }
+
   #logo_footer p {
     max-width: 100%;
     font-size: 13px;
   }
+
   .footer h3 {
     font-size: 16px;
   }
+
   .footer a,
   .footer span,
   #copyright p {
     font-size: 13px;
   }
+
   #img_logo_footer {
     width: 90px;
   }
+
   #icons_redes {
     justify-content: center;
     gap: 10px;
   }
+
   #icons_redes a img {
     width: 24px;
     height: 24px;
   }
+
   #copyright {
     padding: 8px;
   }
