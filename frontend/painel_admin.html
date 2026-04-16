@@ -54,60 +54,50 @@
     </div>
  
  
-    <div class="cards-container">
-      <a href="painelADM_pets.html" class="card" onclick="mostrarSecao('pets')">
-        <div class="icon">🐾</div>
-        <div class="info">
-          <span class="numero">4</span>
-          <span class="label">Pets disponíveis</span>
-        </div>
-      </a>
- 
-      <a href="" class="card" onclick="mostrarSecao('')">
-        <div class="icon">🎪</div>
-        <div class="info">
-          <span class="numero">8</span>
-          <span class="label">Eventos</span>
-        </div>
-      </a>
-
-
-      <a href="painelADM_doacao.html" class="card" onclick="mostrarSecao('docoes')">
-        <div class="icon">❤️</div>
-        <div class="info">
-          <span class="numero">8</span>
-          <span class="label">Doações Recebidas</span>
-        </div>
-      </a>
-
-
-      <a href="painelADM_denuncias.html" class="card" onclick="mostrarSecao('denuncias')">
-        <div class="icon">⚠️</div>
-        <div class="info">
-          <span class="numero">8</span>
-          <span class="label">Denúncias Recebidas</span>
-        </div>
-      </a>
-
-
-      <a href="" class="card" onclick="mostrarSecao('')">
-        <div class="icon">📝</div>
-        <div class="info">
-          <span class="numero">67</span>
-          <span class="label">Inscrições Eventos
-        </div>
-      </a>
-
-
-      <a href="" class="card" onclick="mostrarSecao('')">
-        <div class="icon">📅</div>
-        <div class="info">
-          <span class="numero">12</span>
-          <span class="label">Agendamentos de Pets
-        </div>
-      </a>
+<div class="cards-container">
+  <div class="card admin-tab active" data-section="pets">
+    <div class="icon">🐾</div>
+    <div class="info">
+      <span class="numero">4</span>
+      <span class="label">Pets disponíveis</span>
     </div>
   </div>
+
+  <div class="card admin-tab" data-section="eventos">
+    <div class="icon">🎪</div>
+    <div class="info">
+      <span class="numero">8</span>
+      <span class="label">Eventos</span>
+    </div>
+  </div>
+
+  <div class="card admin-tab" data-section="denuncias">
+    <div class="icon">⚠️</div>
+    <div class="info">
+      <span class="numero">8</span>
+      <span class="label">Denúncias</span>
+    </div>
+  </div>
+
+  <div class="card admin-tab" data-section="inscricoes">
+    <div class="icon">📝</div>
+    <div class="info">
+      <span class="numero">67</span>
+      <span class="label">Inscrições</span>
+    </div>
+  </div>
+
+  <div class="card admin-tab" data-section="agendamentos">
+    <div class="icon">📅</div>
+    <div class="info">
+      <span class="numero">12</span>
+      <span class="label">Agendamentos</span>
+    </div>
+  </div>
+</div>
+
+<div id="adminMensagem" class="admin-mensagem"></div>
+<div id="adminTabela"></div>
 
 
 <footer class="footer">
@@ -175,8 +165,9 @@
 
 
 <script src="js/apiScript.js"></script>
-<script src="js/painelADM.js"></script>
+<script src="js/painel_admin.js"></script>
 
 
 </body>
 </html>
+

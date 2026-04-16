@@ -354,6 +354,49 @@ body {
   }
 }
 
+.admin-table-wrapper {
+  margin: 40px auto;
+  max-width: 1100px;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-table th {
+  background: var(--secondary);
+  color: white;
+  padding: 12px;
+}
+
+.admin-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table tr:hover {
+  background: #f9f9f9;
+}
+
+.admin-mensagem {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.admin-mensagem.erro {
+  color: red;
+}
+
+.admin-vazio {
+  text-align: center;
+  margin: 30px;
+}
+
 
 /* Rodapé */
 .footer {
