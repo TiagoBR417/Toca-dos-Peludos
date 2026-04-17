@@ -101,8 +101,33 @@
 <div id="adminMensagem" class="admin-mensagem"></div>
 <div id="adminTabela"></div>
 
+//modal para descrição dos pets
 
-
+<div id="modalPet" class="modal-admin">
+  <div class="modal-conteudo">
+    <span class="fechar-modal" onclick="fecharModalPet()">&times;</span>
+    <h3 id="modalPetTitulo">Detalhes do Pet</h3>
+    
+    <form id="formEditarPet">
+      <input type="hidden" id="editPetId">
+      
+      <label class="label_text">Nome:</label>
+      <input type="text" id="editPetNome" required>
+      
+      <label class="label_text">Status:</label>
+      <select id="editPetStatus" required>
+        <option value="disponivel">Disponível</option>
+        <option value="adotado">Adotado</option>
+      </select>
+      
+      <label class="label_text">Descrição:</label>
+      <textarea id="editPetDescricao" rows="5" required></textarea>
+      
+      <button type="submit" class="btn-accent" style="width: 100%; margin-top: 15px;">Salvar Alterações</button>
+    </form>
+    <p id="msgEditPet" class="admin-mensagem"></p>
+  </div>
+</div>
 
 <script src="js/apiScript.js"></script>
 <script src="js/painel_admin.js"></script>
