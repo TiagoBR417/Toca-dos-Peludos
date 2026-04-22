@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/bootstrap/app.php';
+require_once __DIR__ . '/../bootstrap/app.php';
 
 use App\Config\Database;
 use App\Support\JsonResponse;
