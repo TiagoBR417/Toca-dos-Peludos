@@ -7,6 +7,7 @@ require_once __DIR__ . '/../bootstrap/app.php';
 use App\Config\Database;
 use App\Support\JsonResponse;
 use App\Support\Request;
+use App\Services\JwtService;
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     JsonResponse::send([
@@ -68,6 +69,27 @@ if (!password_verify($senha, $usuario['senha_hash'])) {
 }
 
 unset($usuario['senha_hash']);
+
+// --- INÍCIO DA GERAÇÃO DO TOKEN ---
+try {
+    $jwtService = new JwtService();
+    $token = $jwtService->createAccessToken([
+        'id' => $usuario['id'],
+        'email' => $usuario['email'],
+        'role' => $usuario['tipo'] // Aqui vai 'admin' ou 'adotante'
+    ]);
+
+    $usuario['token'] = $token; // Coloca o token junto com os dados para o Frontend guardar
+
+} catch (\Exception $e) {
+    // Se der erro no JWT, ele não quebra o site, apenas avisa o Javascript
+    JsonResponse::send([
+        'success' => false, 
+        'message' => 'Erro interno ao gerar o token de segurança: ' . $e->getMessage(),
+        'data' => null
+    ], 500);
+}
+// --- FIM DA GERAÇÃO DO TOKEN ---
 
 JsonResponse::send([
     'success' => true,
