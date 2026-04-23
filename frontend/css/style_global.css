@@ -38,13 +38,13 @@ body {
 
 /* "thumb" (parte que você arrasta) */
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--secondary), var(--accent));
+  background: var(--secondary);
   border-radius: 5px;
 }
 
 /* hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--accent), var(--secondary));
+  background: var(--accent);
 }
 
 /* Fim da barra de rolagem personalizada */
@@ -211,6 +211,14 @@ body {
   
   .links a:hover {
     color: #fff;
+  }
+
+  .links a.active {
+    color: #fff;
+  }
+
+  .links a.active::after {
+    width: 100%;
   }
 
   /* A classe 'ativo' que o JavaScript vai ligar e desligar */

@@ -301,7 +301,7 @@
 }
 
 #txt_denuncias {
-  background: linear-gradient(180deg, #fef8f2 45%, #f5f5f5 100%);
+  background:#f5f5f5;
 }
 
 #txt_denuncias p {
@@ -312,6 +312,8 @@
 }
 
 #txt_denuncias img {
+  max-width: 50%;
+  max-height: 50%;
   padding-top: 50px;
   display: block;
   margin-left: auto;
