@@ -37,12 +37,7 @@
 
 
       <div class="actions">
-        <a href="login.html">
-            <button class="btn-accent">Entrar</button>
-        </a>
-        <a href="index.html#ajude">
-          <button class="btn-accent">Doar</button>
-        </a>
+          <span id="areaAuth" style="display: inline-flex; gap: 10px; align-items: center;"></span>
       </div>
     </div>
   </header>
@@ -54,49 +49,51 @@
     </div>
  
  
-    <div class="cards-container">
-      <div class="card admin-tab" data-section="pets">
-        <div class="icon">🐾</div>
-        <div class="info">
-          <span class="numero">4</span>
-          <span class="label">Pets disponíveis</span>
-        </div>
-      </div>
+
  
 
 
-  <div class="card admin-tab" data-section="eventos">
-    <div class="icon">🎪</div>
-    <div class="info">
-      <span class="numero">8</span>
-      <span class="label">Eventos</span>
-    </div>
-  </div>
+<div class="cards-container">
+      <div class="card admin-tab" data-section="pets">
+        <div class="icon">🐾</div>
+        <div class="info">
+          <span class="numero" id="totalPets">0</span>
+          <span class="label">Pets disponíveis</span>
+        </div>
+      </div>
 
-  <div class="card admin-tab" data-section="denuncias">
-    <div class="icon">⚠️</div>
-    <div class="info">
-      <span class="numero">8</span>
-      <span class="label">Denúncias</span>
-    </div>
-  </div>
+      <div class="card admin-tab" data-section="eventos">
+        <div class="icon">🎪</div>
+        <div class="info">
+          <span class="numero" id="totalEventos">0</span>
+          <span class="label">Eventos</span>
+        </div>
+      </div>
 
-  <div class="card admin-tab" data-section="inscricoes">
-    <div class="icon">📝</div>
-    <div class="info">
-      <span class="numero">67</span>
-      <span class="label">Inscrições</span>
-    </div>
-  </div>
+      <div class="card admin-tab" data-section="denuncias">
+        <div class="icon">⚠️</div>
+        <div class="info">
+          <span class="numero" id="totalDenuncias">0</span>
+          <span class="label">Denúncias</span>
+        </div>
+      </div>
 
-  <div class="card admin-tab" data-section="agendamentos">
-    <div class="icon">📅</div>
-    <div class="info">
-      <span class="numero">12</span>
-      <span class="label">Agendamentos</span>
+      <div class="card admin-tab" data-section="inscricoes">
+        <div class="icon">📝</div>
+        <div class="info">
+          <span class="numero" id="totalInscricoes">0</span>
+          <span class="label">Inscrições</span>
+        </div>
+      </div>
+
+      <div class="card admin-tab" data-section="agendamentos">
+        <div class="icon">📅</div>
+        <div class="info">
+          <span class="numero" id="totalAgendamentos">0</span>
+          <span class="label">Agendamentos</span>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
 <div id="adminMensagem" class="admin-mensagem"></div>
 <div id="adminTabela"></div>
