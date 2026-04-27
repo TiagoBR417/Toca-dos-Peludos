@@ -18,9 +18,14 @@ $dados = Request::json();
 
 $id = isset($dados['id']) ? (int)$dados['id'] : 0;
 $nome = trim($dados['nome'] ?? '');
+$nome = htmlspecialchars(strip_tags(trim($dados['nome'] ?? '')), ENT_QUOTES, 'UTF-8');
 $status = trim($dados['status'] ?? '');
+$statusPermitidos = ['disponivel', 'adotado'];
+if (!in_array($status, $statusPermitidos)) {
+    JsonResponse::send(['success' => false, 'message' => 'Status inválido ou não permitido.'], 400);
+}
 $descricao = trim($dados['descricao'] ?? '');
-
+$descricao = htmlspecialchars(strip_tags(trim($dados['descricao'] ?? '')), ENT_QUOTES, 'UTF-8');
 if ($id <= 0 || $nome === '' || $status === '') {
     JsonResponse::send(['success' => false, 'message' => 'Campos obrigatórios ausentes.', 'data' => null], 400);
 }
