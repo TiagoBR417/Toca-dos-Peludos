@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const menuSanduiche = document.querySelector('.menu-sanduiche');
   const navLinks = document.querySelector('.links');
 
-
   if (menuSanduiche && navLinks) {
     menuSanduiche.addEventListener('click', () => {
       navLinks.classList.toggle('ativo');
@@ -12,21 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-
-
-
-
-
-
-
-const btnNext = document.getElementById('nextSlide')
-   const btnPrevious = document.getElementById('previousSlide')
-   const slider = document.querySelector('.slider')
-   const content = document.querySelector('.content')
-  
-   const { width: slideWidth } = window.getComputedStyle(slider)
-   const { width: contentWidth } = window.getComputedStyle(content)
-   const contentLength = content.children.length;
+// Carrossel 
 document.addEventListener("DOMContentLoaded", () => {
   iniciarCarrossel();
   carregarEventos();
@@ -40,16 +25,17 @@ function iniciarCarrossel() {
 
   if (!btnNext || !btnPrevious || !slider || !content) return;
 
-  const { width: slideWidth } = window.getComputedStyle(slider);
-  const { width: contentWidth } = window.getComputedStyle(content);
+  const slideWidth = slider.offsetWidth;
+  const contentWidth = content.scrollWidth;
   const contentLength = content.children.length;
 
   let currentSlide = 0;
-
-  const slideProps = {
-    width: parseInt(slideWidth),
-    scroll: 0,
-  };
+  let scroll = 0;
+  
+  // Rodar o carossel
+  let autoplay = setInterval(() => {
+    btnNext.click();
+  }, 5000); // muda a cada 5 segundos
 
   function setCurrentDot() {
     const dots = document.querySelectorAll(".dot");
@@ -57,46 +43,55 @@ function iniciarCarrossel() {
     if (dots[currentSlide]) dots[currentSlide].classList.add("current");
   }
 
-  function controlSlide({ target: { id } }) {
-    switch (id) {
-      case "nextSlide":
-        if (slideProps.scroll + slideProps.width < parseInt(contentWidth)) {
-          slideProps.scroll += slideProps.width;
-        }
-        if (currentSlide < contentLength - 1) {
-          currentSlide += 1;
-          setCurrentDot();
-        }
-        slider.scrollLeft = slideProps.scroll;
-        break;
-
-      case "previousSlide":
-        if (currentSlide > 0) {
-          currentSlide -= 1;
-          setCurrentDot();
-        }
-        slideProps.scroll =
-          slideProps.scroll - slideProps.width < 0
-            ? 0
-            : slideProps.scroll - slideProps.width;
-        slider.scrollLeft = slideProps.scroll;
-        break;
+  function controlSlide(e) {
+    if (e.target.id === "nextSlide") {
+      if (scroll + slideWidth < contentWidth) {
+        scroll += slideWidth;
+        currentSlide++;
+      } else {
+        scroll = 0;
+        currentSlide = 0;
+      }
+    } else {
+      if (scroll > 0) {
+        scroll -= slideWidth;
+        currentSlide--;
+      }
     }
+  
+    slider.scrollLeft = scroll;
+    setCurrentDot();
   }
 
   btnNext.addEventListener("click", controlSlide);
   btnPrevious.addEventListener("click", controlSlide);
 
-  window.addEventListener("load", () => {
-    for (let index = 0; index < contentLength - 1; index += 1) {
-      const firstDot = slider.parentElement.querySelector(".dot");
-      if (firstDot) {
-        const newDot = firstDot.cloneNode(true);
-        slider.parentElement.querySelector(".length-dots").appendChild(newDot);
-      }
+  // Criar dots
+  const dotsContainer = slider.parentElement.querySelector(".length-dots");
+  const firstDot = dotsContainer?.querySelector(".dot");
+
+  if (dotsContainer && firstDot) {
+    for (let i = 1; i < contentLength; i++) {
+      dotsContainer.appendChild(firstDot.cloneNode(true));
     }
-    setCurrentDot();
+  }
+
+  // Quando o mouse sair começar a rodar o carrossel
+  slider.addEventListener("mouseleave", () => {
+    if (!autoplay) {
+      autoplay = setInterval(() => {
+        btnNext.click();
+      }, 5000);
+    }
   });
+  
+  // Parar o carrossel se o mouse estiver em cima 
+  slider.addEventListener("mouseenter", () => {
+    clearInterval(autoplay);
+    autoplay = null;
+  });
+
+  setCurrentDot();
 }
 
 async function carregarEventos() {
