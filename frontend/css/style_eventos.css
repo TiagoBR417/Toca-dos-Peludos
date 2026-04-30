@@ -230,9 +230,10 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 2.2rem;
   color: #2f2f2f;
-  background: #ebebeb;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
   padding: 10px;
-  border-radius: 12px 12px 12px 12px;
+  border-radius: 12px;
 }
 
 .lista-eventos {

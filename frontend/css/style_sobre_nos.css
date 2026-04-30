@@ -31,7 +31,7 @@
   gap: 24px;
   padding: 60px 20px;
   flex-wrap: wrap;
-  background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+  background: linear-gradient(180deg, var(--primary) 0%, #f5f5f5 50%, var(--accent) 100%);
 }
 
 .card {
