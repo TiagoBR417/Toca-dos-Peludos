@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Visita - Toca dos Peludos</title>
+    <title>Agendar Visita ao Pet - Toca dos Peludos</title>
     <link rel="icon" type="image/png" href="img/logo-tdp ícone.png">
     <link rel="stylesheet" href="css/style_form_pets.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap">
     <link rel="stylesheet" href="css/style_global.css">
   </head>
   <body>
@@ -21,7 +21,7 @@
           <span>Toca dos Peludos</span>
         </div>
         <nav class="links">
-          <a href="index.html">Início</a>
+          <a href="index.html" >Início</a>
           <a href="sobre_nos.html">Sobre</a>
           <a href="pets.html" class="active">Pets</a>
           <a href="eventos.html">Eventos</a>
@@ -43,26 +43,33 @@
         </div>
       </div>
     </header>
-    <div class="container">
-      <div class="form-container">
-        <h2>Formulário de Visita ao Pet</h2>
-        <form id="formPets">    
-          <label class="label_text required-label">Nome</label>
-          <input id="nome" type="text" placeholder="Nome completo" required>
-          <label class="label_text required-label">Email</label>
-          <input id="email" type="email" placeholder="E-mail" required>
-          <label class="label_text required-label">Telefone</label>
-          <input id="telefone" type="tel" placeholder="Telefone" required>
-          <label class="label_text required-label">Data de Visita</label>
-          <input id="dataVisita" type="date" required>
-          <label class="label_text required-label">Horário da Visita</label>
-          <input id="horarioVisita" type="time" required>
-          <label class="label_text">Observações</label>
-          <textarea id="observações" placeholder="Observações adicionais (opcional)"></textarea>
-          <button class="btn-confirm" type="submit">Confirmar Visita</button>
-        </form>
-      </div>
+    <main class="container-detalhes">
+      <section id="detalhesPet" class="detalhes-pet-card"></section>
+      <aside class="agendamento-card">
+    <div class="agendamento-form-container">
+      <h2>Agendar visita</h2>
+      <p class="agendamento-subtitulo">
+      Preencha os dados abaixo para solicitar uma visita e conhecer esse pet.
+      </p>
+      <form id="formAgendamento" class="form-agendamento">
+        <label for="nomeInteressado" class="label_text required-label">Nome</label>
+        <input type="text" id="nomeInteressado" placeholder="Nome completo" required>
+        <label for="emailInteressado" class="label_text required-label">Email</label>
+        <input type="email" id="emailInteressado" placeholder="E-mail" required>
+        <label for="telefoneInteressado" class="label_text required-label">Telefone</label>
+        <input type="tel" id="telefoneInteressado" placeholder="Telefone" required>
+        <label for="dataVisita" class="label_text required-label">Data da visita</label>
+        <input type="date" id="dataVisita" required>
+        <label for="horarioVisita" class="label_text required-label">Horário da visita</label>
+        <input type="time" id="horarioVisita" required>
+        <label for="observacoesAgendamento" class="label_text">Observações</label>
+        <textarea id="observacoesAgendamento" placeholder="Observações adicionais (opcional)"></textarea>
+        <button type="submit" class="btn-agendar">Agendar visita</button>
+      </form>
+      <p id="mensagemAgendamento" class="mensagem-agendamento"></p>
     </div>
+  </aside>
+    </main>
     <footer class="footer">
     <div id="itens_footer">
       <div id="logo_footer">
@@ -92,7 +99,7 @@
       <div id="links_footer">
         <h3>Links Rápidos</h3>
         <a href="pets.html">Adotar um Pet</a>
-        <a href="index.html#ajude">Fazer Doação</a>
+        <a href="#ajude">Fazer Doação</a>
         <a href="denuncias.html">Fazer uma denúncia</a>
         <a href="eventos.html">Eventos</a>
       </div>
@@ -108,7 +115,7 @@
     </div>
   </footer>
     <script src="js/apiScript.js"></script>
-    <script src="js/form_pets.js"></script>
+    <script src="js/detalhes.js"></script>
     <script src="js/global.js" defer></script>
   </body>
 </html>

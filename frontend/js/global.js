@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
   if (menuSanduiche && navLinks) {
     menuSanduiche.addEventListener('click', () => {
       navLinks.classList.toggle('ativo');
+      menuSanduiche.classList.toggle('ativo');
     });
   } else {
     console.error("Erro: Não encontrei o menu ou os links no HTML.");
