@@ -1,3 +1,20 @@
+.contato-hero {
+  text-align: center;
+  padding: 30px 20px 30px;
+  background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+  color: white;
+}
+
+.contato-hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.contato-hero p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
 .secao-contato {
   display: flex;
   flex-wrap: wrap;
@@ -20,6 +37,75 @@
   max-width: 300px;
   height: auto;
   display: block;
+}
+
+.contato-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding-top: 25px;
+}
+
+.contato-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.contato-card:hover {
+  transform: translateY(-5px);
+}
+
+.contato-card span {
+  font-size: 28px;
+}
+
+.contato-card h3 {
+  margin: 10px 0;
+  color: var(--secondary);
+}
+
+.horario-funcionamento {
+  margin: 0 auto;
+  width: 500px;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.horario-funcionamento h2 {
+  color: var(--secondary);
+  margin-bottom: 15px;
+}
+
+.horario-box p {
+  margin: 5px 0;
+  color: var(--text);
+}
+
+.status {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* STATUS */
+.status.aberto {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status.fechado {
+  background: #fdecea;
+  color: #c62828;
 }
 
 .logo {
@@ -63,8 +149,10 @@
 
 /* Mapas com borda roxa */
 .maps {
+  text-align: center; 
   width: 100%;
   padding: 20px 5%;
+  margin-top: 50px
 }
 
 iframe {
