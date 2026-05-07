@@ -1,192 +1,46 @@
-// Animação do depoimentos
+// 🎯 ANIMAÇÃO DE TEXTO
 const elemento = document.getElementById('texto-animado');
-const frases = [
-  "Veja Alguns Depoimentos Dos Nossos Adotantes",
-  "Salve uma Vida",
-  "Alegre o coração de um pet"
-];
 
-let fraseIndex = 0;
-let caractereIndex = 0;
-let deletando = false;
+if (elemento) {
+  const frases = [
+    "Veja Alguns Depoimentos Dos Nossos Adotantes",
+    "Salve uma Vida",
+    "Alegre o coração de um pet"
+  ];
 
-function animarTexto() {
-  const fraseAtual = frases[fraseIndex];
-  
-  if (deletando) {
-    elemento.textContent = fraseAtual.substring(0, caractereIndex - 1);
-    caractereIndex--;
-  } else {
-    elemento.textContent = fraseAtual.substring(0, caractereIndex + 1);
-    caractereIndex++;
+  let fraseIndex = 0;
+  let caractereIndex = 0;
+  let deletando = false;
+
+  function animarTexto() {
+    const fraseAtual = frases[fraseIndex];
+
+    if (deletando) {
+      elemento.textContent = fraseAtual.substring(0, caractereIndex - 1);
+      caractereIndex--;
+    } else {
+      elemento.textContent = fraseAtual.substring(0, caractereIndex + 1);
+      caractereIndex++;
+    }
+
+    let velocidade = deletando ? 50 : 100;
+
+    if (!deletando && caractereIndex === fraseAtual.length) {
+      velocidade = 2000;
+      deletando = true;
+    } else if (deletando && caractereIndex === 0) {
+      deletando = false;
+      fraseIndex = (fraseIndex + 1) % frases.length;
+      velocidade = 500;
+    }
+
+    setTimeout(animarTexto, velocidade);
   }
 
-  let velocidade = deletando ? 50 : 100;
-
-  if (!deletando && caractereIndex === fraseAtual.length) {
-    velocidade = 2000;
-    deletando = true;
-  } else if (deletando && caractereIndex === 0) {
-    deletando = false;
-    fraseIndex = (fraseIndex + 1) % frases.length;
-    velocidade = 500;
-  }
-
-  setTimeout(animarTexto, velocidade);
+  animarTexto();
 }
 
-animarTexto();
-
-function initCarousel() {
-  const container = document.getElementById('depoimentos');
-  if (!container) return;
-  const track = container.querySelector('.slide-track');
-  const items = Array.from(track.children);
-  const prev = container.querySelector('.carousel-prev');
-  const next = container.querySelector('.carousel-next');
-  let index = 0;
-  let autoplay = true;
-
-  function goTo(i) {
-    index = (i + items.length) % items.length;
-    const target = items[index];
-    const offset = target.offsetLeft;
-    track.style.transform = 'translateX(' + (-offset) + 'px)';
-  }
-
-  function onNext() { goTo(index + 1); }
-  function onPrev() { goTo(index - 1); }
-
-  if (prev) prev.addEventListener('click', onPrev);
-  if (next) next.addEventListener('click', onNext);
-  container.addEventListener('mouseenter', function() { autoplay = false; });
-  container.addEventListener('mouseleave', function() { autoplay = true; });
-
-  goTo(0);
-  setInterval(function() {
-    if (autoplay) onNext();
-  }, 3000);
-}
-
-document.addEventListener('DOMContentLoaded', initCarousel);
-
-//painel ADM
-document.addEventListener("DOMContentLoaded", () => {
-
-  const cards = document.querySelectorAll('.dashboard-grid .card');
-  const secaoDetalhes = document.getElementById('secao-detalhes');
-  const tituloSecao = document.getElementById('titulo-secao');
-  const cabecalhoTabela = document.getElementById('cabecalho-tabela');
-  const corpoTabela = document.getElementById('corpo-tabela');
-
-  if (cards.length > 0 && secaoDetalhes) {      
-    
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        const tipo = card.getAttribute('data-tipo'); 
-              
-        secaoDetalhes.style.display = 'block';
-        corpoTabela.innerHTML = '<tr><td colspan="6" style="text-align:center;">Carregando dados...</td></tr>';
-
-        if (tipo === 'denuncias') {
-          tituloSecao.innerText = 'Gerenciar Denúncias';
-          carregarTabelaDenunciasPainel(cabecalhoTabela, corpoTabela);
-        } 
-        else if (tipo === 'pets') {
-          tituloSecao.innerText = 'Gerenciar Pets';
-          carregarTabelaPetsPainel(cabecalhoTabela, corpoTabela);
-        }
-        else {
-          tituloSecao.innerText = `Gerenciar ${tipo}`;
-          cabecalhoTabela.innerHTML = '<th>Aviso</th>';
-          corpoTabela.innerHTML = '<tr><td>Módulo ainda em desenvolvimento.</td></tr>';
-        }
-      });
-    });
-  }
-});
-
-async function carregarTabelaDenunciasPainel(cabecalho, corpo) {
-
-  cabecalho.innerHTML = `
-    <th>ID</th>
-    <th>Tipo</th>
-    <th>Descrição</th>
-    <th>Local</th>
-    <th>Contato</th>
-    <th>Data</th>
-  `;
-
-  try {
-    const response = await fetch('http://localhost/Toca-dos-Peludos/api/denuncias.php');
-    const denuncias = await response.json();
-      
-    corpo.innerHTML = ''; // Limpa o "Carregando..."
-      
-    denuncias.forEach(d => {
-      const contato = d.anonimo == 1 ? '<span style="color:#e74c3c; font-weight:bold;">Anônimo</span>' : (d.contato || '-');
-      const dataFormatada = new Date(d.data_denuncia).toLocaleDateString('pt-BR');
-          
-      corpo.innerHTML += `
-        <tr>
-          <td>#${d.id}</td>
-          <td><strong>${d.tipo}</strong></td>
-          <td>${d.descricao}</td>
-          <td>${d.localizacao || '-'}</td>
-          <td>${contato}</td>
-          <td>${dataFormatada}</td>
-        </tr>
-      `;
-    });
-  } catch (e) {
-    corpo.innerHTML = '<tr><td colspan="6">Erro ao buscar denúncias.</td></tr>';
-  }
-}
-
-//carregas os aniamis
-async function carregarTabelaPetsPainel(cabecalho, corpo) {
-
-  cabecalho.innerHTML = `
-    <th>ID</th>
-    <th>Foto</th>
-    <th>Nome</th>
-    <th>Tipo</th>
-    <th>Porte</th>
-    <th>Status</th>
-  `;
-
-  try {
-    const response = await fetch('http://localhost/Toca-dos-Peludos/api/pets.php');
-    const pets = await response.json();
-      
-    corpo.innerHTML = ''; 
-      
-    pets.forEach(p => {
-      // Estilo dinâmico pro status ficar bonito
-      const corStatus = p.status === 'DISPONÍVEL' ? 'green' : 'orange';
-          
-      corpo.innerHTML += `
-        <tr>
-          <td>#${p.id}</td>
-          <td><img src="${p.imagemUrl}" alt="foto" style="width: 40px; height: 40px; border-radius: 5px; object-fit: cover;"></td>
-          <td><strong>${p.nome}</strong></td>
-          <td>${p.tipo}</td>
-          <td>${p.porte}</td>
-          <td><span style="color: ${corStatus}; font-weight: 600;">${p.status}</span></td>
-        </tr>
-      `;
-    });
-  } catch (e) {
-    corpo.innerHTML = '<tr><td colspan="6">Erro ao buscar pets.</td></tr>';
-  }
-}
-
-// Carrossel 
-document.addEventListener("DOMContentLoaded", () => {
-  iniciarCarrossel();
-  carregarEventos();
-});
-
+// 🎠 CARROSSEL
 function iniciarCarrossel() {
   const btnNext = document.getElementById("nextSlide");
   const btnPrevious = document.getElementById("previousSlide");
@@ -201,16 +55,12 @@ function iniciarCarrossel() {
 
   let currentSlide = 0;
   let scroll = 0;
-  
-  // Rodar o carossel
-  let autoplay = setInterval(() => {
-    btnNext.click();
-  }, 5000); // muda a cada 5 segundos
+  let autoplay;
 
   function setCurrentDot() {
     const dots = document.querySelectorAll(".dot");
-    dots.forEach((dot) => dot.classList.remove("current"));
-    if (dots[currentSlide]) dots[currentSlide].classList.add("current");
+    dots.forEach(dot => dot.classList.remove("current"));
+    dots[currentSlide]?.classList.add("current");
   }
 
   function controlSlide(e) {
@@ -228,13 +78,24 @@ function iniciarCarrossel() {
         currentSlide--;
       }
     }
-  
+
     slider.scrollLeft = scroll;
     setCurrentDot();
   }
 
   btnNext.addEventListener("click", controlSlide);
   btnPrevious.addEventListener("click", controlSlide);
+
+  function startAutoplay() {
+    autoplay = setInterval(() => btnNext.click(), 5000);
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplay);
+  }
+
+  slider.addEventListener("mouseenter", stopAutoplay);
+  slider.addEventListener("mouseleave", startAutoplay);
 
   // Criar dots
   const dotsContainer = slider.parentElement.querySelector(".length-dots");
@@ -246,60 +107,191 @@ function iniciarCarrossel() {
     }
   }
 
-  // Quando o mouse sair começar a rodar o carrossel
-  slider.addEventListener("mouseleave", () => {
-    if (!autoplay) {
-      autoplay = setInterval(() => {
-        btnNext.click();
-      }, 5000);
-    }
-  });
-  
-  // Parar o carrossel se o mouse estiver em cima 
-  slider.addEventListener("mouseenter", () => {
-    clearInterval(autoplay);
-    autoplay = null;
-  });
-
   setCurrentDot();
+  startAutoplay();
 }
 
-// Gerar QRcode de valor qualquer
-function abrirModalPix() {
-  document.getElementById('popupPix').style.display = 'block';
-  document.body.classList.add("no-scroll");
+// 🧾 PAINEL ADM
+function initPainelADM() {
+  const cards = document.querySelectorAll('.dashboard-grid .card');
+  const secaoDetalhes = document.getElementById('secao-detalhes');
+  const tituloSecao = document.getElementById('titulo-secao');
+  const cabecalhoTabela = document.getElementById('cabecalho-tabela');
+  const corpoTabela = document.getElementById('corpo-tabela');
+
+  if (!cards.length || !secaoDetalhes) return;
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const tipo = card.dataset.tipo;
+
+      secaoDetalhes.style.display = 'block';
+      corpoTabela.innerHTML = '<tr><td colspan="6">Carregando...</td></tr>';
+
+      if (tipo === 'denuncias') {
+        tituloSecao.innerText = 'Gerenciar Denúncias';
+        carregarTabelaDenuncias(cabecalhoTabela, corpoTabela);
+      } else if (tipo === 'pets') {
+        tituloSecao.innerText = 'Gerenciar Pets';
+        carregarTabelaPets(cabecalhoTabela, corpoTabela);
+      }
+    });
+  });
 }
- 
-function fecharModalDoacao() {
-  document.getElementById('popupPix').style.display = 'none';
-  document.body.classList.remove("no-scroll");
-}
- 
-function calcularCRC16(payload) {
-  let resultado = 0xFFFF;
-  let polinomio = 0x1021;
- 
-  for (let i = 0; i < payload.length; i++) {
-    resultado ^= (payload.charCodeAt(i) << 8);
-    for (let bitwise = 0; bitwise < 8; bitwise++) {
-      if ((resultado <<= 1) & 0x10000) resultado ^= polinomio;
-      resultado &= 0xFFFF;
-    }
+
+// 📡 API DENÚNCIAS
+async function carregarTabelaDenuncias(cabecalho, corpo) {
+  cabecalho.innerHTML = `
+    <th>ID</th><th>Tipo</th><th>Descrição</th>
+    <th>Local</th><th>Contato</th><th>Data</th>
+  `;
+
+  try {
+    const res = await fetch('http://localhost/Toca-dos-Peludos/api/denuncias.php');
+    const dados = await res.json();
+
+    let html = "";
+
+    dados.forEach(d => {
+      const contato = d.anonimo == 1 ? "Anônimo" : (d.contato || "-");
+      const data = new Date(d.data_denuncia).toLocaleDateString('pt-BR');
+
+      html += `
+        <tr>
+          <td>#${d.id}</td>
+          <td>${d.tipo}</td>
+          <td>${d.descricao}</td>
+          <td>${d.localizacao || '-'}</td>
+          <td>${contato}</td>
+          <td>${data}</td>
+        </tr>
+      `;
+    });
+
+    corpo.innerHTML = html;
+
+  } catch (e) {
+    console.error(e);
+    corpo.innerHTML = '<tr><td colspan="6">Erro ao carregar</td></tr>';
   }
-  return resultado.toString(16).toUpperCase().padStart(4, '0');
 }
- 
-function gerarPix() {
-  let valorInput = document.getElementById("valorDoacao").value.replace(',', '.');
-  let valor = parseFloat(valorInput).toFixed(2);
 
-  if (valor <= 0 || isNaN(valor)) {
+// 🐶 API PETS
+async function carregarTabelaPets(cabecalho, corpo) {
+  cabecalho.innerHTML = `
+    <th>ID</th><th>Foto</th><th>Nome</th>
+    <th>Tipo</th><th>Porte</th><th>Status</th>
+  `;
+
+  try {
+    const res = await fetch('http://localhost/Toca-dos-Peludos/api/pets.php');
+    const pets = await res.json();
+
+    let html = "";
+
+    pets.forEach(p => {
+      const cor = p.status === 'DISPONÍVEL' ? 'green' : 'orange';
+
+      html += `
+        <tr>
+          <td>#${p.id}</td>
+          <td><img src="${p.imagemUrl}" width="40"></td>
+          <td>${p.nome}</td>
+          <td>${p.tipo}</td>
+          <td>${p.porte}</td>
+          <td style="color:${cor}">${p.status}</td>
+        </tr>
+      `;
+    });
+
+    corpo.innerHTML = html;
+
+  } catch (e) {
+    console.error(e);
+    corpo.innerHTML = '<tr><td colspan="6">Erro ao carregar</td></tr>';
+  }
+}
+
+// 💰 PIX (VERSÃO PROFISSIONAL)
+document.addEventListener("DOMContentLoaded", () => {
+
+  const modal = document.getElementById("popupPix");
+  const fecharModal = document.getElementById("fecharModal");
+  const botoesDoar = document.querySelectorAll(".btn-doar");
+  const btnOutroValor = document.getElementById("btnOutroValor");
+
+  const inputValor = document.getElementById("valorDoacao");
+  const tituloModal = document.getElementById("tituloModal");
+  const btnGerarPix = document.getElementById("btnGerarPix");
+
+  let valorSelecionado = null;
+
+  // 👉 abrir modal com valor fixo
+  botoesDoar.forEach(btn => {
+    btn.addEventListener("click", () => {
+      valorSelecionado = parseFloat(btn.dataset.valor);
+      tituloModal.innerText = `Doe R$${valorSelecionado},00`;
+      inputValor.style.display = "none";
+      abrirModal();
+    });
+  });
+
+  // 👉 outro valor
+  btnOutroValor.addEventListener("click", () => {
+    valorSelecionado = null;
+    tituloModal.innerText = "Digite o valor da doação";
+    inputValor.style.display = "block";
+    abrirModal();
+  });
+
+  // 👉 gerar QR Code
+  btnGerarPix.addEventListener("click", () => {
+    let valorFinal = valorSelecionado;
+
+    if (!valorFinal) {
+      let valorInput = inputValor.value.replace(',', '.');
+      valorFinal = parseFloat(valorInput);
+    }
+
+    gerarPix(valorFinal);
+  });
+
+  // 👉 fechar modal
+  fecharModal.addEventListener("click", fechar);
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) fechar();
+  });
+
+  function abrirModal() {
+    modal.style.display = "block";
+    document.body.classList.add("no-scroll");
+    document.getElementById("qrcode").innerHTML = "";
+
+  // 👉 resetar botão copiar
+  const btnCopiar = document.getElementById("btnCopiarPix");
+  btnCopiar.disabled = true;
+  btnCopiar.innerText = "Copiar";
+
+  // limpar código anterior
+  document.getElementById("codigoPix").value = "";
+  }
+  
+  function fechar() {
+    modal.style.display = "none";
+    document.body.classList.remove("no-scroll");
+  }
+
+});
+
+function gerarPix(valor) {
+
+  if (!valor || valor <= 0 || isNaN(valor)) {
     alert("Digite um valor válido");
     return;
   }
 
   const chavePix = "48712800805";
-  const nome = "TIAGO OLIVEIRA DOS SANTOS";
+  const nome = "TIAGO OLIVEIRA";
   const cidade = "SAO PAULO";
 
   const formatField = (id, value) => {
@@ -308,183 +300,72 @@ function gerarPix() {
   };
 
   const merchantAccountInfo = formatField("26",
-  formatField("00", "br.gov.bcb.pix") + formatField("01", chavePix)
+    formatField("00", "br.gov.bcb.pix") +
+    formatField("01", chavePix)
   );
 
-  const additionalDataFieldTemplate = formatField("62", formatField("05", "doacao-20260323-001"));
+  const additionalDataFieldTemplate = formatField("62",
+    formatField("05", "***")
+  );
 
   let payloadBase = "000201" +
-  merchantAccountInfo +
-  formatField("52", "0000") +
-  formatField("53", "986") +
-  formatField("54", valor) +
-  formatField("58", "BR") +
-  formatField("59", nome) +
-  formatField("60", cidade) +
-  additionalDataFieldTemplate +
-  "6304";
+    merchantAccountInfo +
+    formatField("52", "0000") +
+    formatField("53", "986") +
+    formatField("54", valor.toFixed(2)) +
+    formatField("58", "BR") +
+    formatField("59", nome) +
+    formatField("60", cidade) +
+    additionalDataFieldTemplate +
+    "6304";
 
   const payloadFinal = payloadBase + calcularCRC16(payloadBase);
 
-  document.getElementById("qrcode").innerHTML = "";
+  // 👉 QR Code
+  const qr = document.getElementById("qrcode");
+  qr.innerHTML = "";
 
-  new QRCode(document.getElementById("qrcode"), {
+  new QRCode(qr, {
     text: payloadFinal,
     width: 200,
     height: 200
   });
+
+  document.getElementById("codigoPix").value = payloadFinal;
+  document.getElementById("btnCopiarPix").disabled = false;
 }
 
-//Gerar QRcode de 10 reais
-function enviarDoacaoDezReais(){
-  document.getElementById('popupPixDez').style.display = 'block';
-  document.body.classList.add("no-scroll");
-};
+// 🔢 CRC16
+function calcularCRC16(payload) {
+  let res = 0xFFFF;
+  const pol = 0x1021;
 
-function fecharModalDoacaoDez(){
-  document.getElementById('popupPixDez').style.display = 'none'
-  document.body.classList.remove("no-scroll");
+  for (let i = 0; i < payload.length; i++) {
+    res ^= payload.charCodeAt(i) << 8;
+
+    for (let j = 0; j < 8; j++) {
+      res = (res << 1) ^ ((res & 0x10000) ? pol : 0);
+      res &= 0xFFFF;
+    }
+  }
+
+  return res.toString(16).toUpperCase().padStart(4, '0');
 }
 
-function gerarPixDezReais() {
-  let valor = 10.00;  // Valor fixo de R$10,00
+// 🚀 INIT GERAL
+document.addEventListener("DOMContentLoaded", () => {
+  iniciarCarrossel();
+  initPainelADM();
+});
 
-  const chavePix = "48712800805";
-  const nome = "TIAGO OLIVEIRA DOS SANTOS";
-  const cidade = "SAO PAULO";
+// Copia do pix
+document.getElementById("btnCopiarPix").addEventListener("click", () => {
+  const input = document.getElementById("codigoPix");
 
-  const formatField = (id, value) => {
-    let size = String(value.length).padStart(2, '0');
-    return id + size + value;
-  };
+  input.select();
+  input.setSelectionRange(0, 99999); // mobile
 
-  const merchantAccountInfo = formatField("26",
-    formatField("00", "br.gov.bcb.pix") + formatField("01", chavePix)
-  );
+  navigator.clipboard.writeText(input.value);
 
-  const additionalDataFieldTemplate = formatField("62", formatField("05", "doacao-20260323-001"));
-
-  let payloadBase = "000201" +
-  merchantAccountInfo +
-  formatField("52", "0000") +
-  formatField("53", "986") +
-  formatField("54", valor.toFixed(2)) +  // Aqui usamos o valor de 10.00 formatado
-  formatField("58", "BR") +
-  formatField("59", nome) +
-  formatField("60", cidade) +
-  additionalDataFieldTemplate +
-  "6304";
-
-  const payloadFinal = payloadBase + calcularCRC16(payloadBase); // Calculando o CRC16 para o payload
-
-  document.getElementById('qrcodeDez').innerHTML = ""; // Limpa o conteúdo anterior do QR Code
-
-  new QRCode(document.getElementById('qrcodeDez'), {
-    text: payloadFinal,
-    width: 200,
-    height: 200
-  });
-}
-
-//Gerar QRcode de 20 reais
-function enviarDoacaoVinteReais(){
-  document.getElementById('popupPixVinte').style.display = 'block';
-  document.body.classList.add("no-scroll");
-};
-
-function fecharModalDoacaoVinte(){
-  document.getElementById('popupPixVinte').style.display = 'none'
-  document.body.classList.remove("no-scroll");  
-}
-
-function gerarPixVinteReais() {
-  let valor = 20.00;  // Valor fixo de R$20,00
-
-  const chavePix = "48712800805";
-  const nome = "TIAGO OLIVEIRA DOS SANTOS";
-  const cidade = "SAO PAULO";
-
-  const formatField = (id, value) => {
-    let size = String(value.length).padStart(2, '0');
-    return id + size + value;
-  };
-
-  const merchantAccountInfo = formatField("26",
-    formatField("00", "br.gov.bcb.pix") + formatField("01", chavePix)
-  );
-
-  const additionalDataFieldTemplate = formatField("62", formatField("05", "doacao-20260323-001"));
-
-  let payloadBase = "000201" +
-  merchantAccountInfo +
-  formatField("52", "0000") +
-  formatField("53", "986") +
-  formatField("54", valor.toFixed(2)) +  // Aqui usamos o valor de 20.00 formatado
-  formatField("58", "BR") +
-  formatField("59", nome) +
-  formatField("60", cidade) +
-  additionalDataFieldTemplate +
-  "6304";
-
-  const payloadFinal = payloadBase + calcularCRC16(payloadBase); // Calculando o CRC16 para o payload
-
-  document.getElementById('qrcodeVinte').innerHTML = ""; // Limpa o conteúdo anterior do QR Code
-
-  new QRCode(document.getElementById('qrcodeVinte'), {
-    text: payloadFinal,
-    width: 200,
-    height: 200
-  });
-}
-
-//Gerar QRcode de 50 reais
-
-function enviarDoacaoCinquentaReais(){
-  document.getElementById('popupPixCinquenta').style.display = 'block';
-  document.body.classList.add("no-scroll");
-};
-
-function fecharModalDoacaoCinquenta(){
-  document.getElementById('popupPixCinquenta').style.display = 'none'
-  document.body.classList.remove("no-scroll");
-}
-
-function gerarPixCinquentaReais() {
-  let valor = 50.00;  // Valor fixo de R$50,00
-
-  const chavePix = "48712800805";
-  const nome = "TIAGO OLIVEIRA DOS SANTOS";
-  const cidade = "SAO PAULO";
-
-  const formatField = (id, value) => {
-    let size = String(value.length).padStart(2, '0');
-    return id + size + value;
-  };
-
-  const merchantAccountInfo = formatField("26",
-    formatField("00", "br.gov.bcb.pix") + formatField("01", chavePix)
-  );
-
-  const additionalDataFieldTemplate = formatField("62", formatField("05", "doacao-20260323-001"));
-
-  let payloadBase = "000201" +
-  merchantAccountInfo +
-  formatField("52", "0000") +
-  formatField("53", "986") +
-  formatField("54", valor.toFixed(2)) +  // Aqui usamos o valor de 50.00 formatado
-  formatField("58", "BR") +
-  formatField("59", nome) +
-  formatField("60", cidade) +
-  additionalDataFieldTemplate +
-  "6304";
-
-  const payloadFinal = payloadBase + calcularCRC16(payloadBase); // Calculando o CRC16 para o payload
-
-  document.getElementById('qrcodeCinquenta').innerHTML = ""; // Limpa o conteúdo anterior do QR Code
-
-  new QRCode(document.getElementById('qrcodeCinquenta'), {
-    text: payloadFinal,
-    width: 200,
-    height: 200
-  });
-}
+  alert("Código PIX copiado!");
+});

@@ -29,7 +29,7 @@ body {
 /* largura da barra */
 ::-webkit-scrollbar {
   width: 15px;
-} 
+}
 
 /* fundo da barra */
 ::-webkit-scrollbar-track {
@@ -56,7 +56,7 @@ body {
   top: 0;
   z-index: 20;
 }
-  
+ 
 .nav-content {
   max-width: 1100px;
   margin: 0 auto;
@@ -67,7 +67,7 @@ body {
   justify-content: space-between;
   position: relative;
 }
-  
+ 
 .nav img {
   width: 60px;
   height: 60px;
@@ -91,12 +91,12 @@ body {
 .nav .links a:hover {
   padding-left: 5px;
 }
-  
+ 
 .logo {
   border-radius: 12px; /* controla a curvatura */
   object-fit: cover; /* mantém proporção da imagem */
 }
-  
+ 
 .brand {
   display: flex;
   align-items: center;
@@ -104,7 +104,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
-  
+ 
 .links a {
   position: relative;
   color: #7956a6;
@@ -112,7 +112,7 @@ body {
   margin: 0 8px;
   font-weight: 600;
 }
-  
+ 
 .links a::after {
   content: "";
   position: absolute;
@@ -123,23 +123,23 @@ body {
   background-color: #7956a6;
   transition: width 0.6s ease;
 }
-  
+ 
 .links a:hover::after {
   width: 100%;
 }
-  
+ 
 .links a:hover {
   color: var(--accent);
 }
-  
+ 
 .links a.active {
   color: var(--accent);
 }
-  
+ 
 .links a.active::after {
   width: 100%;
 }
-  
+ 
 .btn-accent {
   background: var(--accent);
   color: #fff;
@@ -149,20 +149,21 @@ body {
   cursor: pointer;
   font-weight: 700;
   transition: 0.3s;
+  text-decoration: none;
 }
-  
+ 
 .btn-accent:hover {
   transform: scale(1.05);
 }
-  
+ 
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px; 
+  gap: 8px;
 }
-  
+ 
 .actions button {
-  margin: 0; 
+  margin: 0;
 }
 
 /* Fim do Cabeçalho */
@@ -197,7 +198,7 @@ body {
   transform: rotate(-45deg) translate(7px, -6px);
 }
 
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 674px) {
   .menu-sanduiche {
     display: flex;
   }
@@ -213,7 +214,7 @@ body {
     padding: 20px;
     transform: translateY(-20px);
     opacity: 0;
-    pointer-events: none; 
+    pointer-events: none;
     transition: all 0.3s ease;
   }
 
@@ -330,7 +331,7 @@ body {
 #copyright {
   background-color: var(--primary);
   text-align: center;
-  padding: 8px 0; 
+  padding: 8px 0;
 }
 
 #copyright p {

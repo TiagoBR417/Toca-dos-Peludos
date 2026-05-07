@@ -8,10 +8,10 @@
   <link rel="stylesheet" href="css/style_home.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap"> 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap">
   <link rel="stylesheet" href="css/style_global.css">
 </head>
-<body> 
+<body>
   <header class="nav">
     <div class="nav-content">
       <div class="brand">
@@ -34,17 +34,13 @@
         <div class="linha"></div>
       </div>
       <div class="actions">
-        <a href="login.html">
-            <button class="btn-accent">Entrar</button>
-        </a>
-        <a href="#ajude">
-            <button class="btn-accent">Doar</button>
-        </a>
+        <a href="login.html" class="btn-accent">Entrar</a>
+        <a href="#ajude" class="btn-accent">Doar</a>
       </div>
     </div>
   </header>
     <div class="container-cabecalho">
-      <img src="img/capa-home.png" alt="">
+      <img src="img/capa-home.png" alt="Home">
       <div class="texto">
         <h2>Encontre Seu Novo Melhor Amigo e Adote um Animal de Estimação</h2>
         <p>Mais de 12.000 Histórias Salvas</p>
@@ -53,21 +49,21 @@
     <div class="secao-cards">
       <div class="cards">
         <a href="https://www.tiktok.com/@toca_dos_peludos" target="_blank" class="card">
-          <img src="img/adotando.jpg" alt="">
+          <img src="img/adotando.jpg" alt="Adotando">
           <div class="card-overlay">
             <h3>Pets Adotados</h3>
             <span>Ver histórias →</span>
           </div>
         </a>
         <a href="https://www.tiktok.com/@toca_dos_peludos" target="_blank" class="card">
-          <img src="img/resgatando.jpg" alt="">
+          <img src="img/resgatando.jpg" alt="Resgatando">
           <div class="card-overlay">
             <h3>Nossos Resgates</h3>
             <span>Ver resgates →</span>
           </div>
         </a>
         <a href="eventos.html" class="card">
-          <img src="img/foto-evento-banner.png" alt="">
+          <img src="img/foto-evento-banner.png" alt="Evento">
           <div class="card-overlay">
             <h3>Próximos Eventos</h3>
             <span>Saiba mais →</span>
@@ -83,12 +79,12 @@
       <div class="slide">
         <div class="slider">
           <div class="content">
-            <img src="img/eventos/foto1_carrossel.png" alt="">
-            <img src="img/eventos/foto2_carrossel.png" alt="">
-            <img src="img/eventos/foto3_carrossel.png" alt="">
-            <img src="img/eventos/foto4_carrossel.png" alt="">
-            <img src="img/eventos/foto5_carrossel.png" alt="">
-            <img src="img/eventos/foto6_carrossel.png" alt="">
+            <img src="img/eventos/foto1_carrossel.png" alt="Carrossel">
+            <img src="img/eventos/foto2_carrossel.png" alt="Carrossel">
+            <img src="img/eventos/foto3_carrossel.png" alt="Carrossel">
+            <img src="img/eventos/foto4_carrossel.png" alt="Carrossel">
+            <img src="img/eventos/foto5_carrossel.png" alt="Carrossel">
+            <img src="img/eventos/foto6_carrossel.png" alt="Carrossel">
           </div>
         </div>
         <button id="previousSlide">◀</button>
@@ -98,75 +94,49 @@
         </div>
       </div>
     </section>
-  </section> 
+  </section>
   <section class="doacao-container">
     <div id="ajude">
-      <h2 id="ajude"></h2>
       <div class="doacao-info">
         <h2>Ajude A Toca Dos Peludos</h2>
         <p>Sua doação ajuda no resgate, alimentação e cuidados veterinários.</p>
         <div class="doacao-grid">
           <div class="doacao-card">
             <span>Doe R$10,00</span>
-            <button onclick="enviarDoacaoDezReais()">Doar</button>
-          </div>
-          <div id="popupPixDez" class="modalPixFundo">
-            <div class="modalPixConteudo">
-              <div class="popup_form_pix">
-                <span class="fecharModalPix" onclick="fecharModalDoacaoDez()">&times;</span>
-                <h3>Doe R$10,00</h3>
-                <button class="btn-pix" onclick="gerarPixDezReais()">Gerar QR Code</button>
-                <div id="qrcodeDez" style="margin-top:20px; display:flex; justify-content:center;"></div>
-              </div>
-            </div>
+            <button class="btn-doar" data-valor="10">Doar</button>
           </div>
           <div class="doacao-card">
             <span>Doe R$20,00</span>
-            <button onclick="enviarDoacaoVinteReais()">Doar</button>
-          </div>
-          <div id="popupPixVinte" class="modalPixFundo">
-            <div class="modalPixConteudo">
-              <div class="popup_form_pix">
-                <span class="fecharModalPix" onclick="fecharModalDoacaoVinte()">&times;</span>
-                <h3>Doe R$20,00</h3>
-                <button class="btn-pix" onclick="gerarPixVinteReais()">Gerar QR Code</button>
-                <div id="qrcodeVinte" style="margin-top:20px; display:flex; justify-content:center;"></div>
-              </div>
-            </div>
+            <button class="btn-doar" data-valor="20">Doar</button>
           </div>
           <div class="doacao-card">
             <span>Doe R$50,00</span>
-            <button onclick="enviarDoacaoCinquentaReais()">Doar</button>
-          </div>
-          <div id="popupPixCinquenta" class="modalPixFundo">
-            <div class="modalPixConteudo">
-              <div class="popup_form_pix">
-                <span class="fecharModalPix" onclick="fecharModalDoacaoCinquenta()">&times;</span>
-                <h3>Doe R$50,00</h3>
-                <button class="btn-pix" onclick="gerarPixCinquentaReais()">Gerar QR Code</button>
-                <div id="qrcodeCinquenta" style="margin-top:20px; display:flex; justify-content:center;"></div>
-              </div>
-            </div>
+            <button class="btn-doar" data-valor="50">Doar</button>
           </div>
           <div class="doacao-card">
-            <span>Doar via PIX</span>
-            <button onclick="abrirModalPix()">Doar</button>
+            <span>Doe outro valor</span>
+            <button id="btnOutroValor">Doar</button>
           </div>
-          <div id="popupPix" class="modalPixFundo">
-            <div class="modalPixConteudo">
-              <div class="popup_form_pix">
-                <span class="fecharModalPix" onclick="fecharModalDoacao()">&times;</span>
-                <h3>Doar via PIX</h3>
-                <input type="number" id="valorDoacao" placeholder="Digite o valor (R$)">
-                <button class="btn-pix" onclick="gerarPix()">Gerar QR Code</button>
-                <div id="qrcode" style="margin-top:20px; display:flex; justify-content:center;"></div>
-              </div>
+        </div>
+        <!-- MODAL ÚNICO -->
+        <div id="popupPix" class="modalPixFundo">
+          <div class="modalPixConteudo">
+            <div class="popup_form_pix">
+              <span class="fecharModalPix" id="fecharModal">&times;</span>              
+              <h3 id="tituloModal">Doar</h3>      
+              <input type="number" id="valorDoacao" placeholder="Digite o valor (R$)" style="display:none;">      
+              <button class="btn-pix" id="btnGerarPix">Gerar QR Code</button>
+              <div id="qrcode" style="margin-top:20px; display:flex; justify-content:center;"></div>
+              <div class="pix-copia">
+                <input type="text" id="codigoPix" readonly placeholder="Código PIX aparecerá aqui">
+                <button id="btnCopiarPix" disabled>Copiar</button>
+              </div>      
             </div>
           </div>
         </div>
         <div style="margin-top: 20px;">
           <h3>Doações Recentes:</h3>
-          <ul id="listaDoacoes"></ul> 
+          <ul id="listaDoacoes"></ul>
         </div>
       </div>
     </div>
@@ -177,7 +147,7 @@
   <section id="txt_denuncias">
     <div>
       <div>
-        <img src="img/denuncias/img_denuncias1.png" alt="">
+        <img src="img/denuncias/img_denuncias1.png" alt="Denuncias">
       </div>
       <p>Denunciar maus-tratos a animais é um ato de responsabilidade e cidadania, pois a violência contra animais é crime e precisa ser comunicada para que as medidas cabíveis sejam tomadas. A denúncia é realizada de forma totalmente anônima, garantindo sua segurança e evitando qualquer tipo de exposição. É fundamental agir com seriedade e compromisso com a verdade, já que denúncias falsas prejudicam investigações e podem gerar penalidades legais. Ao denunciar, procure informar com clareza o que está acontecendo, a localização correta, a data e o horário aproximado dos fatos, além de possíveis evidências, como fotos, vídeos ou relatos detalhados.</p>
     </div>
@@ -190,13 +160,13 @@
     <section class="parceiros">
       <h2 style="margin-bottom: 15px;">Nossas ONGs Parceiras</h2>
       <div class="grid-parceiros">
-        <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
-        <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
-        <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
-        <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
-        <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
-        <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
-        <div class="logo-ong"><img src="img/logo-teste.png" alt=""></div>
+        <div class="logo-ong"><img src="img/logo-teste.png" alt="ONG"></div>
+        <div class="logo-ong"><img src="img/logo-teste.png" alt="ONG"></div>
+        <div class="logo-ong"><img src="img/logo-teste.png" alt="ONG"></div>
+        <div class="logo-ong"><img src="img/logo-teste.png" alt="ONG"></div>
+        <div class="logo-ong"><img src="img/logo-teste.png" alt="ONG"></div>
+        <div class="logo-ong"><img src="img/logo-teste.png" alt="ONG"></div>
+        <div class="logo-ong"><img src="img/logo-teste.png" alt="ONG"></div>
       </div>
     </section>
     <footer class="footer">
@@ -242,9 +212,9 @@
         <p>© 2026 Toca dos Peludos. Feito com ❤️ para os animais.</p>
       </div>
     </footer>
-    <script src="js/apiScript.js"></script>
-    <script src="js/painelADMScript.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/apiScript.js" defer></script>
+    <script src="js/painelADMScript.js" defer></script>
+    <script src="js/index.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="js/global.js" defer></script>
   </body>

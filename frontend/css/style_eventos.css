@@ -98,7 +98,7 @@
 
 .content img {
   width: 950px;
-  height: 350px;
+  aspect-ratio: 16/6;
   object-fit: cover;
 }
 
@@ -106,11 +106,13 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: none;
-  background-color: #ffcc33;
-  color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.5);
+  color: #000;
   position: absolute;
-  top: 50%; 
+  top: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
 }
 
 #moments button:first-of-type {
@@ -124,7 +126,7 @@
 }
 
 #moments button:hover {
-  background-color: #ffc107;
+  background-color: var(--primary);
 }
 
 .dot {
@@ -145,7 +147,7 @@
 }
 
 .dot.current {
-  background-color: #ffcc33;
+  background-color: var(--primary);
 }
 
 /* Fim do carrossel copiavel */
