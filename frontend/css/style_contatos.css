@@ -1,7 +1,7 @@
 .contato-hero {
   text-align: center;
   padding: 30px 20px 30px;
-  background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
   color: white;
 }
 
