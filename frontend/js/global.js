@@ -263,7 +263,7 @@ class ChatIA extends HTMLElement {
         #chat-button {
           width: 60px;
           height: 60px;
-          background: var(--accent, #007bff);
+          background: var(--accent);
           color: white;
           border-radius: 50%;
           display: flex;
@@ -272,6 +272,11 @@ class ChatIA extends HTMLElement {
           cursor: pointer;
           box-shadow: 0 4px 10px rgba(0,0,0,0.3);
           font-size: 24px;
+          transition: 0.3s ease;
+        }
+
+        #chat-button:hover {
+          background: var(--secondary);
         }
 
         #chat-window {
@@ -296,7 +301,7 @@ class ChatIA extends HTMLElement {
         }
 
         .header {
-          background: var(--accent, #007bff);
+          background: var(--accent);
           color: white;
           padding: 10px;
           display: flex;
@@ -325,10 +330,15 @@ class ChatIA extends HTMLElement {
 
         .input-area button {
           border: none;
-          background: var(--accent, #222);
+          background: var(--accent);
           color: white;
           padding: 8px 12px;
           cursor: pointer;
+          transition: 0.3s ease;
+        }
+
+        .input-area button:hover {
+          background: var(--secondary);
         }
       </style>
 

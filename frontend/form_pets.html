@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar Visita ao Pet - Toca dos Peludos</title>
-    <link rel="icon" type="image/png" href="img/logo-tdp ícone.png">
+    <link rel="icon" type="image/png" href="img/logo-tdp-ícone.png">
     <link rel="stylesheet" href="css/style_form_pets.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,35 +17,33 @@
     <main class="container-detalhes">
       <section id="detalhesPet" class="detalhes-pet-card"></section>
       <aside class="agendamento-card">
-    <div class="agendamento-form-container">
-      <h2>Agendar visita</h2>
-      <p class="agendamento-subtitulo">
-      Preencha os dados abaixo para solicitar uma visita e conhecer esse pet.
-      </p>
-      <form id="formAgendamento" class="form-agendamento">
-        <label for="nomeInteressado" class="label_text required-label">Nome</label>
-        <input type="text" id="nomeInteressado" placeholder="Nome completo" required>
-        <label for="emailInteressado" class="label_text required-label">Email</label>
-        <input type="email" id="emailInteressado" placeholder="E-mail" required>
-        <label for="telefoneInteressado" class="label_text required-label">Telefone</label>
-        <input type="tel" id="telefoneInteressado" placeholder="Telefone" required>
-        <label for="dataVisita" class="label_text required-label">Data da visita</label>
-        <input type="date" id="dataVisita" required>
-        <label for="horarioVisita" class="label_text required-label">Horário da visita</label>
-        <input type="time" id="horarioVisita" required>
-        <label for="observacoesAgendamento" class="label_text">Observações</label>
-        <textarea id="observacoesAgendamento" placeholder="Observações adicionais (opcional)"></textarea>
-        <button type="submit" class="btn-agendar">Agendar visita</button>
-      </form>
-      <p id="mensagemAgendamento" class="mensagem-agendamento"></p>
-    </div>
-  </aside>
+        <div class="agendamento-form-container">
+          <h2>Agendar visita</h2>
+          <p class="agendamento-subtitulo"> Preencha os dados abaixo para solicitar uma visita e conhecer esse pet.</p>
+          <form id="formAgendamento" class="form-agendamento">
+            <label for="nomeInteressado" class="label_text required-label">Nome</label>
+            <input type="text" id="nomeInteressado" placeholder="Nome completo" required>
+            <label for="emailInteressado" class="label_text required-label">Email</label>
+            <input type="email" id="emailInteressado" placeholder="E-mail" required>
+            <label for="telefoneInteressado" class="label_text required-label">Telefone</label>
+            <input type="tel" id="telefoneInteressado" placeholder="Telefone" required>
+            <label for="dataVisita" class="label_text required-label">Data da visita</label>
+            <input type="date" id="dataVisita" required>
+            <label for="horarioVisita" class="label_text required-label">Horário da visita</label>
+            <input type="time" id="horarioVisita" required>
+            <label for="observacoesAgendamento" class="label_text">Observações</label>
+            <textarea id="observacoesAgendamento" placeholder="Observações adicionais (opcional)"></textarea>
+            <button type="submit" class="btn-agendar">Agendar visita</button>
+          </form>
+          <p id="mensagemAgendamento" class="mensagem-agendamento"></p>
+        </div>
+      </aside>
     </main>
     <!-- Componentes globais -->
     <chat-ia></chat-ia>
-  <global-footer></global-footer>
+    <global-footer></global-footer>
     <script src="js/apiScript.js"></script>
-    <script src="js/detalhes.js"></script>
+    <script src="js/form_pets.js"></script>
     <script src="js/global.js" defer></script>
   </body>
 </html>

@@ -4,132 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste - Toca dos Peludos</title>
-    <link rel="icon" type="image/png" href="img/logo-tdp ícone.png">
-    <link rel="stylesheet" href="css/style_cadastro.css">
+    <link rel="icon" type="image/png" href="img/logo-tdp-ícone.png">
+    <link rel="stylesheet" href="css/style_admin_painel.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style_global.css">
-    <style>
-        
-        .app-container{
-            display: flex;
-            min-height: 100vh;
-        }
-
-        .sidebar{
-            width: 260px;
-            background-color: #7956a6;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.15);
-        }
-
-        .logo{
-            color: white;
-            text-decoration: underline;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 40px;
-            text-align: center;
-            letter-spacing: 1px;
-            font-family: 'Montserrat', sans-serif;
-            margin-bottom: 160px;
-        }
-
-        .nav-links{
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .nav-links li{
-            background-color: rgba(255,255,255,0.08);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.3s ease;
-            font-size: 1rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-links li:hover{
-            background-color: #f4b400;
-            color: #222;
-            transform: translateX(5px);
-        }
-
-        .nav-links li::before{
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 5px;
-            height: 100%;
-            background-color: white;
-            transform: scaleY(0);
-            transition: 0.3s;
-        }
-
-        .nav-links li:hover::before{
-            transform: scaleY(1);
-        }
-
-        .nav-links li.active{
-            background-color: #f4b400;
-            color: #222;
-        }
-
-        @media(max-width: 768px){
-
-            .sidebar{
-                width: 100%;
-                height: auto;
-            }
-
-            .logo{
-                font-size: 1.5rem;
-            }
-
-            .nav-links li{
-                padding: 14px;
-                font-size: 0.95rem;
-            }
-        }
-
-    </style>
   </head>
   <body>
+    <!-- Componentes globais --> 
     <global-header></global-header>
-    
     <div class="app-container">      
-        <aside class="sidebar">
-            <div class="logo">
-                Dashboard
-            </div>
-            
-            <ul class="nav-links">
-                <li>Pets</li>
-                <li>Eventos</li>
-                <li>Denúncias</li>
-                <li>Inscrições</li>
-                <li>Agendamentos</li>
-                <li>Doações</li>
-                <li>Usuários</li>
-                <li>Configurações</li>
-            </ul>
-
-        </aside>
+      <aside class="sidebar">
+        <div class="logo">Dashboard</div>    
+        <ul class="nav-links">
+          <li>Pets</li>
+          <li>Eventos</li>
+          <li>Denúncias</li>
+          <li>Inscrições</li>
+          <li>Agendamentos</li>
+          <li>Doações</li>
+          <li>Usuários</li>
+          <li>Configurações</li>
+        </ul>
+      </aside>
     </div>
-
+    <!-- Componentes globais -->
+    <chat-ia></chat-ia>
+    <global-footer></global-footer>
     <script src="js/apiScript.js"></script>
-    <script src="js/cadastro.js"></script>
+    <!-- <script src="js/painel_admin.js"></script> -->
     <script src="js/global.js" defer></script>
   </body>
+</html>

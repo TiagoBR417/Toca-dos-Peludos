@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Denunciar - Toca dos Peludos</title>
-    <link rel="icon" type="image/png" href="img/logo-tdp ícone.png">
+    <link rel="icon" type="image/png" href="img/logo-tdp-ícone.png">
     <link rel="stylesheet" href="css/style_forms_denuncias.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,64 +14,64 @@
   <body>
     <!-- Componentes globais --> 
     <global-header></global-header>
-      <div class="container">
-        <!-- Coluna esquerda -->
-        <div class="sidebar">
-          <h3>Contatos de Emergência</h3>
-          <div class="card">
-            <div class="icon">🛡</div>
-            <div>
-              <strong>IBAMA</strong><br>
-              0800 618 080
-            </div>
-          </div>
-          <div class="card">
-            <div class="icon">⚠</div>
-            <div>
-              <strong>Polícia Ambiental</strong><br>
-              190
-            </div>
-          </div>
-          <div class="card">
-            <div class="icon">❤</div>
-            <div>
-              <strong>CCZ - Centro de Zoonoses</strong><br>
-              (11) 3397-8900
-            </div>
-          </div>
-          <div class="card important">
-            <div>
-              <strong>Importante</strong><br>
-              Em casos de emergência, ligue imediatamente para os órgãos competentes.
-            </div>
+    <div class="container">
+      <!-- Coluna esquerda -->
+      <div class="sidebar">
+        <h3>Contatos de Emergência</h3>
+        <div class="card">
+          <div class="icon">🛡</div>
+          <div>
+            <strong>IBAMA</strong><br>
+            0800 618 080
           </div>
         </div>
-        <!-- Coluna direita -->
-        <div class="form-container">
-          <h2>Formulário de Denúncia</h2>
-          <form id="formDenuncia">
-            <label class="label_text required-label">Tipo de Denúncia</label>
-            <select id="tipoDenuncia" required>
-              <option value="seleciona_tipo">Selecione o tipo</option>
-              <option>Maus-tratos</option>
-              <option>Abandono</option>
-              <option>Desmatamento</option>
-              <option value="outros">Outros</option>
-            </select>
-            <label class="label_text required-label">Descreva a Situação</label>
-            <textarea id="descricaoDenuncia" placeholder="Forneça o máximo de detalhes possível sobre a situação." required></textarea>
-            <label class="label_text required-label">Local da Ocorrência</label>
-            <input id="localDenuncia" type="text" placeholder="Endereço ou ponto de referência" required>
-            <div id="options_container">
-              <label for="anonimo">Fazer denúncia anônima</label>
-              <input type="checkbox" id="anonimoCheckbox">
-            </div>
-            <label class="label_text">Contato</label>
-            <input id="contatoDenuncia" type="text" placeholder="E-mail ou telefone (opcional)">
-            <button class="btn-confirm" type="submit">Cadastrar Denúncia</button>
-            <p id="mensagemDenuncia"></p>
-          </form>
+        <div class="card">
+          <div class="icon">⚠</div>
+          <div>
+            <strong>Polícia Ambiental</strong><br>
+            190
+          </div>
         </div>
+        <div class="card">
+          <div class="icon">❤</div>
+          <div>
+            <strong>CCZ - Centro de Zoonoses</strong><br>
+            (11) 3397-8900
+          </div>
+        </div>
+        <div class="card important">
+          <div>
+            <strong>Importante</strong><br>
+            Em casos de emergência, ligue imediatamente para os órgãos competentes.
+          </div>
+        </div>
+      </div>
+      <!-- Coluna direita -->
+      <div class="form-container">
+        <h2>Formulário de Denúncia</h2>
+        <form id="formDenuncia">
+          <label class="label_text required-label">Tipo de Denúncia</label>
+          <select id="tipoDenuncia" required>
+            <option value="seleciona_tipo">Selecione o tipo</option>
+            <option>Maus-tratos</option>
+            <option>Abandono</option>
+            <option>Desmatamento</option>
+            <option value="outros">Outros</option>
+          </select>
+          <label class="label_text required-label">Descreva a Situação</label>
+          <textarea id="descricaoDenuncia" placeholder="Forneça o máximo de detalhes possível sobre a situação." required></textarea>
+          <label class="label_text required-label">Local da Ocorrência</label>
+          <input id="localDenuncia" type="text" placeholder="Endereço ou ponto de referência" required>
+          <div id="options_container">
+            <label for="anonimo">Fazer denúncia anônima</label>
+            <input type="checkbox" id="anonimoCheckbox">
+          </div>
+          <label class="label_text">Contato</label>
+          <input id="contatoDenuncia" type="text" placeholder="E-mail ou telefone (opcional)">
+          <button class="btn-confirm" type="submit">Cadastrar Denúncia</button>
+          <p id="mensagemDenuncia"></p>
+        </form>
+      </div>
     </div>
     <!-- Componentes globais -->
     <chat-ia></chat-ia>
