@@ -1,3 +1,4 @@
+/* CSS do Painel Administrativo Novo e com dashboard */
 .app-container {
   display: flex;
   min-height: 100vh;
@@ -15,24 +16,23 @@
 .logo {
   color: white;
   text-decoration: underline;
-  font-size: 2rem;
+  font-size: 2.45rem;
   font-weight: bold;
-  margin-bottom: 40px;
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: -1px;
   font-family: 'Montserrat', sans-serif;
-  margin-bottom: 160px;
+  margin-bottom: 15px;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .nav-links li {
-  background-color: rgba(255,255,255,0.08);
+  background-color: rgba(255, 255, 255, 0.08);
   color: white;
   padding: 15px 20px;
   border-radius: 12px;
@@ -74,19 +74,9 @@
 }
 
 @media(max-width: 768px) {
-
   .sidebar {
-    width: 100%;
+    width: 35%;
     height: auto;
-  }
-
-  .logo {
-    font-size: 1.5rem;
-  }
-
-  .nav-links li {
-    padding: 14px;
-    font-size: 0.95rem;
   }
 }
 
