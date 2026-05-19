@@ -17,14 +17,80 @@
     <main class="container-principal">
       <section class="secao-filtro">
         <h1>Encontre seu novo melhor amigo</h1>
-        <div class="filtro-container">
-          <input type="text" id="inputBusca" placeholder="Pesquisar por nome..." class="campo-busca">
-          <select id="filtroTipo" class="select-filtro">
-            <option value="todos">Todos os Pets</option>
-            <option value="cachorro">Cachorros</option>
-            <option value="gato">Gatos</option>
-          </select>
-          <button id="btnFiltrar" class="btn-filtrar">Filtrar</button>
+    <div class= "filtro-container-principal">
+          
+          <div class="filtro-barra-principal">
+            <div class="busca-wrapper">
+              <span class="icone-busca">🔍</span>
+              <input type="text" id="inputBusca" placeholder="Pesquisar por nome do pet..." class="campo-busca-nome">
+            </div>
+            
+            <button id="btnToggleFiltros" class="btn-toggle-filtros">
+              <span class="icone-filtro">➕</span> Filtros Avançados
+            </button>
+          </div>
+
+          <div id="painelFiltrosExtras" class="filtro-painel-extras">
+            
+            <div class="filtro-grid-superior">
+              <select id="filtroTipo" class="select-filtro-item">
+                <option value="todos">🐶 Espécie (Todas)</option>
+                <option value="cachorro">Cachorro</option>
+                <option value="gato">Gato</option>
+              </select>
+              
+              <select id="filtroPorte" class="select-filtro-item">
+                <option value="todos">📏 Porte (Todos)</option>
+                <option value="pequeno">Pequeno</option>
+                <option value="medio">Médio</option>
+                <option value="grande">Grande</option>
+              </select>
+              
+              <select id="filtroIdade" class="select-filtro-item">
+                <option value="todos">🎂 Idade (Todas)</option>
+                <option value="filhote">Filhote</option>
+                <option value="adulto">Adulto</option>
+                <option value="idoso">Idoso</option>
+              </select>
+              
+              <select id="filtroSexo" class="select-filtro-item">
+                <option value="todos">⚧️ Sexo (Todos)</option>
+                <option value="macho">Macho</option>
+                <option value="fêmea">Fêmea</option>
+              </select>
+              
+              <select id="filtroEnergia" class="select-filtro-item">
+                <option value="todos">⚡ Energia (Todas)</option>
+                <option value="calmo">Calmo</option>
+                <option value="brincalhão">Brincalhão</option>
+                <option value="atleta">Atleta</option>
+              </select>
+            </div>
+
+            <div class="filtro-linha-inferior">
+              <div class="chips-container">
+                <label class="chip-filtro">
+                  <input type="checkbox" id="chkCastrado">
+                  <span>Castrado</span>
+                </label>
+                <label class="chip-filtro">
+                  <input type="checkbox" id="chkVacinado">
+                  <span>Vacinado</span>
+                </label>
+                <label class="chip-filtro">
+                  <input type="checkbox" id="chkCriancas">
+                  <span>Bom c/ Crianças</span>
+                </label>
+                <label class="chip-filtro">
+                  <input type="checkbox" id="chkOutrosPets">
+                  <span>Bom c/ Outros Pets</span>
+                </label>
+              </div>
+              
+              <button id="btnLimparFiltros" class="btn-limpar-estilizado">Limpar</button>
+            </div>
+            
+          </div>
         </div>
       </section>
       <div id="listaPets" class="grid-pets"></div>
