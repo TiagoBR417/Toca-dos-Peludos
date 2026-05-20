@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste - Toca dos Peludos</title>
     <link rel="icon" type="image/png" href="img/logo-tdp-ícone.png">
-    <link rel="stylesheet" href="css/style_admin_painel.css">
+    <link rel="stylesheet" href="css/style_adminteste.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -18,21 +18,25 @@
       <aside class="sidebar">
         <div class="logo">Dashboard</div>    
         <ul class="nav-links">
-          <li>Pets</li>
-          <li>Eventos</li>
-          <li>Denúncias</li>
-          <li>Inscrições</li>
-          <li>Agendamentos</li>
-          <li>Doações</li>
-          <li>Usuários</li>
-          <li>Configurações</li>
+          <li data-dashboard="pets">🐾 Pets</li>
+          <li data-dashboard="eventos">🎉 Eventos</li>
+          <li data-dashboard="denuncias">🚨 Denúncias</li>
+          <li data-dashboard="inscricoes">📝 Inscrições</li>
+          <li data-dashboard="agendamentos">📅 Agendamentos</li>
+          <li data-dashboard="doacoes">💰 Doações</li>
+          <li data-dashboard="usuarios">👥 Usuários</li>
+          <li data-dashboard="configuracoes">⚙️ Configurações</li>
         </ul>
       </aside>
+      <!-- Área do dashboard -->
+      <main class="main-content" id="dashboard-content">
+        <h1>Dashboards</h1>
+      </main>
     </div>
-    <!-- Componentes globais -->
-    <global-footer></global-footer>
     <script src="js/apiScript.js"></script>
-    <!-- <script src="js/painel_admin.js"></script> -->
+    <script src="js/painel_admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="js/painel_grafico.js"></script>
     <script src="js/global.js" defer></script>
   </body>
 </html>
