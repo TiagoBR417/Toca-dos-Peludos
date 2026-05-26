@@ -11,10 +11,19 @@
   padding: 50px 20px;
 }
 
+.historia main {
+  background: #fff;
+  padding: 30px;
+  margin: 0 auto;
+  border-radius: 20px;
+  max-width: 700px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
 .historia h2 {
   margin-bottom: 10px;
   font-size: clamp(1.8rem, 4vw, 2.5rem);
-  color: var(--accent);
+  color: var(--secondary);
   font-weight: 700;
 }
 
@@ -43,7 +52,7 @@
   border-radius: 20px;
   width: min(260px, 100%);
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
@@ -52,7 +61,7 @@
 
 .card:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
 }
 
 .card h3 {
@@ -67,10 +76,19 @@
   background: var(--bg);
 }
 
+.equipe main {
+  background: #fff;
+  padding: 30px;
+  margin: 0 auto;
+  border-radius: 20px;
+  max-width: 760px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
 .equipe h2 {
   margin-bottom: 20px;
   font-size: clamp(1.8rem, 4vw, 2.5rem);
-  color: var(--accent);
+  color: var(--secondary);
   font-weight: 700;
 }
 
@@ -86,13 +104,13 @@
   padding: 20px;
   border-radius: 20px;
   width: 220px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .membro:hover {
   transform: translateY(-4px) scale(1.02);  
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
 }
 
 .membro img {

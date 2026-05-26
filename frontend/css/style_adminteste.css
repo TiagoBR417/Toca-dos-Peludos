@@ -186,4 +186,8 @@
     width: 35%;
     height: auto;
   }
+
+  .logo {
+    font-size: 1.8rem;
+  }
 }

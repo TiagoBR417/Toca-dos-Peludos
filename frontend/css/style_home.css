@@ -305,7 +305,7 @@
 }
 
 #txt_denuncias {
-  background:#f5f5f5;
+  background: var(--bg);
 }
 
 #txt_denuncias p {
@@ -313,6 +313,17 @@
   padding: 40px 20px;
   font-weight: bold;
   text-align: center;
+}
+
+#txt_denuncias .area-txt-btn {
+  margin: 40px;
+  background:  #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  max-width: 1000px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #txt_denuncias img {
@@ -328,7 +339,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
 }
 
 .btn-denunciar {
