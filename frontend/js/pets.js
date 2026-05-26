@@ -48,7 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// VARIÁVEIS PAGINAÇÂO
 let listaCompletaPets = [];
+let petsFiltradosAtual = []; // Guarda a lista que passou no filtro
+let paginaAtual = 1;
+const itensPorPagina = 39; // mudar a quantidad de pets por page
 
 async function carregarPets() {
   const container = document.getElementById("listaPets");
@@ -64,7 +68,7 @@ async function carregarPets() {
     }
 
     listaCompletaPets = resultado.data;
-    renderizarPets(listaCompletaPets);
+    aplicarFiltros();
   } catch (error) {
     console.error("Erro ao carregar pets:", error);
     container.innerHTML = `<p>Erro ao carregar pets.</p>`;
@@ -112,7 +116,14 @@ function aplicarFiltros() {
   if (criancas) filtrados = filtrados.filter(p => parseInt(p.bom_com_criancas) === 1);
   if (outrosPets) filtrados = filtrados.filter(p => parseInt(p.bom_com_outros_pets) === 1);
 
-  renderizarPets(filtrados);
+// Salva o resultado do filtro
+  petsFiltradosAtual = filtrados;
+  
+  // Toda vez que filtrar, volta para a página 1
+  paginaAtual = 1; 
+  
+  // Chama a função que fatia e mostra a página
+  mostrarPaginaAtual();
 }
 
 function renderizarPets(pets) {
@@ -195,4 +206,70 @@ function montarLocalizacao(bairro, cidade) {
 function limitarTexto(texto, limite) {
   if (texto.length <= limite) return texto;
   return texto.slice(0, limite).trim() + "...";
+}
+
+//PAGINAÇÂO
+function mostrarPaginaAtual() {
+  // Matemática para fatiar o Array
+  const indiceInicio = (paginaAtual - 1) * itensPorPagina;
+  const indiceFim = indiceInicio + itensPorPagina;
+  
+  // Corta só os pets da página atual
+  const petsDaPagina = petsFiltradosAtual.slice(indiceInicio, indiceFim);
+
+  renderizarPets(petsDaPagina);
+  renderizarControlesPaginacao();
+}
+
+function renderizarControlesPaginacao() {
+  const container = document.getElementById("paginacaoContainer");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const totalPaginas = Math.ceil(petsFiltradosAtual.length / itensPorPagina);
+  
+  // Se só tiver 1 página de pets, esconde os botões
+  if (totalPaginas <= 1) return; 
+
+  // Botão "Anterior"
+  if (paginaAtual > 1) {
+    const btnAnterior = document.createElement("button");
+    btnAnterior.textContent = "Anterior";
+    btnAnterior.className = "btn-paginacao";
+    btnAnterior.onclick = () => { 
+      paginaAtual--; 
+      mostrarPaginaAtual(); 
+      // Rola a página suavemente para o topo do filtro
+      document.querySelector('.secao-filtro').scrollIntoView({ behavior: 'smooth' });
+    };
+    container.appendChild(btnAnterior);
+  }
+
+  // Botões Numéricos (1, 2, 3...)
+  for (let i = 1; i <= totalPaginas; i++) {
+    const btnNumero = document.createElement("button");
+    btnNumero.textContent = i;
+    btnNumero.className = `btn-paginacao ${i === paginaAtual ? "ativo" : ""}`;
+    btnNumero.onclick = () => { 
+      paginaAtual = i; 
+      mostrarPaginaAtual(); 
+      // Rola a página suavemente para o topo do filtro
+      document.querySelector('.secao-filtro').scrollIntoView({ behavior: 'smooth' });
+    };
+    container.appendChild(btnNumero);
+  }
+
+  // Botão "Próxima"
+  if (paginaAtual < totalPaginas) {
+    const btnProxima = document.createElement("button");
+    btnProxima.textContent = "Próxima";
+    btnProxima.className = "btn-paginacao";
+    btnProxima.onclick = () => { 
+      paginaAtual++; 
+      mostrarPaginaAtual(); 
+      // Rola a página suavemente para o topo do filtro
+      document.querySelector('.secao-filtro').scrollIntoView({ behavior: 'smooth' });
+    };
+    container.appendChild(btnProxima);
+  }
 }

@@ -401,3 +401,41 @@
     text-decoration: none;
     display: inline-block;
 }
+/* =========================================
+   PAGINAÇÃO 
+   ========================================= */
+.paginacao-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 40px;
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-paginacao {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #555;
+    padding: 8px 16px;
+    border-radius: 20px; /* Estilo pílula */
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.btn-paginacao:hover {
+    background: #f0f0f0;
+    border-color: #ccc;
+}
+
+/* Página que o usuário está agora */
+.btn-paginacao.ativo {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    pointer-events: none; /* Impede clicar na mesma página */
+}

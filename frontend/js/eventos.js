@@ -81,6 +81,11 @@ function iniciarCarrossel() {
   setCurrentDot();
 }
 
+// VARIÁVEIS PAGINAÇÃO EVENTOS
+let listaCompletaEventos = [];
+let paginaAtualEvento = 1;
+const itensPorPaginaEvento = 2; // numero de eventos por page
+
 async function carregarEventos() {
   const container = document.getElementById("listaEventos");
   if (!container) return;
@@ -94,52 +99,124 @@ async function carregarEventos() {
       return;
     }
 
-    const eventos = resultado.data;
-    container.innerHTML = "";
+    // Salva todos os eventos na variável global
+    listaCompletaEventos = resultado.data;
 
-    if (!eventos.length) {
+    if (!listaCompletaEventos.length) {
       container.innerHTML = `<p>Nenhum evento disponível no momento.</p>`;
       return;
     }
 
-    eventos.forEach((evento) => {
-      const card = document.createElement("article");
-      card.className = "evento-card";
+    // Chama a função que mostra a página 1
+    mostrarPaginaEvento();
 
-      const dataFormatada = evento.data_evento
-        ? new Date(evento.data_evento).toLocaleDateString("pt-BR")
-        : "Data não informada";
-
-      const imagem = evento.imagem_url && evento.imagem_url.trim() !== ""
-        ? evento.imagem_url
-        : "https://placehold.co/420x260?text=Evento";
-
-      card.innerHTML = `
-        <div class="evento-card-info">
-          <h3>${evento.titulo}</h3>
-
-          <p><strong>Data:</strong> ${dataFormatada}</p>
-          <p><strong>Local:</strong> ${evento.local}</p>
-          <p class="evento-descricao">${evento.descricao || "Evento sem descrição."}</p>
-
-          <a href="form_eventos.html?evento_id=${evento.id}" class="btn-evento">
-            Confirme sua presença
-          </a>
-        </div>
-
-        <div class="evento-card-imagem">
-          <img 
-            src="${imagem}" 
-            alt="${evento.titulo}"
-            onerror="this.src='https://placehold.co/420x260?text=Evento'"
-          >
-        </div>
-      `;
-
-      container.appendChild(card);
-    });
   } catch (error) {
     console.error("Erro ao carregar eventos:", error);
     container.innerHTML = `<p>Erro ao carregar eventos.</p>`;
+  }
+}
+
+function mostrarPaginaEvento() {
+  // Matemática para fatiar o Array
+  const indiceInicio = (paginaAtualEvento - 1) * itensPorPaginaEvento;
+  const indiceFim = indiceInicio + itensPorPaginaEvento;
+  
+  // Corta só os eventos da página atual
+  const eventosDaPagina = listaCompletaEventos.slice(indiceInicio, indiceFim);
+
+  renderizarEventos(eventosDaPagina);
+  renderizarPaginacaoEventos();
+}
+
+function renderizarEventos(eventos) {
+  const container = document.getElementById("listaEventos");
+  container.innerHTML = ""; // Limpa a tela antes de desenhar a nova página
+
+  eventos.forEach((evento) => {
+    const card = document.createElement("article");
+    card.className = "evento-card";
+
+    const dataFormatada = evento.data_evento
+      ? new Date(evento.data_evento).toLocaleDateString("pt-BR")
+      : "Data não informada";
+
+    const imagem = evento.imagem_url && evento.imagem_url.trim() !== ""
+      ? evento.imagem_url
+      : "https://placehold.co/420x260?text=Evento";
+
+    card.innerHTML = `
+      <div class="evento-card-info">
+        <h3>${evento.titulo}</h3>
+
+        <p><strong>Data:</strong> ${dataFormatada}</p>
+        <p><strong>Local:</strong> ${evento.local}</p>
+        <p class="evento-descricao">${evento.descricao || "Evento sem descrição."}</p>
+
+        <a href="form_eventos.html?evento_id=${evento.id}" class="btn-evento">
+          Confirme sua presença
+        </a>
+      </div>
+
+      <div class="evento-card-imagem">
+        <img 
+          src="${imagem}" 
+          alt="${evento.titulo}"
+          onerror="this.src='https://placehold.co/420x260?text=Evento'"
+        >
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function renderizarPaginacaoEventos() {
+  const container = document.getElementById("paginacaoEventos");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const totalPaginas = Math.ceil(listaCompletaEventos.length / itensPorPaginaEvento);
+  
+  // Se só tiver 1 página, esconde os botões
+  if (totalPaginas <= 1) return; 
+
+  // Botão "Anterior"
+  if (paginaAtualEvento > 1) {
+    const btnAnterior = document.createElement("button");
+    btnAnterior.textContent = "Anterior";
+    btnAnterior.className = "btn-paginacao";
+    btnAnterior.onclick = () => { 
+      paginaAtualEvento--; 
+      mostrarPaginaEvento(); 
+      // Rola a página para o título dos eventos suavemente
+      document.querySelector('.secao-eventos').scrollIntoView({ behavior: 'smooth' });
+    };
+    container.appendChild(btnAnterior);
+  }
+
+  // Botões Numéricos (1, 2, 3...)
+  for (let i = 1; i <= totalPaginas; i++) {
+    const btnNumero = document.createElement("button");
+    btnNumero.textContent = i;
+    btnNumero.className = `btn-paginacao ${i === paginaAtualEvento ? "ativo" : ""}`;
+    btnNumero.onclick = () => { 
+      paginaAtualEvento = i; 
+      mostrarPaginaEvento(); 
+      document.querySelector('.secao-eventos').scrollIntoView({ behavior: 'smooth' });
+    };
+    container.appendChild(btnNumero);
+  }
+
+  // Botão "Próxima"
+  if (paginaAtualEvento < totalPaginas) {
+    const btnProxima = document.createElement("button");
+    btnProxima.textContent = "Próxima";
+    btnProxima.className = "btn-paginacao";
+    btnProxima.onclick = () => { 
+      paginaAtualEvento++; 
+      mostrarPaginaEvento(); 
+      document.querySelector('.secao-eventos').scrollIntoView({ behavior: 'smooth' });
+    };
+    container.appendChild(btnProxima);
   }
 }
