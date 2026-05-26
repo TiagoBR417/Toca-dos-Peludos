@@ -12,12 +12,14 @@ class GlobalHeader extends HTMLElement {
   position: sticky;
   top: 0;
   z-index: 20;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
  
 .nav-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 10px 16px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 5px 24px;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -32,7 +34,7 @@ class GlobalHeader extends HTMLElement {
 
 .nav .links {
   display: flex;
-  gap: 20px;
+  gap: 27px;
   border-radius: 0 0 12px 12px;
 }
 
@@ -52,6 +54,11 @@ class GlobalHeader extends HTMLElement {
 .logo {
   border-radius: 12px; /* controla a curvatura */
   object-fit: cover; /* mantém proporção da imagem */
+  height: 60px; /* altura fixa */
+  transition: transform 0.3s ease; /* animação suave */
+}
+.logo:hover {
+  transform: rotate(-3deg) scale(1.03);
 }
  
 .brand {
@@ -102,15 +109,16 @@ class GlobalHeader extends HTMLElement {
   color: #fff;
   border: none;
   padding: 8px 14px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 700;
   transition: 0.3s;
   text-decoration: none;
+  box-shadow: 0 4px 10px rgba(106,27,154,0.2);
 }
  
 .btn-accent:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
  
 .actions {

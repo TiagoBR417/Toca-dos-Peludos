@@ -1,38 +1,126 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Perfil - Toca dos Peludos</title>
-    <link rel="icon" type="image/png" href="img/logo-tdp-ícone.png">
-    <link rel="stylesheet" href="css/style_denuncias.css"> <!-- Esse CSS está desatualizado e errado -->
-    <link rel="stylesheet" href="css/style_global.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <!-- Componentes globais --> 
-    <global-header></global-header>
-    <main style="max-width: 1000px; margin: 40px auto; padding: 20px;">
-      <h2 style="color: #6A1B9A; margin-bottom: 30px;">Meu Perfil</h2>  
-      <div id="infoUsuario" style="background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 30px;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meu Perfil - Toca dos Peludos</title>
+  <link rel="icon" type="image/png" href="img/logo-tdp-ícone.png"/>
+  <link rel="stylesheet" href="css/style_global.css"/>
+  <link rel="stylesheet" href="css/style_perfil.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+</head>
+<body>
+  <global-header></global-header>
+  <main class="perfil-container">
+    <!-- HERO -->
+    <section class="perfil-hero">
+      <div class="perfil-avatar">
+        <img src="img/logo-tdp-ícone.png" alt="Foto do usuário">
       </div>
-      <h3 style="color: #ffcc33; background: #6A1B9A; padding: 10px 20px; border-radius: 8px;">Minhas Visitas a Pets</h3>
-      <div id="listaVisitas" style="margin-bottom: 40px;">
-        <p>A carregar visitas...</p>
+      <div class="perfil-hero-info">
+        <span class="perfil-tag">
+          <i class="fa-solid fa-paw"></i>
+          Amigo dos Peludos
+        </span>
+        <h1>Meu Perfil</h1>
+        <p>Gerencie suas visitas, eventos e acompanhe sua jornada ajudando os animais.</p>
       </div>
-      <h3 style="color: #ffcc33; background: #6A1B9A; padding: 10px 20px; border-radius: 8px;">Meus Eventos</h3>
-      <div id="listaEventos">
-        <p>A carregar eventos...</p>
+    </section>
+    <!-- CARD PRINCIPAL -->
+    <section class="perfil-grid">
+      <!-- Dados do usuário -->
+      <div class="card card-usuario">
+        <div class="card-header">
+          <h2>
+            <i class="fa-solid fa-user"></i>
+            Informações da Conta
+          </h2>
+          <button class="btn-editar">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+          </button>
+        </div>
+        <div id="infoUsuario" class="info-usuario">
+          <div class="info-item">
+            <span>Nome</span>
+            <strong>Carregando...</strong>
+          </div>
+          <div class="info-item">
+            <span>Email</span>
+            <strong>Carregando...</strong>
+          </div>
+          <div class="info-item">
+            <span>Telefone</span>
+            <strong>Carregando...</strong>
+          </div>
+        </div>
       </div>
-    </main>        
-    <!-- Componentes globais -->
-    <chat-ia></chat-ia>
-    <global-footer></global-footer>
-    <script src="js/apiScript.js"></script>
-    <script src="js/perfil.js"></script>
-    <script src="js/global.js" defer></script>
-    <script src="js/chatIA.js" defer></script>
-  </body>
+      <!-- Estatísticas -->
+      <div class="card estatisticas-card">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <i class="fa-solid fa-heart"></i>
+            <h3>12</h3>
+            <p>Visitas</p>
+          </div>
+          <div class="stat-item">
+            <i class="fa-solid fa-calendar"></i>
+            <h3>5</h3>
+            <p>Eventos</p>
+          </div>
+          <div class="stat-item">
+            <i class="fa-solid fa-paw"></i>
+            <h3>8</h3>
+            <p>Pets Ajudados</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- VISITAS -->
+    <section class="secao-conteudo">
+      <div class="secao-titulo">
+        <h2>
+          <i class="fa-solid fa-dog"></i>
+          Minhas Visitas a Pets
+        </h2>
+      </div>
+      <div id="listaVisitas" class="cards-lista">
+        <div class="item-card">
+          <div>
+            <h3>Thor</h3>
+            <p>Visita realizada em 12/05/2026</p>
+          </div>
+          <span class="status sucesso">Concluída</span>
+        </div>
+      </div>
+    </section>
+    <!-- EVENTOS -->
+    <section class="secao-conteudo">
+      <div class="secao-titulo">
+        <h2>
+          <i class="fa-solid fa-calendar-days"></i>
+          Meus Eventos
+        </h2>
+      </div>
+      <div id="listaEventos" class="cards-lista">
+        <div class="item-card">
+          <div>
+            <h3>Feira de Adoção</h3>
+            <p>Participação confirmada</p>
+          </div>
+          <span class="status pendente">Em breve</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <chat-ia></chat-ia>
+  <global-footer></global-footer>
+  <script src="js/apiScript.js"></script>
+  <script src="js/perfil.js"></script>
+  <script src="js/global.js" defer></script>
+  <script src="js/chatIA.js" defer></script>
+</body>
 </html>
