@@ -1,3 +1,7 @@
+section {
+  padding: 100px 0 0 0;
+}
+
 .container-cabecalho {
   position: relative;
   width: 100%;
@@ -27,9 +31,29 @@
   transition: transform 0.5s ease-in-out;
 }
 
+.texto h2 {
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.texto p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.container-cabecalho::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.65) 0%, 
+  rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.1) 100%);
+  z-index: 1;
+}
+
 .container-cabecalho:hover img {
   filter: brightness(0.6);
-  transform: scale(1.1);
 }
 
 .container-cabecalho:hover .texto {
@@ -73,10 +97,29 @@
   width: 100%;
 }
 
+.slider::before,
+.slider::after {
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 2;
+}
+
+.slider::before {
+  left: 0;
+  background: linear-gradient(to right, var(--accent), transparent);
+}
+
+.slider::after {
+  right: 0;
+  background: linear-gradient(to left, var(--accent), transparent);
+}
+
 .content {
   display: flex;
   width: fit-content;
-  transition: all 0.5s ease;
+  transition: transform 0.8s cubic-bezier(.22,.61,.36,1);
 }
 
 .content img {
@@ -89,13 +132,15 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
   color: #000;
   position: absolute;
   top: 50%;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 20;
 }
 
 #moments button:first-of-type {
@@ -148,6 +193,7 @@
   width: 280px;
   height: 280px;
   border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
   overflow: hidden;
   text-decoration: none;
   cursor: pointer;
@@ -183,12 +229,16 @@
   left: 20px;
   color: white;
   z-index: 2;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.25);
+  padding: 12px 16px;
+  border-radius: 14px;
 }
 
 .card-overlay h3 {
   margin: 0 0 6px;
   font-size: 1.4rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .card-overlay span {
@@ -198,8 +248,9 @@
 
 /* Hover refinado */
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  transform: translateY(-10px);
+  scale: (1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
 }
 
 .card:hover img {
@@ -240,8 +291,7 @@
   align-items: center;
   padding: 60px 5%;
   color: white;
-  font-family: sans-serif;
-  gap: 40px;
+  font-family: 'Inter', sans-serif;  gap: 40px;
   border-radius: 0 0 12px 12px;
 }
 
@@ -269,20 +319,19 @@
 .doacao-card button {
   background-color: #ffcc33;
   color: #6f42c1;
-  border: none;
+  border: 1px solid rgba(255,255,255,0.08);
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 20px;
   font-weight: bold;
   width: 100%; /* Ocupa o espaço do grid */
   max-width: 300px;
   cursor: pointer;
-  transition: 0.5s;
+  transition: .3s;
 }
 
 .doacao-card button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  filter: brightness(1.1);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255,255,255,0.14);
 }
 
 .doacao-card span {
@@ -373,7 +422,7 @@
 .parceiros {
   text-align: center;
   padding: 60px 20px;
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;  
   background-color: var(--primary);  
 }
 
@@ -415,6 +464,7 @@
   height: 100%;
   background: rgba(0,0,0,0.6);
   z-index: 1000;
+  backdrop-filter: blur(8px);
 }
 
 /* CAIXA CENTRALIZADA */
@@ -435,6 +485,18 @@
   text-align: center;
   z-index: 2;
   position: relative;
+  animation: modalShow .4s ease;
+}
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    transform: scale(.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .popup_form_pix h3 {
@@ -541,4 +603,15 @@ input::placeholder {
   overflow: hidden;
   height: 100%;
   touch-action: none;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all .8s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
 }

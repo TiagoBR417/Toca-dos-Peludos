@@ -261,22 +261,74 @@ class GlobalFooter extends HTMLElement {
       <style>
 /* Começo do Rodapé */
 .footer {
-  width: 100%;
-  background-color: var(--accent);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #744ea3, #7e57c2, #6A1B9A);
+  box-shadow: 0 -10px 40px rgba(106,27, 154, 0.25);
+  background-size: 300% 300%;
+  animation: footerGradient 18s ease infinite;
 }
-
+      
+@keyframes footerGradient {
+  0% {background-position: 50% 0%;}
+  50% {background-position: 100% 100%;}
+  100% {background-position: 50% 0%;}
+}
+      
+@keyframes blobMove1 {
+  0% {transform: translate(0, 0);}
+  50% {transform: translate(-40px, 30px);}
+  100% {transform: translate(0, 0);}
+}
+      
+@keyframes blobMove2 {
+  0% {transform: translate(0, 0);}
+  50% {transform: translate(50px, -20px);}
+  100% {transform: translate(0, 0);}
+}
+      
+.footer * {
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+}
+      
+.footer::before,
+.footer::after {
+  content: '';
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.12;
+  pointer-events: none;
+}
+      
+.footer::before {
+  background: #ffffff;
+  top: -180px;
+  right: -120px;
+  animation: blobMove1 18s ease-in-out infinite;
+}
+      
+.footer::after {
+  background: #ffcc33;
+  bottom: -180px;
+  left: -120px;
+  animation: blobMove2 22s ease-in-out infinite;
+}
+      
 /* Container principal */
 .footer #itens_footer {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 5% 15px;
+  padding: 25px 5% 25px;
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: 1.2fr 1.5fr 1fr 1fr;
   justify-content: space-between;
   align-items: start;
   gap: 40px;
 }
-
+      
 /* Todas as colunas */
 #logo_footer,
 #redes_footer,
@@ -284,35 +336,46 @@ class GlobalFooter extends HTMLElement {
 #contato_footer {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 }
-
+      
 /* Logo / texto */
 #logo_footer {
   max-width: 260px;
   align-items: center;
   text-align: center;
+  gap: 14px;
+  padding-top: 8px;
 }
-
+      
+.logo {
+  border-radius: 12px;
+  object-fit: cover;
+}
+      
 #img_logo_footer {
-  width: 70px;
+  width: 110px;
   height: auto;
 }
-
+      
 #logo_footer p {
   color: #fff;
-  font-size: 13px;
-  line-height: 1.4;
-  max-width: 260px;
+  font-size: 15px;
+  line-height: 1.7;
+  opacity: 0.9;
+  max-width: 230px;
+  font-weight: 400;
 }
-
+      
 /* Títulos */
 .footer h3 {
   color: var(--primary);
-  font-size: 16px;
+  font-size: 20px;
+  letter-spacing: -0.3px;
+  font-weight: 700;
   margin-bottom: 8px;
 }
-
+      
 /* Links */
 .footer a,
 .footer span {
@@ -320,57 +383,95 @@ class GlobalFooter extends HTMLElement {
   font-size: 14px;
   text-decoration: none;
 }
-
+      
+#links_footer a {
+  transition: 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+      
+#links_footer a:hover {
+  transform: translateX(4px);
+}
+      
 .footer a:hover {
   text-decoration: underline;
 }
-
+      
 /* REDES SOCIAIS */
 #redes_footer {
   align-items: center;
   text-align: center;
   justify-content: center;
+  flex-direction: column;
+  display: flex;
+  gap: 24px;
 }
-
+      
 #icons_redes {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
   justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 16px;
+  flex-wrap: nowrap;
 }
-
+      
 #icons_redes a {
-  background: rgba(255,255,255,0.15);
-  padding: 6px;
-  border-radius: 8px;
-  transition: 0.3s;
+  width: 45px;
+  height: 45px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.08), 0 8px 20px rgba(0,0,0,0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  transition: all ease 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
+      
 #icons_redes a:hover {
-  background: rgba(255,255,255,0.3);
+  transform: translateY(-6px) scale(1.05);
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 18px 30px rgba(0,0,0,0.18);
 }
-
+      
 #icons_redes img {
-  width: 26px;
-  height: 26px;
+  width: 35px;
+  height: 35px;
   display: block;
 }
-
-#copyright {
-  background-color: var(--primary);
-  text-align: center;
-  padding: 8px 0;
+      
+/* CONTATOS */
+#contato_footer a {
+  transition: 0.3s ease;
+  display: inline-block;
+  position: relative;
 }
-
+      
+#contato_footer a:hover {
+  transform: translateX(4px);
+}
+      
+#copyright {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 18px;
+}
+      
 #copyright p {
   margin: 0;        /* REMOVE o espaço invisível */
   font-size: 13px;
   color: #222;
   font-weight: 500;
   line-height: 1.2; /* Deixa mais compacto */
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
-
+      
 /* Responsividade do footer do TABLET (900px) */
 @media (max-width: 900px) {
   .footer #itens_footer {
