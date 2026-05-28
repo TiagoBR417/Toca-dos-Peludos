@@ -11,6 +11,67 @@ if (!mensagem) {
   return;
 }
 
+function validarCPF(cpf) {
+  cpf = cpf.replace(/\D/g, '');
+
+  if (cpf.length !== 11) return false;
+
+  if (/^(\d)\1+$/.test(cpf)) return false;
+
+  let soma = 0;
+  let resto;
+
+  for (let i = 1; i <= 9; i++) {
+    soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+  }
+
+  resto = (soma * 10) % 11;
+
+  if (resto === 10 || resto === 11) resto = 0;
+
+  if (resto !== parseInt(cpf.substring(9, 10))) {
+    return false;
+  }
+
+  soma = 0;
+
+  for (let i = 1; i <= 10; i++) {
+    soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+  }
+
+  resto = (soma * 10) % 11;
+
+  if (resto === 10 || resto === 11) resto = 0;
+
+  if (resto !== parseInt(cpf.substring(10, 11))) {
+    return false;
+  }
+
+  return true;
+}
+
+function validarCEP(cep) {
+  cep = cep.replace(/\D/g, '');
+  return /^[0-9]{8}$/.test(cep);
+}
+
+async function cepExiste(cep) {
+  cep = cep.replace(/\D/g, '');
+
+  try {
+    const response = await fetch(
+      `https://viacep.com.br/ws/${cep}/json/`
+    );
+
+    const data = await response.json();
+
+    return !data.erro;
+
+  } catch {
+    return false;
+  }
+}
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -29,8 +90,34 @@ form.addEventListener("submit", async (e) => {
   if (senha !== confirmaSenha) {
     mensagem.textContent = "As senhas não coincidem.";
     mensagem.classList.add("erro");
+  return;
+  }
+
+  const cpf = document.getElementById("cpfCadastro").value.trim();
+
+  if (!validarCPF(cpf)) {
+    mensagem.textContent = "CPF inválido.";
+    mensagem.classList.add("erro");
     return;
   }
+
+  const cep = document.getElementById("cepCadastro").value.trim();
+
+  if (!validarCEP(cep)) {
+    mensagem.textContent = "CEP inválido.";
+    mensagem.classList.add("erro");
+  return;
+  }
+
+  const cepValido = await cepExiste(cep);
+
+  if (!cepValido) {
+    mensagem.textContent = "CEP não encontrado.";
+    mensagem.classList.add("erro");
+    return;
+  }
+
+
 
   const payload = {
     nome,
