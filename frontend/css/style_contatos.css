@@ -1,51 +1,65 @@
 .secao-contato {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
   padding: 40px 5%;
 }
 
 .topo-contato {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 40px;
-  flex-wrap: wrap; /* importante para responsivo */
+  align-items: stretch;
+  gap: 30px;
+  width: 100%;
+  max-width: 1100px;
 }
 
 .caixa-logo {
-  border: 3px solid var(--accent);
-  border-radius: var(--radius); 
-  max-width: 100%;
+  border: 2px solid var(--accent, #7956a6); /* Borda ligeiramente mais fina */
+  border-radius: 16px; 
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  flex: 1;
+  max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.02);
 }
 
 .caixa-logo img {
   width: 100%;
-  max-width: 300px;
   height: auto;
-  display: block;
+  object-fit: contain;
 }
 
 .contato-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  padding: 10px 5%;
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+  padding: 10px 0;
 }
 
 .contato-card {
   background: white;
-  padding: 15px;
+  padding: 24px 16px;
   border-radius: 16px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  border: 1px solid #f3f3f3;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .contato-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(121, 86, 166, 0.1);
 }
 
 .contato-card span {
@@ -53,38 +67,72 @@
 }
 
 .contato-card h3 {
-  margin: 10px 0;
-  color: var(--secondary);
+  margin: 12px 0 6px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  color: var(--secondary, #7956a6);
+}
+
+.contato-card a {
+  color: #555;
+  text-decoration: none; /* Remove o sublinhado fixo antigo */
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.contato-card a:hover {
+  color: var(--accent, #5e3c85);
+  text-decoration: underline; /* Sublinhado aparece elegantemente apenas no hover */
 }
 
 .horario-funcionamento {
-  margin: 0 auto;
-  width: 500px;
+  width: 100%;
+  max-width: 500px; /* Define o limite máximo, mas encolhe se a tela for menor */
   background: white;
-  padding: 20px;
-  border-radius: 16px;
+  padding: 30px 24px;
+  border-radius: 20px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  margin-bottom: 50px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  border: 1px solid #f3f3f3;
+  margin: 20px auto 50px auto;
 }
 
 .horario-funcionamento h2 {
-  color: var(--secondary);
-  margin-bottom: 15px;
+  color: var(--secondary, #7956a6);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .horario-box p {
-  margin: 5px 0;
-  color: var(--text);
+  margin: 8px 0;
+  color: #444;
+  font-size: 1rem;
 }
 
 .status {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 6px 14px;
-  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  padding: 8px 16px;
+  border-radius: 30px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 /* STATUS */
@@ -93,10 +141,14 @@
   color: #2e7d32;
 }
 
+.status.aberto::before { background: #2e7d32; }
+
 .status.fechado {
   background: #fdecea;
   color: #c62828;
 }
+
+.status.fechado::before { background: #c62828; }
 
 .logo {
   border-radius: 12px; 
@@ -137,24 +189,52 @@
   color: var(--secondary);
 }
 
+.maps {
+  flex: 2;
+  min-width: 300px;
+}
+
 .maps iframe {
-  width: 700px;
-  height: 300px;
+  width: 100% !important; /* Nunca use largura fixa em pixels para layouts fluidos */
+  height: 100%;
+  min-height: 300px;
+  border: none;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
 }
 
 /* Mobile */
-@media (max-width: 768px) {
-  .maps iframe {
-  width: 450px;
+@media (max-width: 900px) {
+  .topo-contato {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .caixa-logo {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .maps {
+    width: 100%;
   }
 
   .contato-cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas para tablets */
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contato-cards {
+    grid-template-columns: 1fr; /* 1 única coluna perfeitamente alinhada no celular */
+  }
+
+  .secao-contato {
+    padding: 24px 4%;
   }
 
   .horario-funcionamento {
-    width: 450px;
+    padding: 20px 16px;
   }
 }

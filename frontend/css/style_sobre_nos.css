@@ -13,11 +13,11 @@
 
 .historia main {
   background: #fff;
-  padding: 30px;
+  padding: 40px 30px;
   margin: 0 auto;
-  border-radius: 20px;
-  max-width: 700px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 24px; /* Bordas um pouco mais suaves */
+  max-width: 750px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 .historia h2 {
@@ -40,33 +40,43 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 20px;
-  padding: 50px 20px;
+  gap: 24px;
+  padding: 60px 20px;
   flex-wrap: wrap;
-  background: linear-gradient(180deg, var(--bg) 0%, #fff 50%, var(--bg) 100%);
+  background: #fcfbfe;
 }
 
 .card {
-  background: linear-gradient(315deg, #fff 0%, #ffd700 100%);
-  padding: 20px;
+  background:#fffbeb;
+  border: 1px solid #fef3c7;
+  padding: 30px 24px;
   border-radius: 20px;
-  width: min(260px, 100%);
+  width: min(280px, 100%);
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 8px 24px rgba(254,243,199,0.3);
+  transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(245,158,11,0.15);
 }
 
 .card h3 {
-  margin-bottom: 12px;
-  color: var(--text);
+  margin-bottom: 14px;
+  color: #7956a6;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.card p {
+  color: #4b5563; /* Cinza escuro legível */
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 /* EQUIPE */
@@ -78,11 +88,11 @@
 
 .equipe main {
   background: #fff;
-  padding: 30px;
+  padding: 40px 30px;
   margin: 0 auto;
-  border-radius: 20px;
-  max-width: 760px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 24px;
+  max-width: 900px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 .equipe h2 {
@@ -100,34 +110,42 @@
 }
 
 .membro {
-  background: linear-gradient(315deg, #fff 0%, #888 100%);
-  padding: 20px;
+  background:#ffffff;
+  border: 1px solid #eaeaea;
+  padding: 24px 20px;
   border-radius: 20px;
-  width: 220px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  width: 240px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+  transition: all 0.25s ease;
 }
 
 .membro:hover {
-  transform: translateY(-4px) scale(1.02);  
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px);  
+  box-shadow: 0 12px 28px rgba(121,86,166,0.08);
 }
 
 .membro img {
-  width: 100%;
-  border-radius: 16px;
-  margin-bottom: 12px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 16px auto;
   object-fit: cover;
+  display: block;
+  background-color: #f3f4f6; /* Cor de fundo neutra caso a imagem quebre */
+  border: 3px solid #f3e8ff;
 }
 
 .membro h4 {
   margin-bottom: 6px;
+  font-family: 'Montserrat', sans-serif;
+  color: #1f2937;
+  font-size: 1.1rem;
 }
 
 .membro p {
-  font-size: 0.9rem;
-  color: var(--text);
-  line-height: 1.8;
+  font-size: 0.85rem;
+  color: #6b7280; /* Tom cinza suave para a profissão/cargo */
+  font-weight: 500;
 }
 
 /* Animação suave na entrada */
@@ -154,10 +172,12 @@
   .membros {
     flex-direction: column;
     align-items: center;
+    gap: 20px;
   }
 
   .card,
   .membro {
-    width: min(220px, 100%);
+    width: 100%;
+    max-width: 320px;
   }
 }

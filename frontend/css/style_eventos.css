@@ -3,15 +3,15 @@
   background-color: #f5f5f5;             
   display: flex;
   justify-content: center;
-  padding: 40px 20px; 
+  padding: 40px 20px;
+  gap: 24px; 
 }
 
 .cards_primary {
   background-color: #fff;
-  width: 45%;
-  max-width: 500px; 
+  width: 100%;
+  max-width: 480px; 
   border-radius: 12px; 
-  margin: 0 2%;
   padding: 40px;
   text-align: center;
   display: flex;
@@ -47,7 +47,7 @@
 }
 
 .cards_primary button {
-  background-color: #ffcc33;
+  background-color: var(--primary);
   color: #222;
   border: none;
   border-radius: 8px; 
@@ -228,14 +228,16 @@
 }
 
 .secao-eventos h2 {
-  margin: 0 0 14px;
+  margin: 0 0 24px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 2.2rem;
+  font-size: 2rem;
   color: #2f2f2f;
   background: #fff;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
-  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  padding: 16px 24px;
   border-radius: 12px;
+  text-align: left;
+  display: inline-block;
 }
 
 .lista-eventos {
@@ -312,6 +314,26 @@
 
 /* TABLET */
 @media (max-width: 900px) {
+  #cards {
+    flex-direction: column; /* Transforma linha em coluna no mobile */
+    align-items: center;
+    padding: 30px 16px;
+  }
+
+  .cards_primary {
+    max-width: 100%; /* Ocupa o espaço total da tela do celular */
+    padding: 30px 20px; /* Reduz levemente o recuo interno */
+  }
+
+  .cards_primary h2 {
+    font-size: 24px; /* Diminui o título para não quebrar muitas linhas */
+  }
+
+  .cards_primary p {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+  
   .evento-card {
     grid-template-columns: 1fr;
     max-width: 100%;
@@ -334,7 +356,9 @@
   }
 
   .secao-eventos h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    display: block;
+    text-align: center;
   }
 
   .evento-card-info {
