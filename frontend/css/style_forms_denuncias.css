@@ -98,7 +98,7 @@ form button {
 }
 
 .form-container button {
-  background: var(--accent);
+  background: #7956a6;
   color: #fff;
   border: none;
   padding: 8px 14px;

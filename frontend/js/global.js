@@ -454,7 +454,7 @@ class GlobalFooter extends HTMLElement {
 }
       
 #copyright {
-  background: rgba(255,255,255,0.06);
+  background: #ffC93C;
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255,255,255,0.08);
   padding: 18px;
