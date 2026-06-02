@@ -32,6 +32,7 @@
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -2px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .texto p {
@@ -128,6 +129,7 @@
   width: 100%;
   aspect-ratio: 16/6;
   object-fit: cover;
+  border-radius: 16px;
 }
 
 #moments button {
@@ -282,6 +284,26 @@
   .popup_form_pix {
     width: 90vw;
   }
+
+  #txt_denuncias {
+    padding: 40px 15px; /* Menos espaçamento nas bordas do celular */
+    gap: 20px;
+  }
+
+  #txt_denuncias img {
+    max-width: 90%; /* A imagem cresce no mobile, ocupando quase toda a largura disponível */
+    padding-top: 0; /* Remove espaçamentos desnecessários */
+  }
+
+  #txt_denuncias .area-txt-btn {
+    padding: 25px 20px; /* Deixa o card de texto mais compacto e elegante no celular */
+    margin: 0;
+  }
+
+  #txt_denuncias p {
+    font-size: 1rem; /* Diminui levemente a fonte para melhor leitura no celular */
+    padding: 0; /* Remove paddings exagerados que espremiam o texto */
+  }
 }
 
 /* Seção de Doação */
@@ -314,8 +336,9 @@
 
 .doacao-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
+  justify-content: center;
 }
 
 .doacao-card button {
@@ -357,42 +380,41 @@
 
 #txt_denuncias {
   background: var(--bg);
-  padding: 100px 0 100px 0;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column; /* Garante o fluxo vertical padrão */
+  align-items: center;
+  gap: 30px;
 }
 
 #txt_denuncias p {
   font-size: 1.15rem;
   line-height: 1.7;
-  padding: 40px 20px;
   font-weight: 500;
   text-align: center;
-  max-width: 900px;
-  margin: 0 auto;
+  margin-bottom: 30px;
   color: var(--text)
 }
 
 #txt_denuncias .area-txt-btn {
-  margin: 40px;
+  margin: 0 auto;
   background: rgba(255,255,255,0.7);
   border: 1px solid rgba(255,255,255,0.4);
   box-shadow: 0 10px 40px rgba(0,0,0,0.08);
   border-radius: 28px;
-  max-width: 1000px;
-  padding: 50px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 900px;
+  padding: 40px 30px;
   backdrop-filter: blur(10px);
 }
 
 #txt_denuncias img {
-  max-width: 50%;
-  max-height: 50%;
-  padding-top: 50px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.12);
+  width: 100%;
+  max-width: 700px; /* Limita o tamanho em telas grandes para não distorcer */
+  height: auto;
+  display: block; 
+  margin: 0 auto; 
+  border-radius: 24px; 
+  box-shadow: 0 20px 40px rgba(0,0,0,.12); 
   transition: 0.5s ease;
 }
 
@@ -450,10 +472,10 @@
 }
 
 .grid-parceiros {
-  display: flex;
+  display: grid;
   justify-content: center;
   gap: 20px;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -578,7 +600,7 @@
   color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .pix-copia button:hover {
@@ -590,6 +612,7 @@
   background-color: #ccc;
   cursor: not-allowed;
   opacity: 0.6;
+  pointer-events: none;
 }
 
 /* INPUT DO VALOR */
@@ -604,6 +627,12 @@
   outline: none;
   background-color: #fafafa;            
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.popup_form_pix input:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.2); /* Efeito de foco moderno (outline suave) */
+  background-color: #fff;
 }
 
 input:focus {

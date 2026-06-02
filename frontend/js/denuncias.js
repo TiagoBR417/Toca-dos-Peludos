@@ -3,6 +3,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const mensagem = document.getElementById("mensagemDenuncia");
   const checkbox = document.getElementById("anonimoCheckbox");
   const campoContato = document.getElementById("contatoDenuncia");
+  const inputImagem = document.getElementById("imgDenuncia");
+  const labelImagem = document.getElementById("labelImgDenuncia");
+
+  if (inputImagem && labelImagem) {
+    inputImagem.addEventListener("change", (event) => {
+      // Verifica se o usuário de fato selecionou algum arquivo
+      if (event.target.files && event.target.files.length > 0) {
+        const nomeArquivo = event.target.files[0].name;
+        
+        // Atualiza o texto com um ícone de "check" verde e o nome do arquivo
+        labelImagem.innerHTML = `✅ ${nomeArquivo}`;
+        
+        // Adiciona uma classe CSS caso queira mudar a cor da borda/fundo (opcional)
+        labelImagem.classList.add("arquivo-selecionado");
+      } else {
+        // Se o usuário abrir a janela e cancelar, volta ao estado original
+        labelImagem.innerHTML = `📸 Selecionar fotos da ocorrência`;
+        labelImagem.classList.remove("arquivo-selecionado");
+      }
+    });
+  }
 
   if (!form || !mensagem || !checkbox || !campoContato) {
     console.error("Erro: elementos do formulário não encontrados.");

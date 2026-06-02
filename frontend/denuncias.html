@@ -22,27 +22,28 @@
           <div class="icon">🛡</div>
           <div>
             <strong>IBAMA</strong><br>
-            0800 618 080
+            <span>0800 618 080</span>
           </div>
         </div>
         <div class="card">
           <div class="icon">⚠</div>
           <div>
             <strong>Polícia Ambiental</strong><br>
-            190
+            <span>190</span>
           </div>
         </div>
         <div class="card">
           <div class="icon">❤</div>
           <div>
             <strong>CCZ - Centro de Zoonoses</strong><br>
-            (11) 3397-8900
+            <span>(11) 3397-8900</span>
           </div>
         </div>
         <div class="card important">
+          <div class="icon">💡</div>
           <div>
             <strong>Importante</strong><br>
-            Em casos de emergência, ligue imediatamente para os órgãos competentes.
+            <span>Em casos de emergência, ligue imediatamente para os órgãos competentes.</span>
           </div>
         </div>
       </div>
@@ -50,26 +51,41 @@
       <div class="form-container">
         <h2>Formulário de Denúncia</h2>
         <form id="formDenuncia">
-          <label class="label_text required-label">Tipo de Denúncia</label>
+          <div class="grupo-input">
+          <label class="required-label">Tipo de Denúncia</label>
           <select id="tipoDenuncia" required>
-            <option value="seleciona_tipo">Selecione o tipo</option>
+            <option value="" disabled selected>Selecione o tipo</option>
             <option>Maus-tratos</option>
             <option>Abandono</option>
             <option>Desmatamento</option>
             <option value="outros">Outros</option>
           </select>
-          <label class="label_text required-label">Descreva a Situação</label>
-          <textarea id="descricaoDenuncia" placeholder="Forneça o máximo de detalhes possível sobre a situação." required></textarea>
-          <label class="label_text required-label">Local da Ocorrência</label>
-          <input id="localDenuncia" type="text" placeholder="Endereço ou ponto de referência" required>
-          <label class="label_text required-label">Imagens da Situação</label>
-          <input type="image" name="Imagens da Denúncia" id="imgDenuncia">
-          <div id="options_container">
-            <label for="anonimo">Fazer denúncia anônima</label>
-            <input type="checkbox" id="anonimoCheckbox">
           </div>
-          <label class="label_text">Contato</label>
-          <input id="contatoDenuncia" type="text" placeholder="E-mail ou telefone (opcional)">
+          <div class="grupo-input">
+            <label class="required-label">Descreva a Situação</label>
+            <textarea id="descricaoDenuncia" placeholder="Forneça o máximo de detalhes possível sobre a situação." required></textarea>
+          </div>
+          <div class="grupo-input">
+            <label class="required-label">Local da Ocorrência</label>
+            <input id="localDenuncia" type="text" placeholder="Endereço ou ponto de referência" required>
+          </div>
+          <div class="grupo-input">
+            <label class="required-label">Imagens da Situação</label>
+            <div class="upload-container">
+              <input type="file" id="imgDenuncia" accept="image/*" required>
+              <label for="imgDenuncia" class="btn-upload" id="labelImgDenuncia">
+                📸 Selecionar fotos da ocorrência
+              </label>
+            </div>
+          </div>
+          <div id="options_container">
+            <input type="checkbox" id="anonimoCheckbox">
+            <label for="anonimoCheckbox">Fazer denúncia anônima</label>
+          </div>
+          <div class="grupo-input">
+            <label>Contato</label>
+            <input id="contatoDenuncia" type="text" placeholder="E-mail ou telefone (opcional)">
+          </div>
           <button class="btn-confirm" type="submit">Cadastrar Denúncia</button>
           <p id="mensagemDenuncia"></p>
         </form>
