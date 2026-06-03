@@ -128,19 +128,21 @@
 .form-agendamento input,
 .form-agendamento textarea {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
   font-size: 14px;
-  background: #fff;
+  background: #f8fafc;
   outline: none;
-  transition: 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  color: var(--text);
 }
 
 .form-agendamento input:focus,
 .form-agendamento textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(121, 86, 166, 0.12);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(111,66,193,0.15);
 }
 
 .form-agendamento textarea {
@@ -171,6 +173,13 @@
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background-color: transparent;
+  cursor: pointer;
+  filter: invert(33%) sepia(51%) md(100%) saturate(463%) hue-rotate(221deg) brightness(86%) contrast(87%);
 }
 
 .mensagem-agendamento {

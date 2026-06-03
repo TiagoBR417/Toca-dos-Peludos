@@ -1,7 +1,7 @@
 /* CSS do Painel Administrativo Novo e com dashboard */
 .app-container {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 71px);
   background-color: #f8fafc;
 }
 
@@ -13,6 +13,7 @@
   flex-direction: column;
   box-shadow: 4px 0 20px rgba(15,23,42,0.08);
   position: fixed;
+  top: 71px;
   bottom: 0;
   left: 0;
   z-index: 10;
@@ -21,14 +22,16 @@
 .logo {
   color: #ffffff;
   text-decoration: none;
-  font-size: 1.65rem;
+  font-size: 1.3rem;
   font-weight: 700;
   text-align: left;
+  padding-left: 10px;
   letter-spacing: -0.5px;
   font-family: 'Montserrat', sans-serif;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 20px;
+  padding-bottom: 15px;
+  box-sizing: border-box;
 }
 
 .nav-links {
@@ -36,6 +39,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links li {
@@ -89,74 +94,112 @@
   padding: 40px 50px;
   margin-left: 280px;
   min-width: 0;
-  background-color: #f5f5f5;
 }
 
 .main-content h1 {
-  font-size: 2rem;
-  margin-bottom: 25px;
-  color: #333;
   font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #1e293b;
+  letter-spacing: -0.5px;
 }
 
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
 }
 
 .chart-card {
-  background: white;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.02);
+  border: 1px solid rgba(226,232,240,0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .chart-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
   margin-bottom: 20px;
-  color: #333;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .kpi-card {
-  background: linear-gradient(135deg, #4CAF50, #2E7D32);
-  color: #fff;
-  padding: 24px;
+  background: #ffffff;
+  color: #1e293b;
+  padding: 30px 25px;
   border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-align: left;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.02);
+  border: 1px solid rgba(226,232,240,0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary), var(--accent));
 }
 
 .kpi-card h3 {
-  font-size: 18px;
-  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
 }
 
 .kpi-card span {
-  font-size: 36px;
-  font-weight: bold;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0f172a;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .kpi-card p {
-  font-size: 14px;
-  opacity: 0.9;
+  font-size: 0.85rem;
+  color: #10b981;
+  font-weight: 500;
 }
 
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  position: relative;
+  padding-left: 10px;
 }
 
 .timeline-item {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  padding: 14px;
-  border-left: 4px solid #7956A6;
-  background: #f9f9f9;
-  border-radius: 8px;
+  gap: 20px;
+  padding: 18px 20px;
+  border: 1px solid rgba(226,232,240,0.7);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+  background: #ffffff;
+  border-radius: 12px;
+  transition: all 0.2 ease;
+}
+
+.timeline-item:hover {
+  border-color: rgba(111, 66, 193, 0.2);
+  transform: translateX(2px);
 }
 
 .timeline-item .time {
@@ -173,6 +216,48 @@
 .timeline-item .content p {
   margin: 4px 0 0;
   color: #666;
+}
+
+.table-container {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.admin-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-table td {
+  padding: 16px 20px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:hover td {
+  background-color: #f8fafc;
 }
 
 .integracoes-grid {
@@ -198,13 +283,87 @@
   color: #555;
 }
 
-@media(max-width: 768px) {
+@media (max-width: 1024px) {
   .sidebar {
-    width: 35%;
-    height: auto;
+    width: 80px;
+    padding: 20px 10px;
+    align-items: center;
+    top: 71px;
+  }
+  
+  /* Esconde o texto da logo no tablet, mantém só o ícone */
+  .logo {
+    font-size: 0; 
+    padding: 0;
+    margin-bottom: 20px;
+    border: none;
+  }
+  .logo::before {
+    content: '🐾'; 
+    font-size: 1.6rem;
   }
 
-  .logo {
-    font-size: 1.8rem;
+  /* Transforma o menu em uma linha vertical de botões com emojis centralizados */
+  .nav-links li {
+    font-size: 0;
+    padding: 12px;
+    justify-content: center;
+  }
+  
+  .nav-links li span {
+    font-size: 1.3rem; 
+    margin: 0;
+  }
+
+  /* Ajusta o espaçamento do conteúdo principal */
+  .main-content {
+    margin-left: 80px;
+    padding: 30px;
+  }
+
+  /* Gráficos começam a se ajustar melhor no espaço restante */
+  .charts-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* 2. COMPORTAMENTO PARA CELULARES (Telas até 640px) */
+@media (max-width: 640px) {
+  .main-content {
+    padding: 20px 15px; /* Reduz as margens para aproveitar a tela do celular */
+  }
+  
+  .main-content h1 {
+    font-size: 1.4rem; /* Diminui o título principal */
+    margin-bottom: 20px;
+  }
+
+  /* Força os cards e gráficos a ficarem em uma coluna única perfeita */
+  .charts-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .chart-card {
+    padding: 15px;
+  }
+  
+  /* SALVA-VIDAS PARA CELULAR: Se a tabela gerada pelo JS for muito larga, 
+     este container permite arrastar a tabela para os lados sem quebrar o layout */
+  .admin-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Rolagem suave no iOS/Safari */
+    border-radius: 12px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    margin-top: 15px;
+  }
+
+  /* Ajusta as células da tabela para não espremerem demais o texto */
+  .admin-table th, .admin-table td {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    white-space: nowrap; /* Impede que textos longos quebrem em 3 linhas */
   }
 }
