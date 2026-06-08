@@ -50,27 +50,40 @@ function validarCPF(cpf) {
   return true;
 }
 
-function validarCEP(cep) {
-  cep = cep.replace(/\D/g, '');
-  return /^[0-9]{8}$/.test(cep);
-}
+//Validação de CEP
 
-async function cepExiste(cep) {
-  cep = cep.replace(/\D/g, '');
+const inputCep = document.getElementById('cepCadastro');
+
+inputCep.addEventListener('blur', async () => {
+  // Pega o valor digitado e remove qualquer coisa que não seja número (como hifens)
+  const cepLimpo = inputCep.value.replace(/\D/g, '');
+
+  // Verifica se o CEP possui exatamente 8 números
+  if (cepLimpo.length !== 8) {
+    return; // Se não tiver 8 números, simplesmente para a execução
+  }
+
+  // Feedback visual (opcional, mas recomendado)
+  inputRua.value = "Buscando...";
 
   try {
-    const response = await fetch(
-      `https://viacep.com.br/ws/${cep}/json/`
-    );
+    // Faz a chamada para a API do ViaCEP
+    const resposta = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+    const dados = await resposta.json();
 
-    const data = await response.json();
+    // A API retorna um objeto com "erro: true" se o CEP não existir
+    if (dados.erro) {
+      alert("CEP não encontrado. Verifique o número digitado.");
+      limparCampos();
+      return;
+    }
 
-    return !data.erro;
-
-  } catch {
-    return false;
+    } catch (erro) {
+    console.error("Erro ao buscar o CEP:", erro);
+    alert("Erro na conexão ao buscar o CEP.");
+    limparCampos();
   }
-}
+});
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -100,24 +113,6 @@ form.addEventListener("submit", async (e) => {
     mensagem.classList.add("erro");
     return;
   }
-
-  const cep = document.getElementById("cepCadastro").value.trim();
-
-  if (!validarCEP(cep)) {
-    mensagem.textContent = "CEP inválido.";
-    mensagem.classList.add("erro");
-  return;
-  }
-
-  const cepValido = await cepExiste(cep);
-
-  if (!cepValido) {
-    mensagem.textContent = "CEP não encontrado.";
-    mensagem.classList.add("erro");
-    return;
-  }
-
-
 
   const payload = {
     nome,
