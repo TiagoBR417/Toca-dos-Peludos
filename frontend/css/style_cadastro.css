@@ -94,12 +94,14 @@
 }
 
 #enderecoCadastro {
-  width: 160%;
+  grid-column: span 4;
+  width: 100%;
 }
 
 #numeroCadastro {
-  margin-left: 170px;
-  width: 35%
+  grid-column: span 2;
+  width: 100%;
+  margin-left: 0;
 }
 
 input, select {
@@ -116,17 +118,17 @@ input, select {
 }
 
 input:focus, select:focus {
-  border-color: #7956a6; /* Roxo de destaque */
-  box-shadow: 0 0 0 4px rgba(121,86,166,0.15); /* Glow suave */
+  border-color: #7956a6; 
+  box-shadow: 0 0 0 4px rgba(121,86,166,0.15); 
   background-color: #fff;
 }
 
 .formCadastro .input-endereco {
-  grid-column: span 4; /* Ocupa 4/6 do espaço */
+  grid-column: span 4; 
 }
 
 .formCadastro .input-numero {
-  grid-column: span 2; /* Ocupa 2/6 do espaço */
+  grid-column: span 2; 
 }
 
 input::placeholder {
