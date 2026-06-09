@@ -298,11 +298,7 @@
     margin-bottom: 20px;
     border: none;
   }
-  .logo::before {
-    content: '🐾'; 
-    font-size: 1.6rem;
-  }
-
+  
   /* Transforma o menu em uma linha vertical de botões com emojis centralizados */
   .nav-links li {
     font-size: 0;

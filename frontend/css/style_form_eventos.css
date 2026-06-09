@@ -1,44 +1,69 @@
 .container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px); /* Ajusta para a altura da barra de navegação */
   gap: 30px;
-  padding: 40px;
+  padding: 40px 20px;
 }
     
 /* Formulário */
 .form-container {
   flex: 1;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 20px 40px rgba(75,46,131,0.05);
 }
     
 h2 {
   margin-top: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 24px;
+  text-align: center;
 }
     
 label {
   display: block;
-  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #475569;
 }
 
 .label_text {
-  margin-top: 20px;
+  margin-top: 18px;
 }
 
 .required-label::after {
   content: " *";
-  color: red;
-  font-weight: bold;
+  color: #ef4444;
+  font-weight: 600;
 }
     
 input, select, textarea {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
+  padding: 12px 16px;
+  margin-top: 8px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 2px solid #e2e8f0;
   font-size: 14px;
+  background-color: #f8fafc; /* Fundo suave para destacar o input da página */
+  color: var(--text);
+  font-family: 'Roboto', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1); /* Animação fluida */
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent); /* Usa o roxo da sua paleta */
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(111,66,193,0.15); /* Sombra sutil ao redor */
 }
     
 textarea {
@@ -51,22 +76,34 @@ form button {
 }
 
 .btn-confirm {
-  background: var(--accent);
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent) 0%, #5b32a1 100%);
   color: #fff;
   border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 14px 20px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 700;
-  transition: 0.5s;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  margin-top: 30px;
+  box-shadow: 0 4px 14px rgba(111,66,193,0.25);
+  transition: all 0.25s ease;
 }
 
 .btn-confirm:hover {
-  transform: scale(1.05);
+  transform: translateY(2px);
+  box-shadow: 0 6px 20px rgba(111,66,193,0.35);
+  background: linear-gradient(135deg, #7c4ee6 0%, var(--accent) 100%);
+}
+
+.btn-confirm:active {
+  transform: translateY(0); /* Efeito de clique físico */
 }
      
 .form-container button {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, #5b32a1 100%);
   color: #fff;
   border: none;
   padding: 8px 14px;
@@ -95,7 +132,24 @@ form button {
 }
 
 .evento-selecionado {
-  margin-bottom: 16px;
-  font-size: 1rem;
-  color: #444;
+  background: #f1ecf9;
+  border-left: 4px solid var(--accent);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.evento-selecionado strong {
+  font-family: 'Montserrat', sans-serif;
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 24px 16px; /* Menos espaço interno no container para aproveitar a tela do celular */
+  }
 }

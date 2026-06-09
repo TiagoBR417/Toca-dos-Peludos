@@ -206,25 +206,25 @@ class GlobalHeader extends HTMLElement {
     position: absolute;
     top: 100%;
     left: 16px;
-    right: 16px;
-    width: 100%;
-    background: #ffffff;
+    width: calc(100% - 32px); 
+    background: rgba(255,201,60);
+    padding: 12px 20px; 
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(75,46,131,0.2);
     flex-direction: column;
     align-items: stretch;
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     transform: translateY(-10px);
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
   }
 
   .nav .links a {
-    color: #334155;
-    padding: 12px 0;
-    border-bottom: 1px solid #f1f5f9;
+    color: #000;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    font-weight: 500;
   }
       
   .nav .links a:last-child {
