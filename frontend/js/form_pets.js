@@ -156,3 +156,24 @@ function montarLocalizacao(bairro, cidade) {
 
   return "Local não informado";
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const inputImagem = document.getElementById("imgLocal");
+  const labelImagem = document.getElementById("labelImgLocal");
+
+  if (inputImagem && labelImagem) {
+    inputImagem.addEventListener("change", (event) => {
+
+      if (event.target.files && event.target.files.length > 0) {
+        const nomeArquivo = event.target.files[0].name;
+        
+        labelImagem.innerHTML = `✅ ${nomeArquivo}`;
+        
+        labelImagem.classList.add("arquivo-selecionado");
+      } else {
+        labelImagem.innerHTML = `📸 Selecionar fotos da ocorrência`;
+        labelImagem.classList.remove("arquivo-selecionado");
+      }
+    });
+  }
+});

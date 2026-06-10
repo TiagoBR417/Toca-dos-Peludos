@@ -123,12 +123,12 @@ input:focus, select:focus {
   background-color: #fff;
 }
 
-.formCadastro .input-endereco {
-  grid-column: span 4; 
+.formCadastro #enderecoCadastro {
+  grid-column: span 6; 
 }
 
-.formCadastro .input-numero {
-  grid-column: span 2; 
+.formCadastro #numeroCadastro {
+  grid-column: span 3; 
 }
 
 input::placeholder {
