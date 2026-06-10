@@ -206,18 +206,20 @@ class GlobalHeader extends HTMLElement {
     position: absolute;
     top: 100%;
     left: 16px;
-    width: calc(100% - 32px); 
-    background: rgba(255,201,60);
+    right: 16px;
+    width: auto; 
+    background: rgba(255,201,60,0.99);
     padding: 12px 20px; 
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(75,46,131,0.2);
     flex-direction: column;
     align-items: stretch;
-    transform: translateY(-10px);
+    transform: translateY(-20px);
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     border: 1px solid rgba(255,255,255,0.1);
+    box-sizing: border-box;
   }
 
   .nav .links a {

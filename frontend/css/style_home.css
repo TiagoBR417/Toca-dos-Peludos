@@ -76,6 +76,7 @@
   align-items: center; /* Centraliza horizontalmente */
   justify-content: center;
   border-radius: 28px 28px 0 0;
+  overflow: hidden;
 }
 
 #moments h2 {
@@ -303,6 +304,24 @@
   #txt_denuncias p {
     font-size: 1rem; /* Diminui levemente a fonte para melhor leitura no celular */
     padding: 0; /* Remove paddings exagerados que espremiam o texto */
+  }
+
+  #moments button {
+    width: 35px;
+    height: 60px;
+    transform: translateY(-50%);
+  }
+
+  #moments button:first-of-type {
+    left: 10px;
+    border-radius: 0 40px 40px 0;
+    border-left: none;
+  }
+
+  #moments button:last-of-type {
+    right: 10px;
+    border-radius: 40px 0 0 40px;
+    border-left: none;
   }
 }
 
@@ -586,21 +605,29 @@
 
 .pix-copia input {
   flex: 1;
-  padding: 10px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
+  height: 42px;
+  box-sizing: border-box;
 }
 
 .pix-copia button {
-  padding: 15px;
+  padding: 0 20px;
+  height: 42px;
   border: none;
-  border-radius: 999px;
+  border-radius: 8px;
   background: linear-gradient(90deg, var(--secondary), var(--accent));
   color: white;
   font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
+  white-space: nowrap;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pix-copia button:hover {
