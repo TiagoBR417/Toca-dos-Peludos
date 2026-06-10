@@ -22,7 +22,7 @@
 }
 
 .card {
-  background: white;
+  background: linear-gradient(270deg, #ffffff 0%, #f3e8ff 100%);
   padding: 16px 20px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.02);
@@ -59,7 +59,7 @@
 }
 
 .important {
-  background: #fff7ed;
+  background: linear-gradient(270deg, #ffffff 0%, #ffedd5 100%);
   border: 1px solid #ffedd5;
 }
 
