@@ -283,6 +283,41 @@
   color: #555;
 }
 
+/* Divisor e cabeçalhos de gerenciamento no dashboard misto */
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.3px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: #7956A6; /* Mantém a identidade visual roxa da Toca dos Peludos */
+  border-radius: 2px;
+}
+
+/* Transição suave ao atualizar dados das tabelas sem piscar a página */
+.loader-suave {
+  padding: 30px;
+  text-align: center;
+  color: #64748b;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
 @media (max-width: 1024px) {
   .sidebar {
     width: 80px;

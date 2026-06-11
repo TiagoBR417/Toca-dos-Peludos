@@ -17,6 +17,82 @@
   box-shadow: 0 10px 30px rgba(106, 27, 154, 0.25);
 }
 
+.perfil-avatar-wrapper {
+  position: relative;
+}
+
+.perfil-avatar {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-upload-foto {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--primary);
+  color: #1e293b;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: 0.3s ease;
+  border: 2px solid white;
+}
+
+.btn-upload-foto:hover {
+  transform: scale(1.1);
+  background: #ffb800;
+}
+
+/* Botões de Ação Inline (Tabelas e Listas) */
+.btn-acao-perfil {
+  background: #f3e5f5;
+  color: #6A1B9A;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.2s;
+}
+
+.btn-acao-perfil:hover {
+  background: #6A1B9A;
+  color: white;
+}
+
+.btn-acao-perfil.secundario {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.btn-acao-perfil.secundario:hover {
+  background: #0369a1;
+  color: white;
+}
+
+.btn-add-pet {
+  background: var(--primary);
+  color: #222;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-add-pet:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
 .perfil-avatar img {
   width: 120px;
   height: 120px;
@@ -170,6 +246,34 @@
   gap: 16px;
 }
 
+.cards-lista-pets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.pet-user-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 5px solid var(--accent);
+}
+
+.pet-user-info h4 {
+  color: #222;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.pet-user-info p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
 .item-card {
   background: white;
   border-radius: 18px;
@@ -209,6 +313,92 @@
 .status.pendente {
   background: #fff8e1;
   color: #f9a825;
+}
+
+.modal-perfil-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-perfil-content {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: modalEntrada 0.3s ease;
+}
+
+@keyframes modalEntrada {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-perfil-content h3 {
+  color: #6A1B9A;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.modal-perfil-content label {
+  display: block;
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.modal-perfil-content input, 
+.modal-perfil-content select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.modal-perfil-botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modal-perfil-botoes button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-cancelar {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.btn-cancelar:hover { background: #e2e8f0; }
+
+.btn-salvar {
+  background: #6A1B9A;
+  color: white;
+}
+
+.btn-salvar:hover { background: #5a1485; }
+
+body.no-scroll {
+  overflow: hidden;
 }
 
 /* RESPONSIVO */

@@ -15,21 +15,26 @@
 <body>
   <global-header></global-header>
   <main class="perfil-container">
-    <!-- HERO -->
+    <!-- HERO COM UPLOAD DE FOTO -->
     <section class="perfil-hero">
-      <div class="perfil-avatar">
-        <img src="img/logo-tdp-ícone.png" alt="Foto do usuário">
-      </div>
+      <div class="perfil-avatar-wrapper">
+        <div class="perfil-avatar">
+          <img id="avatarUsuario" src="img/logo-tdp-ícone.png" alt="Foto do usuário">
+          <label for="uploadFoto" class="btn-upload-foto" title="Alterar foto de perfil">
+            <i class="fa-solid fa-camera"></i>
+          </label>
+        </div>
+      </div>  
       <div class="perfil-hero-info">
         <span class="perfil-tag">
           <i class="fa-solid fa-paw"></i>
           Amigo dos Peludos
         </span>
-        <h1>Meu Perfil</h1>
+        <h1 id="saudacaoNome">Meu Perfil</h1>
         <p>Gerencie suas visitas, eventos e acompanhe sua jornada ajudando os animais.</p>
       </div>
     </section>
-    <!-- CARD PRINCIPAL -->
+    <!-- CARD PRINCIPAL E CONFIGURAÇÕES -->
     <section class="perfil-grid">
       <!-- Dados do usuário -->
       <div class="card card-usuario">
@@ -45,7 +50,7 @@
         </div>
         <div id="infoUsuario" class="info-usuario">
           <div class="info-item">
-            <span>Nome</span>
+            <span>Nome Completo</span>
             <strong>Carregando...</strong>
           </div>
           <div class="info-item">
@@ -54,29 +59,39 @@
           </div>
           <div class="info-item">
             <span>Telefone</span>
+            <div style="display: flex; justify-content: space-between; align-items: center;"></div>
             <strong>Carregando...</strong>
           </div>
         </div>
       </div>
-      <!-- Estatísticas -->
+      <!-- Estatísticas Resumidas -->
       <div class="card estatisticas-card">
         <div class="stats-grid">
           <div class="stat-item">
             <i class="fa-solid fa-heart"></i>
-            <h3>12</h3>
+            <h3 id="statVisitas">0</h3>
             <p>Visitas</p>
           </div>
           <div class="stat-item">
             <i class="fa-solid fa-calendar"></i>
-            <h3>5</h3>
+            <h3 id="statEventos">0</h3>
             <p>Eventos</p>
           </div>
-          <div class="stat-item">
-            <i class="fa-solid fa-paw"></i>
-            <h3>8</h3>
-            <p>Pets Ajudados</p>
-          </div>
         </div>
+      </div>
+    </section>
+    <!-- SEÇÃO: MEUS PETS (NOVA FUNCIONALIDADE) -->
+    <section class="secao-conteudo">
+      <div class="secao-titulo" style="display: flex; justify-content: space-between; align-items: center; background: var(--accent); color: var(--primary); padding: 0 22px 0 0; border-radius: 14px;">
+        <h2 style="font-size: 1.1rem; display: flex; align-items: center; gap: 10px; margin: 0;">
+          <i class="fa-solid fa-cat"></i>
+          Meus Pets Cadastrados
+        </h2>
+        <button class="btn-add-pet" onclick="abrirModalPet()"><i class="fa-solid fa-plus"></i> Adicionar Pet</button>
+      </div>
+      <div id="listaMeusPets" class="cards-lista-pets" style="margin-top: 20px;">
+        <!-- Injetado dinamicamente via JS -->
+        <p style="color: #666;">Carregando seus pets...</p>
       </div>
     </section>
     <!-- VISITAS -->
@@ -88,13 +103,7 @@
         </h2>
       </div>
       <div id="listaVisitas" class="cards-lista">
-        <div class="item-card">
-          <div>
-            <h3>Thor</h3>
-            <p>Visita realizada em 12/05/2026</p>
-          </div>
-          <span class="status sucesso">Concluída</span>
-        </div>
+        <p>Carregando visitas...</p>
       </div>
     </section>
     <!-- EVENTOS -->
@@ -106,16 +115,65 @@
         </h2>
       </div>
       <div id="listaEventos" class="cards-lista">
-        <div class="item-card">
-          <div>
-            <h3>Feira de Adoção</h3>
-            <p>Participação confirmada</p>
-          </div>
-          <span class="status pendente">Em breve</span>
-        </div>
+        <p>Carregando eventos...</p>
       </div>
     </section>
   </main>
+  <!-- MODAL: ALTERAR TELEFONE -->
+  <div id="modalTelefone" class="modal-perfil-container">
+    <div class="modal-perfil-content">
+      <h3><i class="fa-solid fa-phone"></i> Atualizar Telefone</h3>
+      <form id="formTelefone" onsubmit="salvarTelefone(event)">
+        <label for="novoTelefone">Novo número (com DDD):</label>
+        <input type="text" id="novoTelefone" placeholder="(11) 99999-9999" required autocomplete="off">
+        <div class="modal-perfil-botoes">
+          <button type="button" class="btn-cancelar" onclick="fecharModais()">Cancelar</button>
+          <button type="submit" class="btn-salvar">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- MODAL: ALTERAR SENHA -->
+  <div id="modalSenha" class="modal-perfil-container">
+    <div class="modal-perfil-content">
+      <h3><i class="fa-solid fa-lock"></i> Alterar Senha</h3>
+      <form id="formSenha" onsubmit="salvarSenha(event)">
+        <label for="senhaAtual">Senha Atual:</label>
+        <input type="password" id="senhaAtual" required autocomplete="current-password">
+        <label for="novaSenha">Nova Senha:</label>
+        <input type="password" id="novaSenha" required autocomplete="new-password">
+        <label for="confirmaSenha">Confirmar Nova Senha:</label>
+        <input type="password" id="confirmaSenha" required autocomplete="new-password">
+        <div class="modal-perfil-botoes">
+          <button type="button" class="btn-cancelar" onclick="fecharModais()">Cancelar</button>
+          <button type="submit" class="btn-salvar">Atualizar Senha</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- MODAL: ADICIONAR/EDITAR PET -->
+  <div id="modalPet" class="modal-perfil-container">
+    <div class="modal-perfil-content">
+      <h3><i class="fa-solid fa-paw"></i> Informações do Pet</h3>
+      <form id="formPet" onsubmit="salvarPet(event)">
+        <input type="hidden" id="petId">
+        <label for="nomePet">Nome do Pet:</label>
+        <input type="text" id="nomePet" required placeholder="Ex: Mel, Bob">
+        <label for="especiePet">Espécie:</label>
+        <select id="especiePet" required>
+          <option value="Cachorro">Cachorro</option>
+          <option value="Gato">Gato</option>
+          <option value="Outro">Outro</option>
+        </select>
+        <label for="idadePet">Idade aproximada:</label>
+        <input type="text" id="idadePet" placeholder="Ex: 2 anos, 5 meses" required>
+        <div class="modal-perfil-botoes">
+          <button type="button" class="btn-cancelar" onclick="fecharModais()">Cancelar</button>
+          <button type="submit" class="btn-salvar">Gravar Registro</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <chat-ia></chat-ia>
   <global-footer></global-footer>
   <script src="js/apiScript.js"></script>

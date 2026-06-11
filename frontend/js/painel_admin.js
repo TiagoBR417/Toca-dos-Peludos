@@ -67,7 +67,6 @@ function fazerLogout() {
 }
 
 // 3. CARREGAMENTO DE DADOS (GET COM TOKEN)
-
 async function carregarResumoDashboard() {
   try {
     const response = await fetch(`${BASE_URL}/admin/dashboard.php`, {
@@ -203,7 +202,6 @@ function renderizarTabela(secao, dados) {
 }
 
 // 4. MODAIS E ATUALIZAÇÕES (POST COM TOKEN)
-
 //  PETS 
 function abrirModalPet(idPet) {
   const pet = dadosTabelaAtual.find(p => Number(p.id) === Number(idPet));
@@ -328,7 +326,6 @@ document.getElementById("formEditarEvento")?.addEventListener("submit", async (e
 });
 
 // 5. FUNÇÃO AUXILIAR PARA ENVIAR POST COM TOKEN
-
 async function enviarAtualizacao(url, payload, idMensagem, funcFecharModal, nomeSecao) {
   const msg = document.getElementById(idMensagem);
   msg.textContent = "Atualizando...";
@@ -370,10 +367,7 @@ async function enviarAtualizacao(url, payload, idMensagem, funcFecharModal, nome
   }
 }
 
-// ==========================================
 // FUNÇÕES DE CRIAR E EXCLUIR EVENTOS (PITCH)
-// ==========================================
-
 // Abrir e Fechar Modal de Criação
 function abrirModalCriarEvento() {
   document.getElementById("formCriarEvento").reset();
@@ -424,4 +418,104 @@ async function excluirEvento(id) {
   } catch (error) {
     alert("Erro de conexão ao tentar excluir.");
   }
+}
+
+// Busca os dados especificamente para os containers injetados abaixo dos gráficos
+async function carregarDadosTabelaDashboard(secao, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = '<div class="loader-suave">Atualizando listagem...</div>';
+  const endpoint = ADMIN_ENDPOINTS[secao];
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "GET",
+      headers: { "Authorization": `Bearer ${TOKEN}` }
+    });
+
+    if (response.status === 401 || response.status === 403) { fazerLogout(); return; }
+
+    const resultado = await response.json();
+
+    if (resultado.success && resultado.data.length > 0) {
+      // Atualiza a variável global do escopo admin para modais lerem os dados corretos
+      dadosTabelaAtual = resultado.data; 
+      
+      const colunas = Object.keys(resultado.data[0]);
+      let html = `<div class="admin-table-wrapper"><table class="admin-table"><thead><tr>`;
+      
+      colunas.forEach(col => {
+        let nomeFormatado = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        html += `<th>${nomeFormatado}</th>`;
+      });
+      html += `<th>Ações</th></tr></thead><tbody>`;
+
+      resultado.data.forEach(item => {
+        html += `<tr>`;
+        colunas.forEach(col => {
+          let valor = item[col] || '-';
+          if(col.includes('data')) {
+              valor = new Date(valor).toLocaleDateString('pt-BR');
+          }
+          html += `<td>${valor}</td>`;
+        });
+
+        // Botões diferenciados para as ações do Administrador
+        if (secao === 'pets') {
+          html += `<td>
+                    <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #9C27B0; margin-right: 5px;" onclick="abrirModalPet(${item.id})">Editar</button>
+                    <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #e74c3c;" onclick="excluirPet(${item.id})">Excluir</button>
+                  </td>`;
+        } else if (secao === 'eventos') {
+          html += `<td>
+                    <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #9C27B0; margin-right: 5px;" onclick="abrirModalEvento(${item.id})">Gerenciar</button>
+                    <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #e74c3c;" onclick="excluirEvento(${item.id})">Excluir</button>
+                   </td>`;
+        }
+        html += `</tr>`;
+      });
+
+      html += `</tbody></table></div>`;
+      container.innerHTML = html;
+    } else {
+      container.innerHTML = `<div class="admin-vazio">Nenhum registro encontrado para a listagem.</div>`;
+    }
+  } catch (error) {
+    container.innerHTML = `<div style="color: red; font-size: 0.9rem;">Erro ao carregar listagem de gerenciamento.</div>`;
+  }
+}
+
+// OPERAÇÃO DE EXCLUSÃO E CRIAÇÃO DE PETS 
+async function excluirPet(id) {
+  if (!confirm("Tem certeza que deseja remover este pet permanentemente?")) return;
+
+  try {
+    const response = await fetch(`${BASE_URL}/admin/excluir_pet.php`, { // Certifique-se que o endpoint existe no seu backend PHP
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${TOKEN}` },
+      body: JSON.stringify({ id: id })
+    });
+
+    if (response.status === 401 || response.status === 403) { fazerLogout(); return; }
+    
+    const resultado = await response.json();
+    if (resultado.success) {
+      // Recarrega dinamicamente a tabela do painel de gráficos atual
+      carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
+      carregarResumoDashboard();
+    } else {
+      alert(resultado.message);
+    }
+  } catch (error) {
+    alert("Erro de conexão ao tentar excluir o pet.");
+  }
+}
+
+// Gatilho para abrir o modal de cadastro de pet
+function abrirModalCriarPet() {
+  // Caso possua um formulário modal estático mapeado no HTML para criação:
+  document.getElementById("formCriarPet")?.reset();
+  document.getElementById("modalCriarPet").style.display = "block";
+  document.body.classList.add("no-scroll");
 }
