@@ -37,7 +37,7 @@
           <form action="" method="" class="popup_form">
             <h3>Esqueceu sua senha?</h3>
             <p>Para redefinir sua senha, siga os seguintes passos.</p><br>
-            <p>Qual seu email cadastrado?</p>
+            <p>Qual seu email cadastrado?</p><br>
             <input type="email" placeholder="Email" id="campoEmail" required><br>
             <button type="button" class="btn-login" onclick="irCodigo()">Continuar</button>
           </form>
@@ -46,7 +46,7 @@
           <form action="" method="" class="popup_form">
             <h3>Verifique sua caixa de entrada do Email</h3>
             <p>Enviamos um código para que a senha possa ser redefinida.</p><br>
-            <p>Insira o código</p>
+            <p>Insira o código</p><br>
             <input type="number" placeholder="Código" required><br>
             <button type="button" class="btn-login" onclick="irRedefinirSenha()">Confirmar</button>
           </form>
@@ -70,8 +70,8 @@
           <form action="" method="post" class="popup_form">
             <h3>Esqueceu seu email?</h3>
             <p>Para redefinir seu email, siga os seguintes passos.</p><br>
-            <p>Qual seu telefone cadastrado?</p>
-            <input type="number" id="campoTelefone" placeholder="Telefone" required><br>
+            <p>Qual seu telefone cadastrado?</p><br>
+            <input type="number" id="campoTelefone" placeholder="Telefone" maxlength="15" required><br>
             <button type="button" class="btn-login" onclick="irCodigoSms()">Continuar</button>
           </form>
         </div>
@@ -79,8 +79,8 @@
           <form action="" method="post" class="popup_form"> 
             <h3>Verifique sua caixa de entrada do SMS</h3>
             <p>Enviamos um código para que o email possa ser redefinido.</p><br>
-            <p>Insira o código</p>
-            <input type="number" placeholder="Código" required><br>
+            <p>Insira o código</p><br>
+            <input type="number" placeholder="Código" maxlength="6" required><br>
             <button type="button" class="btn-login" onclick="irRedefinirEmail()">Confirmar</button>
           </form>
         </div>
