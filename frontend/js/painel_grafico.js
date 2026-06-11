@@ -22,6 +22,9 @@ const dashboards = {
         <div id="idadePets"></div>
       </div>
     </div>
+    <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; margin-top: 40px; margin-bottom: 15px; color: #1e293b;">📋 Gerenciar Cadastro de Pets</h2>
+    <button class="btn-accent" style="background-color: #4CAF50; padding: 10px 20px; border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;" onclick="abrirModalCriarPet()">➕ Novo Pet</button>
+    <div id="container-tabela-pets"></div>
   `,
 
   eventos: `
@@ -40,7 +43,11 @@ const dashboards = {
         <div id="participacaoEventos"></div>
       </div>
     </div>
+    <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; margin-top: 40px; margin-bottom: 15px; color: #1e293b;">📅 Gerenciar Agenda de Eventos</h2>
+    <button class="btn-accent" style="background-color: #4CAF50; padding: 10px 20px; border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;" onclick="abrirModalCriarEvento()">➕ Novo Evento</button>
+    <div id="container-tabela-eventos"></div>
   `,
+
 
   denuncias: `
     <h1>Dashboard Denúncias</h1>
@@ -206,6 +213,7 @@ const dashboards = {
 
 dashboardContent.innerHTML = dashboards.pets;
 renderPetsCharts();
+if (typeof carregarDadosTabelaDashboard === 'function') carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
 navItems[0].classList.add('active');
 
 navItems.forEach(item => {
@@ -219,9 +227,11 @@ navItems.forEach(item => {
     switch (dashboard) {
       case 'pets':
       renderPetsCharts();
+      if (typeof carregarDadosTabelaDashboard === 'function') carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
       break;
       case 'eventos':
       renderEventsCharts();
+      if (typeof carregarDadosTabelaDashboard === 'function') carregarDadosTabelaDashboard('eventos', 'container-tabela-eventos');
       break;
       case 'denuncias':
       renderReportsCharts();
