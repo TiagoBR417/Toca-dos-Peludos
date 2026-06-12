@@ -27,17 +27,20 @@ $telefone = trim($dados['telefone'] ?? '');
 $email = trim($dados['email'] ?? '');
 $genero = trim($dados['genero'] ?? '');
 $senha = trim($dados['senha'] ?? '');
+$cpf = trim($dados['cpf'] ?? '');               // <-- Capturando CPF
 $cep = trim($dados['cep'] ?? '');
 $endereco = trim($dados['endereco'] ?? '');
 $numero = trim($dados['numero'] ?? '');
+$complemento = trim($dados['complemento'] ?? ''); // <-- Capturando Complemento
 $cidade = trim($dados['cidade'] ?? '');
 $estado = trim($dados['estado'] ?? '');
 
-// 2. Verificando se algum campo obrigatório está vazio
+// 2. Verificando se algum campo obrigatório está vazio (complemento fica de fora pois é opcional)
 if (
     $nome === '' || $sobrenome === '' || $data_nascimento === '' ||
     $telefone === '' || $email === '' || $genero === '' || $senha === '' ||
-    $cep === '' || $endereco === '' || $numero === '' || $cidade === '' || $estado === ''
+    $cpf === '' || $cep === '' || $endereco === '' || $numero === '' || 
+    $cidade === '' || $estado === ''
 ) {
     JsonResponse::send([
         'success' => false,
@@ -73,16 +76,16 @@ if ($resultCheck->num_rows > 0) {
 $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 $tipo = 'adotante';
 
-// 6. Inserindo no banco de dados com os campos de endereço
+// 6. Inserindo no banco de dados com os novos campos inclusos
 $stmt = $conn->prepare("
     INSERT INTO usuarios
-    (nome, sobrenome, data_nascimento, telefone, email, genero, senha_hash, tipo, cep, endereco, numero, cidade, estado)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    (nome, sobrenome, data_nascimento, telefone, email, genero, senha_hash, tipo, cpf, cep, endereco, numero, complemento, cidade, estado)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
 
-// 13 "s" para as 13 variáveis de string
+// Agora são 15 "s" para as 15 variáveis de string mapeadas na ordem do INSERT acima
 $stmt->bind_param(
-    "sssssssssssss",
+    "sssssssssssssss",
     $nome,
     $sobrenome,
     $data_nascimento,
@@ -91,9 +94,11 @@ $stmt->bind_param(
     $genero,
     $senha_hash,
     $tipo,
+    $cpf,
     $cep,
     $endereco,
     $numero,
+    $complemento,
     $cidade,
     $estado
 );

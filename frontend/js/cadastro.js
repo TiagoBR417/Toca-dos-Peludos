@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cep = document.getElementById("cepCadastro").value.trim();
     const endereco = document.getElementById("enderecoCadastro").value.trim();
     const numero = document.getElementById("numeroCadastro").value.trim();
+    const complemento = document.getElementById("complementoCadastro").value.trim();
     const cidade = document.getElementById("cidadeCadastro").value.trim();
     const estado = document.getElementById("estadoCadastro").value.trim();
 
@@ -140,9 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
       email,
       genero,
       senha,
+      cpf,
       cep,
       endereco,
       numero,
+      complemento,
       cidade,
       estado
     };
