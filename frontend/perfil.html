@@ -33,6 +33,46 @@
         <h1 id="saudacaoNome">Meu Perfil</h1>
         <p>Gerencie suas visitas, eventos e acompanhe sua jornada ajudando os animais.</p>
       </div>
+
+      <div id="modalPerfil" class="modal-perfil-container">
+    <div class="modal-perfil-content" style="max-width: 500px;">
+      <h3><i class="fa-solid fa-user-gear"></i> Atualizar Informações</h3>
+      <form id="formPerfil" onsubmit="salvarPerfil(event)">
+        <label for="novoTelefone">Telefone:</label>
+        <input type="text" id="novoTelefone" placeholder="(11) 99999-9999" required autocomplete="off">
+        
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 3;">
+            <label for="novoEndereco">Endereço (Rua / Av):</label>
+            <input type="text" id="novoEndereco" placeholder="Ex: Rua das Flores" required autocomplete="off">
+          </div>
+          <div style="flex: 1;">
+            <label for="novoNumero">Número:</label>
+            <input type="text" id="novoNumero" placeholder="123" required autocomplete="off">
+          </div>
+        </div>
+
+        <label for="novoCep">CEP:</label>
+        <input type="text" id="novoCep" placeholder="07000-000" required autocomplete="off">
+
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 3;">
+            <label for="novaCidade">Cidade:</label>
+            <input type="text" id="novaCidade" placeholder="Ex: Guarulhos" required autocomplete="off">
+          </div>
+          <div style="flex: 1;">
+            <label for="novoEstado">UF:</label>
+            <input type="text" id="novoEstado" placeholder="SP" maxlength="2" required autocomplete="off">
+          </div>
+        </div>
+
+        <div class="modal-perfil-botoes">
+          <button type="button" class="btn-cancelar" onclick="fecharModais()">Cancelar</button>
+          <button type="submit" class="btn-salvar">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
     </section>
     <!-- CARD PRINCIPAL E CONFIGURAÇÕES -->
     <section class="perfil-grid">
@@ -43,7 +83,7 @@
             <i class="fa-solid fa-user"></i>
             Informações da Conta
           </h2>
-          <button class="btn-editar">
+          <button class="btn-editar" onclick="abrirModalPerfil()">
             <i class="fa-solid fa-pen"></i>
             Editar
           </button>
@@ -60,6 +100,18 @@
           <div class="info-item">
             <span>Telefone</span>
             <strong id="txtTelefone">Carregando...</strong>
+          </div>
+          <div class="info-item">
+            <span>Endereço</span>
+            <strong id="txtEndereco">Carregando...</strong>
+          </div>
+          <div class="info-item">
+            <span>Cidade / Estado</span>
+            <strong id="txtCidadeEstado">Carregando...</strong>
+          </div>
+          <div class="info-item">
+            <span>CEP</span>
+            <strong id="txtCep">Carregando...</strong>
           </div>
         </div>
       </div>

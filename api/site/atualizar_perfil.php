@@ -33,19 +33,29 @@ $dados = json_decode(file_get_contents('php://input'), true);
 $acao = $dados['acao'] ?? '';
 $conn = Database::getConnection();
 
-// AÇÃO: ATUALIZAR TELEFONE
-if ($acao === 'telefone') {
-    $novoTelefone = $dados['telefone'] ?? '';
+// AÇÃO: ATUALIZAR PERFIL COMPLETO (TELEFONE + ENDEREÇO)
+if ($acao === 'perfil') {
+    $telefone = $dados['telefone'] ?? '';
+    $cep = $dados['cep'] ?? '';
+    $endereco = $dados['endereco'] ?? '';
+    $numero = $dados['numero'] ?? '';
+    $cidade = $dados['cidade'] ?? '';
+    $estado = $dados['estado'] ?? '';
     
-    $stmt = $conn->prepare("UPDATE usuarios SET telefone = ? WHERE email = ?");
-    $stmt->bind_param("ss", $novoTelefone, $userEmail);
+    // Faz o UPDATE sincronizado com as colunas certas da tabela de usuários
+    $stmt = $conn->prepare("
+        UPDATE usuarios 
+        SET telefone = ?, cep = ?, endereco = ?, numero = ?, cidade = ?, estado = ? 
+        WHERE email = ?
+    ");
+    $stmt->bind_param("sssssss", $telefone, $cep, $endereco, $numero, $cidade, $estado, $userEmail);
     
     if ($stmt->execute()) {
-        JsonResponse::send(['success' => true, 'message' => 'Telefone atualizado com sucesso.']);
+        JsonResponse::send(['success' => true, 'message' => 'Perfil atualizado com sucesso.']);
     } else {
-        JsonResponse::send(['success' => false, 'message' => 'Erro interno ao atualizar telefone.'], 500);
+        JsonResponse::send(['success' => false, 'message' => 'Erro interno ao atualizar os dados no banco.'], 500);
     }
-} 
+}
 
 // AÇÃO: ALTERAR SENHA
 elseif ($acao === 'senha') {

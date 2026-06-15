@@ -6,11 +6,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 1. Injeta dados estáticos iniciais guardados no LocalStorage
+// 1. Injeta dados estáticos iniciais guardados no LocalStorage
   document.getElementById("saudacaoNome").innerText = `Olá, ${usuarioLogado.nome}!`;
   document.getElementById("txtNome").innerText = `${usuarioLogado.nome} ${usuarioLogado.sobrenome || ''}`;
   document.getElementById("txtEmail").innerText = usuarioLogado.email;
   document.getElementById("txtTelefone").innerText = usuarioLogado.telefone || 'Não informado';
+  
+  // Injeção dos novos dados de endereço
+  document.getElementById("txtEndereco").innerText = usuarioLogado.endereco ? `${usuarioLogado.endereco}, ${usuarioLogado.numero}` : 'Não informado';
+  document.getElementById("txtCidadeEstado").innerText = usuarioLogado.cidade ? `${usuarioLogado.cidade} - ${usuarioLogado.estado.toUpperCase()}` : 'Não informado';
+  document.getElementById("txtCep").innerText = usuarioLogado.cep || 'Não informado';
 
   // Carrega foto salva localmente se houver
   if (localStorage.getItem(`foto_perfil_${usuarioLogado.email}`)) {
@@ -47,10 +52,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // OPERAÇÃO: MODAIS CONTROLE DE INTERFACE
-function abrirModalTelefone() {
-  const telAtual = document.getElementById("txtTelefone").innerText;
-  document.getElementById("novoTelefone").value = telAtual === 'Não informado' ? '' : telAtual;
-  exibirModal("modalTelefone");
+function abrirModalPerfil() {
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+  
+  document.getElementById("novoTelefone").value = usuarioLogado.telefone || '';
+  document.getElementById("novoEndereco").value = usuarioLogado.endereco || '';
+  document.getElementById("novoNumero").value = usuarioLogado.numero || '';
+  document.getElementById("novoCep").value = usuarioLogado.cep || '';
+  document.getElementById("novaCidade").value = usuarioLogado.cidade || '';
+  document.getElementById("novoEstado").value = usuarioLogado.estado || '';
+  
+  exibirModal("modalPerfil");
 }
 
 function abrirModalSenha() {
@@ -78,10 +90,16 @@ function fecharModais() {
 }
 
 // OPERAÇÃO: ENVIO DE ATUALIZAÇÕES PARA O BANCO
-async function salvarTelefone(event) {
+async function salvarPerfil(event) {
   event.preventDefault();
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-  const novoTel = document.getElementById("novoTelefone").value;
+  
+  const telefone = document.getElementById("novoTelefone").value;
+  const endereco = document.getElementById("novoEndereco").value;
+  const numero = document.getElementById("novoNumero").value;
+  const cep = document.getElementById("novoCep").value;
+  const cidade = document.getElementById("novaCidade").value;
+  const estado = document.getElementById("novoEstado").value;
 
   try {
     const response = await fetch(`${BASE_URL}/site/atualizar_perfil.php`, {
@@ -90,18 +108,38 @@ async function salvarTelefone(event) {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${usuarioLogado.token}` 
       },
-      body: JSON.stringify({ acao: 'telefone', telefone: novoTel })
+      body: JSON.stringify({ 
+        acao: 'perfil', 
+        telefone, 
+        endereco, 
+        numero, 
+        cep, 
+        cidade, 
+        estado 
+      })
     });
 
     const resultado = await response.json();
     if (resultado.success) {
-      document.getElementById("txtTelefone").innerText = novoTel;
-      usuarioLogado.telefone = novoTel;
+      // Atualiza os valores dinamicamente no HTML da página
+      document.getElementById("txtTelefone").innerText = telefone;
+      document.getElementById("txtEndereco").innerText = `${endereco}, ${numero}`;
+      document.getElementById("txtCidadeEstado").innerText = `${cidade} - ${estado.toUpperCase()}`;
+      document.getElementById("txtCep").innerText = cep;
+
+      // Sincroniza o LocalStorage para os dados persistirem ao atualizar a página (F5)
+      usuarioLogado.telefone = telefone;
+      usuarioLogado.endereco = endereco;
+      usuarioLogado.numero = numero;
+      usuarioLogado.cep = cep;
+      usuarioLogado.cidade = cidade;
+      usuarioLogado.estado = estado;
       localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+
       fecharModais();
-      alert("Telefone updated com sucesso!");
+      alert("Informações de perfil atualizadas com sucesso!");
     } else {
-      alert(resultado.message || "Erro ao atualizar.");
+      alert(resultado.message || "Erro ao atualizar dados.");
     }
   } catch (e) {
     alert("Erro na conexão com o servidor.");

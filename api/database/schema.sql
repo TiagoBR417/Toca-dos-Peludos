@@ -4,6 +4,9 @@ COLLATE utf8mb4_unicode_ci;
 
 USE toca_dos_peludos;
 
+-- =========================================
+-- 1. TABELA DE USUÁRIOS
+-- =========================================
 CREATE TABLE IF NOT EXISTS usuarios (
     id BIGINT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(150) NOT NULL,
@@ -13,21 +16,25 @@ CREATE TABLE IF NOT EXISTS usuarios (
     cpf VARCHAR(14) NOT NULL,
     email VARCHAR(150) NOT NULL,
     senha_hash VARCHAR(255) NOT NULL,
-    telefone VARCHAR(20) not NULL,
-    cep VARCHAR(10) not NULL,
-    endereco VARCHAR(255) not NULL,
-    numero VARCHAR(20)not NULL,
+    telefone VARCHAR(20) NOT NULL,
+    cep VARCHAR(10) NOT NULL,
+    endereco VARCHAR(255) NOT NULL,
+    numero VARCHAR(20) NOT NULL,
     complemento VARCHAR(100),
-    cidade VARCHAR(100)not NULL,
-    estado VARCHAR(2)not NULL,
+    cidade VARCHAR(100) NOT NULL,
+    estado VARCHAR(2) NOT NULL,
     tipo VARCHAR(20) NOT NULL DEFAULT 'adotante',
     ativo TINYINT(1) NOT NULL DEFAULT 1,
+    foto_url VARCHAR(255) DEFAULT 'img/logo-tdp-ícone.png', 
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uq_usuarios_email (email)
 );
 
+-- =========================================
+-- 2. TABELA DE PETS 
+-- =========================================
 CREATE TABLE IF NOT EXISTS pets (
     id BIGINT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -47,9 +54,15 @@ CREATE TABLE IF NOT EXISTS pets (
     status VARCHAR(20) NOT NULL DEFAULT 'disponivel',
     cidade VARCHAR(100),
     bairro VARCHAR(100),
+    usuario_id BIGINT NULL, 
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT fk_pets_usuario 
+        FOREIGN KEY (usuario_id) 
+        REFERENCES usuarios(id) 
+        ON DELETE SET NULL 
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS eventos (
@@ -139,12 +152,9 @@ CREATE TABLE IF NOT EXISTS agendamentos_visita (
 CREATE INDEX idx_pets_nome ON pets(nome);
 CREATE INDEX idx_pets_tipo ON pets(tipo);
 CREATE INDEX idx_pets_status ON pets(status);
-
 CREATE INDEX idx_eventos_data_evento ON eventos(data_evento);
 CREATE INDEX idx_eventos_status ON eventos(status);
-
 CREATE INDEX idx_denuncias_status ON denuncias(status);
-
 CREATE INDEX idx_doacoes_data_doacao ON doacoes(data_doacao);
 
 /*inserts do bd atuais*/
