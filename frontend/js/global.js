@@ -197,7 +197,7 @@ class GlobalHeader extends HTMLElement {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   .menu-sanduiche {
     display: flex;
   }
@@ -238,7 +238,14 @@ class GlobalHeader extends HTMLElement {
     opacity: 1;
     pointer-events: auto;
   }
-}      
+}
+
+@media screen and (max-width: 550px) {
+  .titulo{
+    display: none;
+  }
+}
+  
 /* Fim do Menu Sanduiche */      
       </style>
       <header class="nav">
@@ -247,7 +254,7 @@ class GlobalHeader extends HTMLElement {
             <a href="index.html">
               <img src="img/logo-tdp.jpg" class="logo" alt="Logo Toca dos Peludos">
             </a>
-            <span>Toca dos Peludos</span>
+            <span class="titulo">Toca dos Peludos</span>
           </div>
           <nav class="links">
             <a href="index.html">Início</a>
@@ -447,6 +454,12 @@ class GlobalFooter extends HTMLElement {
 
 .footer a:hover {
   text-decoration: underline;
+}
+
+@media screen and (max-width: 900px) {
+  #links_footer a{
+    align-self: center;
+  }
 }
 
 /* REDES SOCIAIS */
@@ -649,7 +662,7 @@ class GlobalFooter extends HTMLElement {
           </div>
         </div>
         <div id="copyright">
-          <p>© 2026 Toca dos Peludos. Feito com ❤️ para os animais.</p>
+          <p>© 2026 Toca dos Peludos. Feito com amor para os animais.</p>
         </div>
       </footer>
     `;
