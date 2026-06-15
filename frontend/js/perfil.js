@@ -99,7 +99,7 @@ async function salvarTelefone(event) {
       usuarioLogado.telefone = novoTel;
       localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
       fecharModais();
-      alert("Telefone atualizado com sucesso!");
+      alert("Telefone updated com sucesso!");
     } else {
       alert(resultado.message || "Erro ao atualizar.");
     }
@@ -161,13 +161,23 @@ async function salvarPet(event) {
       body: JSON.stringify({ id, nome, especie, idade })
     });
 
+    // Captura erros fatais do PHP (como 500 Internal Server Error)
+    if (!response.ok) {
+        throw new Error(`Erro do servidor HTTP: ${response.status}`);
+    }
+
     const resultado = await response.json();
+    
     if (resultado.success) {
-      renderizarMeusPets(resultado.data); // Back-end retorna a lista atualizada de pets
+      renderizarMeusPets(resultado.data);
       fecharModais();
+      alert("Pet salvo com sucesso!"); // Adicionando um feedback de sucesso
+    } else {
+      alert("O servidor recusou a gravação: " + (resultado.message || "Erro desconhecido."));
     }
   } catch (e) {
-    alert("Erro ao gravar dados do pet.");
+    console.error("Detalhes do erro:", e);
+    alert("Erro crítico ao tentar comunicar com o banco de dados. Aperte F12 e veja o Console para detalhes.");
   }
 }
 
@@ -199,7 +209,7 @@ function renderizarMeusPets(pets) {
       <div class="pet-user-card">
         <div class="pet-user-info">
           <h4>${p.nome}</h4>
-          <p><strong>Espécie:</strong> ${p.especie} | <strong>Idade:</strong> ${p.idade}</p>
+          <p><strong>Espécie:</strong> ${p.especie} | <strong>Idade:</strong> ${formatarIdade(p.idade)}</p>
         </div>
         <button class="btn-acao-perfil" onclick="abrirModalPet(${p.id}, '${p.nome}', '${p.especie}', '${p.idade}')">
           <i class="fa-solid fa-pen-to-square"></i>
@@ -266,4 +276,19 @@ function renderizarEventos(eventos) {
     </tr>`;
   });
   div.innerHTML = html + "</table>";
+}
+
+// FUNÇÃO AUXILIAR: FORMATAÇÃO DE IDADE BASEADA EM INTEIRO (MESES)
+function formatarIdade(meses) {
+  meses = parseInt(meses) || 0;
+  if (meses < 12) {
+    return `${meses} ${meses === 1 ? 'mês' : 'meses'}`;
+  }
+  const anos = Math.floor(meses / 12);
+  const mesesRestantes = meses % 12;
+  
+  if (mesesRestantes === 0) {
+    return `${anos} ${anos === 1 ? 'ano' : 'anos'}`;
+  }
+  return `${anos} ${anos === 1 ? 'ano' : 'anos'} e ${mesesRestantes} ${mesesRestantes === 1 ? 'mês' : 'meses'}`;
 }

@@ -48,19 +48,18 @@
             Editar
           </button>
         </div>
-        <div id="infoUsuario" class="info-usuario">
+      <div id="infoUsuario" class="info-usuario">
           <div class="info-item">
             <span>Nome Completo</span>
-            <strong>Carregando...</strong>
+            <strong id="txtNome">Carregando...</strong>
           </div>
           <div class="info-item">
             <span>Email</span>
-            <strong>Carregando...</strong>
+            <strong id="txtEmail">Carregando...</strong>
           </div>
           <div class="info-item">
             <span>Telefone</span>
-            <div style="display: flex; justify-content: space-between; align-items: center;"></div>
-            <strong>Carregando...</strong>
+            <strong id="txtTelefone">Carregando...</strong>
           </div>
         </div>
       </div>
@@ -165,8 +164,8 @@
           <option value="Gato">Gato</option>
           <option value="Outro">Outro</option>
         </select>
-        <label for="idadePet">Idade aproximada:</label>
-        <input type="text" id="idadePet" placeholder="Ex: 2 anos, 5 meses" required>
+          <label for="idadePet">Idade aproximada (em meses):</label>
+          <input type="number" id="idadePet" min="0" placeholder="Ex: 24 para 2 anos, ou 5 para filhote" required>
         <div class="modal-perfil-botoes">
           <button type="button" class="btn-cancelar" onclick="fecharModais()">Cancelar</button>
           <button type="submit" class="btn-salvar">Gravar Registro</button>

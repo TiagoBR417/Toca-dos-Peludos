@@ -63,11 +63,23 @@ $stmtEventos->bind_param("s", $userEmail);
 $stmtEventos->execute();
 $eventos = $stmtEventos->get_result()->fetch_all(MYSQLI_ASSOC);
 
-// 5. Devolve tudo empacotado para o Frontend
+// 4.5 Busca os Pets associados a este usuário com status 'adotado'
+$stmtPets = $conn->prepare("
+    SELECT p.id, p.nome, p.tipo AS especie, p.idade 
+    FROM pets p
+    JOIN usuarios u ON p.usuario_id = u.id
+    WHERE u.email = ? AND p.status = 'adotado'
+    ORDER BY p.id DESC
+");
+$stmtPets->bind_param("s", $userEmail);
+$stmtPets->execute();
+$meusPets = $stmtPets->get_result()->fetch_all(MYSQLI_ASSOC);
+// 5. Devolve tudo empacotado para o Frontend com os nomes corretos
 JsonResponse::send([
     'success' => true,
     'data' => [
         'visitas' => $visitas,
-        'eventos' => $eventos
+        'eventos' => $eventos,
+        'meus_pets' => $meusPets
     ]
 ], 200);
