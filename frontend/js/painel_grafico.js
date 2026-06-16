@@ -22,8 +22,10 @@ const dashboards = {
         <div id="idadePets"></div>
       </div>
     </div>
-    <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; margin-top: 40px; margin-bottom: 15px; color: #1e293b;">📋 Gerenciar Cadastro de Pets</h2>
-    <button class="btn-accent" style="background-color: #4CAF50; padding: 10px 20px; border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;" onclick="abrirModalCriarPet()">➕ Novo Pet</button>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px; margin-bottom: 15px;">
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; margin-top: 40px; margin-bottom: 15px; color: #1e293b;">📋 Gerenciar Cadastro de Pets</h2>
+      <button class="btn-accent" onclick="abrirModalCriarPet()">➕ Novo Pet</button>
+      </div>
     <div id="container-tabela-pets"></div>
   `,
 
@@ -43,8 +45,10 @@ const dashboards = {
         <div id="participacaoEventos"></div>
       </div>
     </div>
-    <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; margin-top: 40px; margin-bottom: 15px; color: #1e293b;">📅 Gerenciar Agenda de Eventos</h2>
-    <button class="btn-accent" style="background-color: #4CAF50; padding: 10px 20px; border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;" onclick="abrirModalCriarEvento()">➕ Novo Evento</button>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px; margin-bottom: 15px;">
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; margin-top: 40px; margin-bottom: 15px; color: #1e293b;">📅 Gerenciar Agenda de Eventos</h2>
+      <button class="btn-accent" onclick="abrirModalCriarEvento()">➕ Novo Evento</button>
+      </div>
     <div id="container-tabela-eventos"></div>
   `,
 

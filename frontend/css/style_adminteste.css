@@ -132,6 +132,36 @@
   gap: 8px;
 }
 
+.btn-accent {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px 0 rgba(16,185,129,0.3);
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-accent:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+  box-shadow: 0 6px 20px 0 rgba(16,185,129,0.5);
+}
+
+.btn-accent:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 3px 10px 0 rgba(16,185,129,0.4);
+}
+
 .kpi-card {
   background: #ffffff;
   color: #1e293b;
