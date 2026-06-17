@@ -3,7 +3,7 @@
         'name' => 'tiago/toca-api',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '5b3b644809719576e29c9f6fe9fa3e07192a7c12',
+        'reference' => '8d3bdf734930ba29a34ac80c4d16b17b7b4b90ba',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -121,7 +121,7 @@
         'tiago/toca-api' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '5b3b644809719576e29c9f6fe9fa3e07192a7c12',
+            'reference' => '8d3bdf734930ba29a34ac80c4d16b17b7b4b90ba',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

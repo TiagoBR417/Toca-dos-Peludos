@@ -18,8 +18,20 @@
       <aside class="sidebar">
         <div class="logo">Dashboard</div>    
         <ul class="nav-links">
-          <li data-dashboard="pets" class="active"><span>🐾</span> Pets</li>
-          <li data-dashboard="eventos"><span>🎉</span> Eventos</li>
+          <li class="has-submenu" id="menu-pets">
+            <div class="menu-toggle"><span>🐾</span> Pets</div>
+            <ul class="submenu">
+              <li data-dashboard="pets" data-view="graficos" class="active"><span>📊</span> Gráficos</li>
+              <li data-dashboard="pets" data-view="tabelas"><span>📋</span> Tabelas</li>
+            </ul>
+          </li>
+          <li class="has-submenu" id="menu-eventos">
+            <div class="menu-toggle"><span>🎉</span> Eventos</div>
+            <ul class="submenu">
+              <li data-dashboard="eventos" data-view="graficos"><span>📊</span> Gráficos</li>
+              <li data-dashboard="eventos" data-view="tabelas"><span>📋</span> Tabelas</li>
+            </ul>
+          </li>
           <li data-dashboard="denuncias"><span>🚨</span> Denúncias</li>
           <li data-dashboard="inscricoes"><span>📝</span> Inscrições</li>
           <li data-dashboard="agendamentos"><span>📅</span> Agendamentos</li>

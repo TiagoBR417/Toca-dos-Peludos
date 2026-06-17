@@ -3,6 +3,7 @@
   display: flex;
   min-height: calc(100vh - 71px);
   background-color: #f8fafc;
+  overflow-x: hidden;
 }
 
 .sidebar {
@@ -62,7 +63,7 @@
 .nav-links li:hover {
   background-color: rgba(255, 255, 255, 0.05);
   color: #f8fafc;
-  transform: translateX(4px);
+  transform: translateX(2px);
 }
 
 .nav-links li.active {
@@ -86,6 +87,78 @@
 
 .nav-links li:hover::before {
   transform: scaleY(1);
+}
+
+/* Estilos para o Submenu */
+.has-submenu {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch !important;
+  gap: 0 !important;
+  padding: 0 !important; /* Reseta o padding do li pai */
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.menu-toggle {
+  padding: 14px 18px;
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: color 0.25s;
+}
+
+.has-submenu:hover .menu-toggle {
+  color: #f8fafc;
+}
+
+/* Submenu inicia escondido */
+.submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Quando o menu estiver aberto, expande o submenu */
+.has-submenu.open .submenu {
+  max-height: 120px; /* Altura máxima para comportar as duas opções */
+  padding: 8px 0;
+}
+
+/* Estilo das opções de dentro do submenu */
+.submenu li {
+  padding: 10px 20px 10px 45px !important; /* Recuo para a direita */
+  font-size: 0.88rem !important;
+  background-color: transparent !important;
+  transform: none !important;
+}
+
+.submenu li:hover {
+  color: #f8fafc !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.submenu li.active {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Remove a linha lateral fake dos itens com submenu para não bugar o visual */
+.has-submenu::before {
+  display: none !important;
 }
 
 /* MAIN */
@@ -160,6 +233,66 @@
 .btn-accent:active {
   transform: translateY(-1px) scale(0.98);
   box-shadow: 0 3px 10px 0 rgba(16,185,129,0.4);
+}
+
+.btn-accent-editar {
+  background: linear-gradient(135deg, #3B82F6 0%, #0EA5E9 100%);
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(0,0,129,.3);
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-accent-editar:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(135deg, #3B82F6 0%, #0EA5E9 100%);
+  box-shadow: 0 6px 20px 0 rgba(0,0,129,0.5);
+}
+
+.btn-accent-editar:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 3px 10px 0 rgba(0,0,129,0.4);
+}
+
+.btn-accent-excluir {
+  background: linear-gradient(135deg, #ef4444 0%, #c0392b 100%);
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(231,76,60,0.3);
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-accent-excluir:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(135deg, #ef4444 0%, #c0392b 100%);
+  box-shadow: 0 6px 20px 0 rgba(239,68,68,0.5);
+}
+
+.btn-accent-excluir:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 3px 10px 0 rgba(239,68,68,0.4);
 }
 
 .kpi-card {
@@ -251,15 +384,27 @@
 .table-container {
   background: #ffffff;
   border-radius: 16px;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(226,232,240,0.8);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.02);
   overflow: hidden;
+  overflow-x: auto;
   margin-top: 20px;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+  margin-top: 15px;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
+  white-space: nowrap;
   text-align: left;
   font-size: 0.95rem;
 }
@@ -349,6 +494,16 @@ h2::after {
 }
 
 @media (max-width: 1024px) {
+  .submenu li {
+    padding: 12px !important;
+    font-size: 0 !important; /* Oculta texto no tablet */
+    justify-content: center;
+  }
+  .menu-toggle {
+    justify-content: center;
+    font-size: 0;
+  }
+  
   .sidebar {
     width: 80px;
     padding: 20px 10px;
@@ -366,14 +521,36 @@ h2::after {
   
   /* Transforma o menu em uma linha vertical de botões com emojis centralizados */
   .nav-links li {
-    font-size: 0;
+    font-size: 0 !important;
     padding: 12px;
-    justify-content: center;
+    justify-content: center !important;
   }
   
   .nav-links li span {
-    font-size: 1.3rem; 
-    margin: 0;
+    font-size: 1.3rem !important; 
+    margin: 0 !important;
+  }
+
+  .has-submenu.open .submenu {
+    max-height: 100px; /* Ajusta o limite de altura para telas menores */
+    padding: 4px 0;
+    width: 100%;
+  }
+
+  .submenu li {
+    font-size: 0 !important; /* Esconde o texto "Gráficos" e "Tabelas" */
+    padding: 10px 0 !important; /* Centraliza verticalmente */
+    justify-content: center !important;
+    align-items: center !important;
+    display: flex !important;
+    width: 100%;
+  }
+
+  /* Garante que o emoji de dentro do submenu permaneça visível e grande o suficiente */
+  .submenu li span {
+    font-size: 1.1rem !important; 
+    display: inline-block !important;
+    margin: 0 !important;
   }
 
   /* Ajusta o espaçamento do conteúdo principal */

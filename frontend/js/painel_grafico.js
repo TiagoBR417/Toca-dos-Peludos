@@ -2,56 +2,64 @@ const navItems = document.querySelectorAll('.nav-links li');
 const dashboardContent = document.getElementById('dashboard-content');
 const dashboards = {
 
-  pets: `
-    <h1>Dashboard Pets</h1>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3>❤️ Status dos pets</h3>
-        <div id="statusPets"></div>
+  pets: {
+    graficos: `
+      <h1>Dashboard Pets - Gráficos</h1>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>❤️ Status dos pets</h3>
+          <div id="statusPets"></div>
+        </div>
+        <div class="chart-card">
+          <h3>🐶 Espécies e portes</h3>
+          <div id="portesPets"></div>
+        </div>
+        <div class="chart-card">
+          <h3>🐾 Taxa de adoção</h3>
+          <div id="adocaoPets"></div>
+        </div>
+        <div class="chart-card">
+          <h3>🎂 Idade média</h3>
+          <div id="idadePets"></div>
+        </div>
       </div>
-      <div class="chart-card">
-        <h3>🐶 Espécies e portes</h3>
-        <div id="portesPets"></div>
+    `,
+    tabelas: `
+      <h1>Dashboard Pets - Gerenciamento</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Gerenciar Cadastro de Pets</h2>
+        <button class="btn-accent" onclick="abrirModalCriarPet()">➕ Novo Pet</button>
       </div>
-      <div class="chart-card">
-        <h3>🐾 Taxa de adoção</h3>
-        <div id="adocaoPets"></div>
+      <div id="container-tabela-pets"></div>
+    `
+  },
+  eventos: {
+    graficos: `
+      <h1>Dashboard Eventos - Gráficos</h1>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>🎉 Conversão</h3>
+          <div id="conversaoEventos"></div>
+        </div>
+        <div class="chart-card">
+          <h3>💰 Arrecadação</h3>
+          <div id="arrecadacaoEventos"></div>
+        </div>
+        <div class="chart-card">
+          <h3>👥 Participação</h3>
+          <div id="participacaoEventos"></div>
+        </div>
       </div>
-      <div class="chart-card">
-        <h3>🎂 Idade média</h3>
-        <div id="idadePets"></div>
+    `,
+    tabelas: `
+      <h1>Dashboard Eventos - Gerenciamento</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📅 Gerenciar Agenda de Eventos</h2>
+        <button class="btn-accent" onclick="abrirModalCriarEvento()">➕ Novo Evento</button>
       </div>
-    </div>
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px; margin-bottom: 15px;">
-      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; margin-top: 40px; margin-bottom: 15px; color: #1e293b;">📋 Gerenciar Cadastro de Pets</h2>
-      <button class="btn-accent" onclick="abrirModalCriarPet()">➕ Novo Pet</button>
-      </div>
-    <div id="container-tabela-pets"></div>
-  `,
-
-  eventos: `
-    <h1>Dashboard Eventos</h1>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3>🎉 Conversão</h3>
-        <div id="conversaoEventos"></div>
-      </div>
-      <div class="chart-card">
-        <h3>💰 Arrecadação</h3>
-        <div id="arrecadacaoEventos"></div>
-      </div>
-      <div class="chart-card">
-        <h3>👥 Participação</h3>
-        <div id="participacaoEventos"></div>
-      </div>
-    </div>
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px; margin-bottom: 15px;">
-      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; margin-top: 40px; margin-bottom: 15px; color: #1e293b;">📅 Gerenciar Agenda de Eventos</h2>
-      <button class="btn-accent" onclick="abrirModalCriarEvento()">➕ Novo Evento</button>
-      </div>
-    <div id="container-tabela-eventos"></div>
-  `,
-
+      <div id="container-tabela-eventos"></div>
+    `
+  },
 
   denuncias: `
     <h1>Dashboard Denúncias</h1>
@@ -215,46 +223,81 @@ const dashboards = {
   `
 };
 
-dashboardContent.innerHTML = dashboards.pets;
+// Inicialização da página padrão (Pets > Gráficos)
+dashboardContent.innerHTML = dashboards.pets.graficos;
 renderPetsCharts();
-if (typeof carregarDadosTabelaDashboard === 'function') carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
-navItems[0].classList.add('active');
+document.getElementById('menu-pets').classList.add('open');
 
-navItems.forEach(item => {
-  item.addEventListener('click', () => {
-    navItems.forEach(nav => nav.classList.remove('active'));
+// Gerenciador de cliques nos Menus Principais que contêm submenus (Pets e Eventos)
+document.querySelectorAll('.has-submenu .menu-toggle').forEach(toggle => {
+  toggle.addEventListener('click', (e) => {
+    const parent = toggle.parentElement;
+    
+    // Fecha os outros submenus abertos
+    document.querySelectorAll('.has-submenu').forEach(menu => {
+      if (menu !== parent) menu.classList.remove('open');
+    });
+
+    // Alterna a abertura do menu clicado
+    parent.classList.toggle('open');
+    
+    // Ao clicar no título do menu, ativa automaticamente a primeira opção interna (Gráficos)
+    if(parent.classList.contains('open')) {
+      const primeiroSubitem = parent.querySelector('.submenu li');
+      primeiroSubitem.click();
+    }
+  });
+});
+
+// Seletor geral de cliques para renderização do conteúdo (Itens normais + Itens dos submenus)
+document.querySelectorAll('.nav-links li[data-dashboard], .submenu li[data-dashboard]').forEach(item => {
+  item.addEventListener('click', (e) => {
+    // Impede o clique no subitem de fechar ou bugar o menu pai
+    e.stopPropagation();
+
+    // Remove a classe active de absolutamente todos os botões
+    document.querySelectorAll('.nav-links li, .submenu li').forEach(el => el.classList.remove('active'));
+    
+    // Adiciona classe ativa no item clicado
     item.classList.add('active');
+
     const dashboard = item.dataset.dashboard;
+    const view = item.dataset.view; // 'graficos' ou 'tabelas' (se aplicável)
+
+    // Se o clique NÃO foi em um submenu, fecha qualquer submenu que esteja aberto
+    if (!item.closest('.has-submenu')) {
+      document.querySelectorAll('.has-submenu').forEach(menu => menu.classList.remove('open'));
+    }
+
     dashboardContent.replaceChildren();
-    dashboardContent.innerHTML = dashboards[dashboard];
-    // DASHBOARDS: Renderização dos gráficos específicos para cada dashboard
-    switch (dashboard) {
-      case 'pets':
-      renderPetsCharts();
-      if (typeof carregarDadosTabelaDashboard === 'function') carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
-      break;
-      case 'eventos':
-      renderEventsCharts();
-      if (typeof carregarDadosTabelaDashboard === 'function') carregarDadosTabelaDashboard('eventos', 'container-tabela-eventos');
-      break;
-      case 'denuncias':
-      renderReportsCharts();
-      break;
-      case 'inscricoes':
-      renderRegistrationsCharts();
-      break;
-      case 'agendamentos':
-      renderAppointmentsCharts();
-      break;
-      case 'doacoes':
-      renderDonationsCharts();
-      break;
-      case 'usuarios':
-      renderUsersCharts();
-      break;
-      case 'configuracoes':
-      renderSettingsCharts();
-      break;
+
+    // Lógica de Renderização Condicional
+    if (view) {
+      // Se possui visualização específica (Pets ou Eventos)
+      dashboardContent.innerHTML = dashboards[dashboard][view];
+      
+      if (dashboard === 'pets') {
+        if (view === 'graficos') renderPetsCharts();
+        if (view === 'tabelas' && typeof carregarDadosTabelaDashboard === 'function') {
+          carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
+        }
+      } else if (dashboard === 'eventos') {
+        if (view === 'graficos') renderEventsCharts();
+        if (view === 'tabelas' && typeof carregarDadosTabelaDashboard === 'function') {
+          carregarDadosTabelaDashboard('eventos', 'container-tabela-eventos');
+        }
+      }
+    } else {
+      // Dashboards normais (Sem submenu)
+      dashboardContent.innerHTML = dashboards[dashboard];
+      switch (dashboard) {
+        case 'denuncias': renderReportsCharts(); break;
+        case 'inscricoes': renderRegistrationsCharts(); break;
+        case 'agendamentos': renderAppointmentsCharts(); break;
+        case 'doacoes': renderDonationsCharts(); break;
+        case 'usuarios': renderUsersCharts(); break;
+        case 'configuracoes': renderSettingsCharts(); break;
+      }
     }
   });
 });

@@ -177,18 +177,22 @@ function renderizarTabela(secao, dados) {
       html += `<td>${valor}</td>`;
     });
 
+    // --- CORREÇÃO AQUI: Mudando 'btn-accent' para 'btn-accent-ce' nas ações principais ---
     if (secao === 'pets') {
-      html += `<td><button class="btn-accent" style="padding: 6px 12px; font-size: 12px;" onclick="abrirModalPet(${item.id})">Detalhes</button></td>`;
+      html += `<td>
+                <button class="btn-accent-editar" onclick="abrirModalPet(${item.id})">Editar</button>
+                <button class="btn-accent-excluir" onclick="excluirPet(${item.id})">Excluir</button>
+              </td>`;
     } else if (secao === 'agendamentos') {
-      html += `<td><button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #2196F3;" onclick="abrirModalAgendamento(${item.id})">Gerenciar</button></td>`;
+      html += `<td><button class="btn-accent" style="background-color: #2196F3;" onclick="abrirModalAgendamento(${item.id})">Gerenciar</button></td>`;
     } else if (secao === 'inscricoes') {
-      html += `<td><button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #4CAF50;" onclick="abrirModalInscricao(${item.id})">Gerenciar</button></td>`;
+      html += `<td><button class="btn-accent" style="background-color: #4CAF50;" onclick="abrirModalInscricao(${item.id})">Gerenciar</button></td>`;
     } else if (secao === 'denuncias') {
-      html += `<td><button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #e74c3c;" onclick="abrirModalDenuncia(${item.id})">Ver Caso</button></td>`;
+      html += `<td><button class="btn-accent" style="background-color: #e74c3c;" onclick="abrirModalDenuncia(${item.id})">Ver Caso</button></td>`;
     } else if (secao === 'eventos') {
       html += `<td>
-                <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #9C27B0; margin-right: 5px;" onclick="abrirModalEvento(${item.id})">Gerenciar</button>
-                <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #e74c3c;" onclick="excluirEvento(${item.id})">Excluir</button>
+                <button class="btn-accent-editar" onclick="abrirModalEvento(${item.id})">Gerenciar</button>
+                <button class="btn-accent-excluir" onclick="excluirEvento(${item.id})">Excluir</button>
                </td>`;
     } else {
       html += `<td>-</td>`;
@@ -464,13 +468,13 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
         // Botões diferenciados para as ações do Administrador
         if (secao === 'pets') {
           html += `<td>
-                    <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #9C27B0; margin-right: 5px;" onclick="abrirModalPet(${item.id})">Editar</button>
-                    <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #e74c3c;" onclick="excluirPet(${item.id})">Excluir</button>
+                    <button class="btn-accent-editar" onclick="abrirModalPet(${item.id})">Editar</button>
+                    <button class="btn-accent-excluir" onclick="excluirPet(${item.id})">Excluir</button>
                   </td>`;
         } else if (secao === 'eventos') {
           html += `<td>
-                    <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #9C27B0; margin-right: 5px;" onclick="abrirModalEvento(${item.id})">Gerenciar</button>
-                    <button class="btn-accent" style="padding: 6px 12px; font-size: 12px; background-color: #e74c3c;" onclick="excluirEvento(${item.id})">Excluir</button>
+                    <button class="btn-accent-editar" onclick="abrirModalEvento(${item.id})">Gerenciar</button>
+                    <button class="btn-accent-excluir" onclick="excluirEvento(${item.id})">Excluir</button>
                    </td>`;
         }
         html += `</tr>`;
