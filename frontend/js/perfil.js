@@ -17,9 +17,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("txtCidadeEstado").innerText = usuarioLogado.cidade ? `${usuarioLogado.cidade} - ${usuarioLogado.estado.toUpperCase()}` : 'Não informado';
   document.getElementById("txtCep").innerText = usuarioLogado.cep || 'Não informado';
 
-  // Carrega foto salva localmente se houver
-  if (localStorage.getItem(`foto_perfil_${usuarioLogado.email}`)) {
-    document.getElementById("avatarUsuario").src = localStorage.getItem(`foto_perfil_${usuarioLogado.email}`);
+
+// Carrega foto vinda do banco (armazenada no LocalStorage do usuário)
+  if (usuarioLogado.foto_url) {
+    // Remove o '/api' da URL base para apontar corretamente para a pasta raiz 'uploads'
+    const urlRaiz = BASE_URL.replace('/api', '');
+    document.getElementById("avatarUsuario").src = `${urlRaiz}/${usuarioLogado.foto_url}`;
+  } else {
+    document.getElementById("avatarUsuario").src = "img/logo-tdp-ícone.png";
   }
 
   // 2. Busca informações operacionais do banco de dados
@@ -220,16 +225,56 @@ async function salvarPet(event) {
 }
 
 // Upload de foto simulado via Base64 integrado ao LocalStorage
-function atualizarFotoPerfil(input) {
+async function atualizarFotoPerfil(input) {
   if (input.files && input.files[0]) {
-    const reader = new FileReader();
+    const arquivo = input.files[0];
+    
+    const formData = new FormData();
+    formData.append('foto_perfil', arquivo);
+
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
     
-    reader.onload = function(e) {
-      document.getElementById("avatarUsuario").src = e.target.result;
-      localStorage.setItem(`foto_perfil_${usuarioLogado.email}`, e.target.result);
+    // Variável para guardar a resposta bruta do servidor
+    let respostaBruta = "";
+
+    try {
+      const response = await fetch(`${BASE_URL}/site/upload_foto.php`, {
+        method: 'POST',
+        headers: { 
+          "Authorization": `Bearer ${usuarioLogado.token}`
+        },
+        body: formData
+      });
+      
+      // Captura a resposta como texto puro primeiro
+      respostaBruta = await response.text();
+      
+      // Tenta transformar o texto em JSON
+      const resultado = JSON.parse(respostaBruta);
+      
+      if (resultado.success) {
+        const urlRaiz = BASE_URL.replace('/api', '');
+        document.getElementById("avatarUsuario").src = `${urlRaiz}/${resultado.url_foto}`;
+        
+        usuarioLogado.foto_url = resultado.url_foto;
+        localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+        
+        alert("Foto de perfil atualizada com sucesso!");
+      } else {
+        alert("Aviso do servidor: " + resultado.message);
+      }
+    } catch (error) {
+      console.error("Erro detalhado no Console:", error);
+      
+      // Se a resposta bruta contiver códigos HTML típicos de erro do PHP/XAMPP, exibe na tela
+      if (respostaBruta.includes("<br />") || respostaBruta.includes("Fatal error") || respostaBruta.includes("Stack trace")) {
+          // Limpa as tags HTML para ficar legível no alert
+          const erroLimpo = respostaBruta.replace(/<[^>]*>/g, '');
+          alert("O PHP quebrou! Erro retornado pelo servidor:\n\n" + erroLimpo);
+      } else {
+          alert("Erro fatal de comunicação com o servidor. Verifique o console do desenvolvedor (F12).");
+      }
     }
-    reader.readAsDataURL(input.files[0]);
   }
 }
 
