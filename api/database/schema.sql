@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     cpf VARCHAR(14) NOT NULL,
     email VARCHAR(150) NOT NULL,
     senha_hash VARCHAR(255) NOT NULL,
+    codigo_recuperacao VARCHAR(6) DEFAULT NULL,
     telefone VARCHAR(20) NOT NULL,
     cep VARCHAR(10) NOT NULL,
     endereco VARCHAR(255) NOT NULL,
