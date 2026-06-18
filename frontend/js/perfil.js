@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-// 1. Injeta dados estáticos iniciais guardados no LocalStorage
+  // 1. Injeta dados estáticos iniciais guardados no LocalStorage
   document.getElementById("saudacaoNome").innerText = `Olá, ${usuarioLogado.nome}!`;
   document.getElementById("txtNome").innerText = `${usuarioLogado.nome} ${usuarioLogado.sobrenome || ''}`;
   document.getElementById("txtEmail").innerText = usuarioLogado.email;
@@ -17,8 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("txtCidadeEstado").innerText = usuarioLogado.cidade ? `${usuarioLogado.cidade} - ${usuarioLogado.estado.toUpperCase()}` : 'Não informado';
   document.getElementById("txtCep").innerText = usuarioLogado.cep || 'Não informado';
 
-
-// Carrega foto vinda do banco (armazenada no LocalStorage do usuário)
+  // Carrega foto vinda do banco (armazenada no LocalStorage do usuário)
   if (usuarioLogado.foto_url) {
     // Remove o '/api' da URL base para apontar corretamente para a pasta raiz 'uploads'
     const urlRaiz = BASE_URL.replace('/api', '');
@@ -27,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("avatarUsuario").src = "img/logo-tdp-ícone.png";
   }
 
-  // 2. Busca informações operacionais do banco de dados
+  // 2. Busca informações operacionais do banco de dados (Com proteção de diagnóstico integrado)
   try {
     const response = await fetch(`${BASE_URL}/site/perfil.php`, {
       method: "GET",
@@ -40,17 +39,30 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const resultado = await response.json();
+    // Captura como texto puro para isolar eventuais falhas do PHP (Formato HTML retornado)
+    const respostaBruta = await response.text();
 
-    if (resultado.success) {
-      // Atualiza os contadores estáticos nas caixas superiores
-      document.getElementById("statVisitas").innerText = resultado.data.visitas ? resultado.data.visitas.length : 0;
-      document.getElementById("statEventos").innerText = resultado.data.eventos ? resultado.data.eventos.length : 0;
+    try {
+      const resultado = JSON.parse(respostaBruta);
 
-      renderizarVisitas(resultado.data.visitas);
-      renderizarEventos(resultado.data.eventos);
-      renderizarMeusPets(resultado.data.meus_pets || []); // Garante fallback caso venha vazio
+      if (resultado.success) {
+        // Proteções condicionais para não interromper a renderização se faltar algum nó DOM
+        if (document.getElementById("statVisitas")) document.getElementById("statVisitas").innerText = resultado.data.visitas ? resultado.data.visitas.length : 0;
+        if (document.getElementById("statEventos")) document.getElementById("statEventos").innerText = resultado.data.eventos ? resultado.data.eventos.length : 0;
+        if (document.getElementById("statDenuncias")) document.getElementById("statDenuncias").innerText = resultado.data.denuncias ? resultado.data.denuncias.length : 0; 
+
+        renderizarVisitas(resultado.data.visitas);
+        renderizarEventos(resultado.data.eventos);
+        renderizarMeusPets(resultado.data.meus_pets || []);
+        renderizarDenuncias(resultado.data.denuncias || []);
+      }
+    } catch (erroJSON) {
+      // Isola e exibe no alerta o erro exato impresso pelo PHP
+      const erroLimpo = respostaBruta.replace(/<[^>]*>/g, '');
+      alert("O PHP falhou ao tentar carregar o seu perfil! Erro retornado:\n\n" + erroLimpo);
+      console.error("Resposta bruta com erro do servidor:", respostaBruta);
     }
+
   } catch (error) {
     console.error("Erro ao carregar os dados consolidados do perfil:", error);
   }
@@ -142,7 +154,7 @@ async function salvarPerfil(event) {
       localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
 
       fecharModais();
-      alert("Informações de perfil atualizadas com sucesso!");
+      alert("Informações de perfil updated com sucesso!");
     } else {
       alert(resultado.message || "Erro ao atualizar dados.");
     }
@@ -204,7 +216,6 @@ async function salvarPet(event) {
       body: JSON.stringify({ id, nome, especie, idade })
     });
 
-    // Captura erros fatais do PHP (como 500 Internal Server Error)
     if (!response.ok) {
         throw new Error(`Erro do servidor HTTP: ${response.status}`);
     }
@@ -214,7 +225,7 @@ async function salvarPet(event) {
     if (resultado.success) {
       renderizarMeusPets(resultado.data);
       fecharModais();
-      alert("Pet salvo com sucesso!"); // Adicionando um feedback de sucesso
+      alert("Pet salvo com sucesso!");
     } else {
       alert("O servidor recusou a gravação: " + (resultado.message || "Erro desconhecido."));
     }
@@ -224,7 +235,7 @@ async function salvarPet(event) {
   }
 }
 
-// Upload de foto simulado via Base64 integrado ao LocalStorage
+// Upload de foto real via FormData integrado ao File System do servidor
 async function atualizarFotoPerfil(input) {
   if (input.files && input.files[0]) {
     const arquivo = input.files[0];
@@ -234,7 +245,6 @@ async function atualizarFotoPerfil(input) {
 
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
     
-    // Variável para guardar a resposta bruta do servidor
     let respostaBruta = "";
 
     try {
@@ -246,10 +256,7 @@ async function atualizarFotoPerfil(input) {
         body: formData
       });
       
-      // Captura a resposta como texto puro primeiro
       respostaBruta = await response.text();
-      
-      // Tenta transformar o texto em JSON
       const resultado = JSON.parse(respostaBruta);
       
       if (resultado.success) {
@@ -266,9 +273,7 @@ async function atualizarFotoPerfil(input) {
     } catch (error) {
       console.error("Erro detalhado no Console:", error);
       
-      // Se a resposta bruta contiver códigos HTML típicos de erro do PHP/XAMPP, exibe na tela
       if (respostaBruta.includes("<br />") || respostaBruta.includes("Fatal error") || respostaBruta.includes("Stack trace")) {
-          // Limpa as tags HTML para ficar legível no alert
           const erroLimpo = respostaBruta.replace(/<[^>]*>/g, '');
           alert("O PHP quebrou! Erro retornado pelo servidor:\n\n" + erroLimpo);
       } else {
@@ -374,4 +379,39 @@ function formatarIdade(meses) {
     return `${anos} ${anos === 1 ? 'ano' : 'anos'}`;
   }
   return `${anos} ${anos === 1 ? 'ano' : 'anos'} e ${mesesRestantes} ${mesesRestantes === 1 ? 'mês' : 'meses'}`;
+}
+
+function renderizarDenuncias(denuncias) {
+  const div = document.getElementById("listaDenuncias");
+  if (!denuncias || denuncias.length === 0) {
+    div.innerHTML = "<p>Você ainda não realizou nenhuma denúncia de resgate.</p>";
+    return;
+  }
+
+  let html = `<table class="admin-table" style="width: 100%; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius: 12px; overflow: hidden; border-collapse: collapse;">
+    <tr style="background: #f8f9fa; text-align: left; border-bottom: 2px solid #eee;">
+      <th style="padding: 14px;">Tipo</th>
+      <th style="padding: 14px;">Data</th>
+      <th style="padding: 14px;">Descrição</th>
+      <th style="padding: 14px;">Status</th>
+    </tr>`;
+              
+  denuncias.forEach(d => {
+    const dataFormatada = new Date(d.created_at).toLocaleDateString('pt-BR');
+    
+    let corStatus = '#6b7280'; 
+    if (d.status === 'pendente') corStatus = '#f59e0b'; 
+    if (d.status === 'em_analise') corStatus = '#3b82f6'; 
+    if (d.status === 'resolvido' || d.status === 'concluida') corStatus = '#10b981'; 
+
+    const statusFormatado = d.status.replace('_', ' ');
+
+    html += `<tr>
+      <td style="padding: 14px; border-top: 1px solid #eee; text-transform: capitalize;"><strong>${d.tipo}</strong></td>
+      <td style="padding: 14px; border-top: 1px solid #eee;">${dataFormatada}</td>
+      <td style="padding: 14px; border-top: 1px solid #eee; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${d.descricao}">${d.descricao}</td>
+      <td style="padding: 14px; border-top: 1px solid #eee; color: ${corStatus}; font-weight: bold; text-transform: capitalize;">• ${statusFormatado}</td>
+    </tr>`;
+  });
+  div.innerHTML = html + "</table>";
 }

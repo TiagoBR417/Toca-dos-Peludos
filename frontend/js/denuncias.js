@@ -8,17 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (inputImagem && labelImagem) {
     inputImagem.addEventListener("change", (event) => {
-      // Verifica se o usuário de fato selecionou algum arquivo
       if (event.target.files && event.target.files.length > 0) {
         const nomeArquivo = event.target.files[0].name;
-        
-        // Atualiza o texto com um ícone de "check" verde e o nome do arquivo
         labelImagem.innerHTML = `✅ ${nomeArquivo}`;
-        
-        // Adiciona uma classe CSS caso queira mudar a cor da borda/fundo (opcional)
         labelImagem.classList.add("arquivo-selecionado");
       } else {
-        // Se o usuário abrir a janela e cancelar, volta ao estado original
         labelImagem.innerHTML = `📸 Selecionar fotos da ocorrência`;
         labelImagem.classList.remove("arquivo-selecionado");
       }
@@ -30,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // comportamento do checkbox
   checkbox.addEventListener("change", () => {
     if (checkbox.checked) {
       campoContato.value = "";
@@ -40,46 +33,75 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  form.addEventListener("submit", async (e) => {
+form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     mensagem.textContent = "";
     mensagem.className = "";
 
-    const payload = {
-      tipo: document.getElementById("tipoDenuncia").value,
-      descricao: document.getElementById("descricaoDenuncia").value.trim(),
-      localizacao: document.getElementById("localDenuncia").value.trim(),
-      contato: campoContato.value.trim(),
-      anonimo: checkbox.checked ? 1 : 0
-    };
+    if (!inputImagem.files || inputImagem.files.length === 0) {
+        mensagem.textContent = "Por favor, selecione pelo menos uma foto da ocorrência.";
+        mensagem.className = "erro";
+        return;
+    }
+
+    mensagem.textContent = "Processando envio...";
+    mensagem.className = "processando";
+
+    const formData = new FormData();
+    formData.append('tipo', document.getElementById("tipoDenuncia").value);
+    formData.append('descricao', document.getElementById("descricaoDenuncia").value.trim());
+    formData.append('localizacao', document.getElementById("localDenuncia").value.trim());
+    formData.append('anonimo', checkbox.checked ? 1 : 0);
+    formData.append('contato', campoContato.value.trim());
+    formData.append('imagem_ocorrencia', inputImagem.files[0]);
+
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+    const headers = {};
+    if (usuarioLogado && usuarioLogado.token) {
+        headers["Authorization"] = `Bearer ${usuarioLogado.token}`;
+    }
+
+    // Variável para guardar a resposta do servidor antes de tentar converter para JSON
+    let respostaBruta = "";
 
     try {
       const response = await fetch(API_DENUNCIAS_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+        headers: headers,
+        body: formData
       });
 
-      const resultado = await response.json();
+      // Captura como texto puro primeiro
+      respostaBruta = await response.text();
+      
+      // Tenta converter para objeto
+      const resultado = JSON.parse(respostaBruta);
 
       if (!resultado.success) {
-        mensagem.textContent = resultado.message;
-        mensagem.classList.add("erro");
+        mensagem.textContent = resultado.message || "Erro ao processar denúncia.";
+        mensagem.className = "erro";
         return;
       }
 
-      mensagem.textContent = "Denúncia enviada com sucesso!";
-      mensagem.classList.add("sucesso");
+      mensagem.textContent = "Denúncia cadastrada com sucesso!";
+      mensagem.className = "sucesso";
       form.reset();
+      labelImagem.innerHTML = `📸 Selecionar fotos da ocorrência`;
+      labelImagem.classList.remove("arquivo-selecionado");
       campoContato.disabled = false;
 
     } catch (error) {
-      console.error("Erro:", error);
-      mensagem.textContent = "Erro ao enviar denúncia.";
-      mensagem.classList.add("erro");
+      console.error("Erro detalhado:", error);
+      
+      // Se a resposta contiver estruturas de erro do PHP, exibe no ecrã
+      if (respostaBruta.includes("<br />") || respostaBruta.includes("Fatal error") || respostaBruta.includes("Stack trace")) {
+        const erroLimpo = respostaBruta.replace(/<[^>]*>/g, '');
+        alert("O PHP quebrou! Erro retornado pelo servidor:\n\n" + erroLimpo);
+      } else {
+        mensagem.textContent = "Erro crítico de comunicação com o servidor.";
+        mensagem.className = "erro";
+      }
     }
   });
 });
