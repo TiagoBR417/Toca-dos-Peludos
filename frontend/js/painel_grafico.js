@@ -28,7 +28,7 @@ const dashboards = {
       <h1>Dashboard Pets - Gerenciamento</h1>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
         <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Gerenciar Cadastro de Pets</h2>
-        <button class="btn-accent" onclick="abrirModalCriarPet()">➕ Novo Pet</button>
+        <button class="btn-painel" onclick="abrirModalCriarPet()">➕ Novo Pet</button>
       </div>
       <div id="container-tabela-pets"></div>
     `
@@ -55,7 +55,7 @@ const dashboards = {
       <h1>Dashboard Eventos - Gerenciamento</h1>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
         <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📅 Gerenciar Agenda de Eventos</h2>
-        <button class="btn-accent" onclick="abrirModalCriarEvento()">➕ Novo Evento</button>
+        <button class="btn-painel" onclick="abrirModalCriarEvento()">➕ Novo Evento</button>
       </div>
       <div id="container-tabela-eventos"></div>
     `

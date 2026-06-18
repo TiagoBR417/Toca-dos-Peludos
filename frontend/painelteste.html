@@ -13,7 +13,37 @@
   </head>
   <body>
     <!-- Componentes globais --> 
-    <global-header></global-header>
+    <header class="nav">
+      <div class="nav-content">
+
+        <div class="brand">
+          <a href="index.html">
+            <img src="img/logo-tdp.jpg" class="logo" alt="Logo Toca dos Peludos">
+          </a>
+          <span class="titulo">Toca dos Peludos</span>
+        </div>
+
+        <nav class="links">
+          <a href="index.html">Início</a>
+          <a href="sobre_nos.html">Sobre</a>
+          <a href="pets.html">Pets</a>
+          <a href="eventos.html">Eventos</a>
+          <a href="denuncias.html">Denúncias</a>
+          <a href="contatos.html">Contatos</a>
+        </nav>
+
+        <div class="actions">
+          <span id="areaAuth" style="display: inline-flex; gap: 10px; align-items: center;"></span>
+        </div>
+
+        <div class="menu-sanduiche">
+          <div class="linha"></div>
+          <div class="linha"></div>
+          <div class="linha"></div>
+        </div>
+
+      </div>
+    </header>
     <div class="app-container">      
       <aside class="sidebar">
         <div class="logo">Dashboard</div>    
@@ -47,6 +77,5 @@
     <script src="js/painel_admin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/painel_grafico.js"></script>
-    <script src="js/global.js" defer></script>
   </body>
 </html>

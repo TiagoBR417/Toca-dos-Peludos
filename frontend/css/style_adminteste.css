@@ -1,3 +1,251 @@
+/* Inicio do Cabeçalho */
+.nav {
+  background: #0f172a;
+  color: #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+  position: relative;
+}
+      
+.nav img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.titulo{
+  color: #ffffff;
+}
+
+.nav .links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav .links a {
+  margin: 12px 0;
+  font-size: 1.1rem;
+  color: #ffffff;
+  text-decoration: none;
+  position: relative;
+  transition: 0.3s;
+}
+
+.nav .links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #dbdbdb; 
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+}
+
+.nav .links a:hover::after,
+.nav .links a.active::after {
+  width: 100%;
+}
+
+.nav .links a:hover,
+.nav .links a.active {
+  color: #dbdbdb;
+}
+
+.logo {
+  border-radius: 12px;
+  object-fit: cover;
+  height: 48px;
+  width: 48px;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo:hover {
+  transform: rotate(-4deg) scale(1.08);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #0f172a;
+}
+
+.links a {
+  position: relative;
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background-color: #dbdbdb;
+  transition: width 0.6s ease;
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+.links a:hover {
+  color: #dbdbdb;
+}
+
+.links a.active {
+  color: #dbdbdb;
+}
+
+.links a.active::after {
+  width: 100%;
+}
+
+.btn-accent {
+  background: #6a1b9a;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(106,27,154,0.2);
+}
+
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(106,27,154,0.3);
+  background: #7b1fa2;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.actions button {
+  margin: 0;
+}
+
+/* Fim do Cabeçalho */
+/* Inicio do Menu Sanduiche */
+.menu-sanduiche {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 30px;
+  height: 30px;
+  z-index: 101;
+}
+
+.menu-sanduiche .linha {
+  width: 26px;
+  height: 2.5px;
+  background-color: #1e293b;
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ANIMAÇÃO */
+.menu-sanduiche.ativo .linha:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.menu-sanduiche.ativo .linha:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.menu-sanduiche.ativo .linha:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-sanduiche {
+    display: flex;
+  }
+
+  .nav .links {
+    position: absolute;
+    top: 100%;
+    left: 16px;
+    right: 16px;
+    width: auto; 
+    background: rgba(255,201,60,0.99);
+    padding: 12px 20px; 
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(75,46,131,0.2);
+    flex-direction: column;
+    align-items: stretch;
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-sizing: border-box;
+  }
+
+  .nav .links a {
+    color: #000;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    font-weight: 500;
+  }
+      
+  .nav .links a:last-child {
+    border-bottom: none;
+  }
+
+  .nav .links.ativo {
+    transform: translateY(10);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .titulo{
+    display: none;
+  }
+}
+  
+/* Fim do Menu Sanduiche */    
+
 /* CSS do Painel Administrativo Novo e com dashboard */
 .app-container {
   display: flex;
@@ -205,7 +453,7 @@
   gap: 8px;
 }
 
-.btn-accent {
+.btn-painel {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
   font-family: 'Montserrat', sans-serif;
@@ -224,18 +472,18 @@
   overflow: hidden;
 }
 
-.btn-accent:hover {
+.btn-painel:hover {
   transform: translateY(-3px) scale(1.02);
   background: linear-gradient(135deg, #34d399 0%, #059669 100%);
   box-shadow: 0 6px 20px 0 rgba(16,185,129,0.5);
 }
 
-.btn-accent:active {
+.btn-painel:active {
   transform: translateY(-1px) scale(0.98);
   box-shadow: 0 3px 10px 0 rgba(16,185,129,0.4);
 }
 
-.btn-accent-editar {
+.btn-painel-editar {
   background: linear-gradient(135deg, #3B82F6 0%, #0EA5E9 100%);
   color: white;
   font-family: 'Montserrat', sans-serif;
@@ -254,18 +502,18 @@
   overflow: hidden;
 }
 
-.btn-accent-editar:hover {
+.btn-painel-editar:hover {
   transform: translateY(-3px) scale(1.02);
   background: linear-gradient(135deg, #3B82F6 0%, #0EA5E9 100%);
   box-shadow: 0 6px 20px 0 rgba(0,0,129,0.5);
 }
 
-.btn-accent-editar:active {
+.btn-painel-editar:active {
   transform: translateY(-1px) scale(0.98);
   box-shadow: 0 3px 10px 0 rgba(0,0,129,0.4);
 }
 
-.btn-accent-excluir {
+.btn-painel-excluir {
   background: linear-gradient(135deg, #ef4444 0%, #c0392b 100%);
   color: white;
   font-family: 'Montserrat', sans-serif;
@@ -284,13 +532,13 @@
   overflow: hidden;
 }
 
-.btn-accent-excluir:hover {
+.btn-painel-excluir:hover {
   transform: translateY(-3px) scale(1.02);
   background: linear-gradient(135deg, #ef4444 0%, #c0392b 100%);
   box-shadow: 0 6px 20px 0 rgba(239,68,68,0.5);
 }
 
-.btn-accent-excluir:active {
+.btn-painel-excluir:active {
   transform: translateY(-1px) scale(0.98);
   box-shadow: 0 3px 10px 0 rgba(239,68,68,0.4);
 }

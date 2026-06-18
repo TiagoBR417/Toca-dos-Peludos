@@ -373,7 +373,7 @@ class GlobalFooter extends HTMLElement {
 .footer #itens_footer {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 24px;
+  padding: 40px 24px;
   display: grid;
   grid-template-columns: 1.2fr 1.5fr 1fr 1fr;
   justify-content: space-between;
@@ -522,7 +522,7 @@ class GlobalFooter extends HTMLElement {
   background: #ffC93C;
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 20px;
+  padding: 15px;
   text-align: center;
 }
 
