@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     estado VARCHAR(2) NOT NULL,
     tipo VARCHAR(20) NOT NULL DEFAULT 'adotante',
     ativo TINYINT(1) NOT NULL DEFAULT 1,
-    foto_url VARCHAR(255) DEFAULT 'img/logo-tdp-ícone.png', 
+    foto_url VARCHAR(255) DEFAULT 'img/logo-tdp-ícone.png',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
@@ -110,9 +110,16 @@ CREATE TABLE IF NOT EXISTS denuncias (
     contato VARCHAR(150),
     anonimo TINYINT(1) NOT NULL DEFAULT 0,
     status VARCHAR(20) NOT NULL DEFAULT 'pendente',
+    usuario_id BIGINT NULL,
+    imagem_url VARCHAR(255) NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT fk_denuncias_usuario
+        FOREIGN KEY (usuario_id) 
+        REFERENCES usuarios(id) 
+        ON DELETE SET NULL 
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS doacoes (

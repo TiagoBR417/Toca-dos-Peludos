@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     JsonResponse::send(['success' => false, 'message' => 'Método não permitido.'], 405);
 }
 
-// 1. Procura o Token (com a proteção anti-XAMPP)
+// 1. Procura o Token
 $headers = null;
 if (function_exists('apache_request_headers')) {
     $headers = apache_request_headers();
@@ -63,7 +63,7 @@ $stmtEventos->bind_param("s", $userEmail);
 $stmtEventos->execute();
 $eventos = $stmtEventos->get_result()->fetch_all(MYSQLI_ASSOC);
 
-// 4.5 Busca os Pets associados a este usuário com status 'adotado'
+// 5. Busca os Pets associados a este usuário com status 'adotado'
 $stmtPets = $conn->prepare("
     SELECT p.id, p.nome, p.tipo AS especie, p.idade 
     FROM pets p
@@ -74,12 +74,26 @@ $stmtPets = $conn->prepare("
 $stmtPets->bind_param("s", $userEmail);
 $stmtPets->execute();
 $meusPets = $stmtPets->get_result()->fetch_all(MYSQLI_ASSOC);
-// 5. Devolve tudo empacotado para o Frontend com os nomes corretos
+
+// 6. Busca as Denúncias vinculadas a este usuário (Não anônimas)
+$stmtDenuncias = $conn->prepare("
+    SELECT d.id, d.tipo, d.descricao, d.status, d.created_at
+    FROM denuncias d
+    JOIN usuarios u ON d.usuario_id = u.id
+    WHERE u.email = ?
+    ORDER BY d.created_at DESC
+");
+$stmtDenuncias->bind_param("s", $userEmail);
+$stmtDenuncias->execute();
+$denuncias = $stmtDenuncias->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Devolve tudo empacotado para o Frontend
 JsonResponse::send([
     'success' => true,
     'data' => [
         'visitas' => $visitas,
         'eventos' => $eventos,
-        'meus_pets' => $meusPets
+        'meus_pets' => $meusPets,
+        'denuncias' => $denuncias
     ]
 ], 200);
