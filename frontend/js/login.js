@@ -9,7 +9,6 @@ let dadosRecuperacaoEmail = { telefone: "", codigo: "", novoEmail: "" };
 
 // Auxiliar para exibir feedbacks dentro dos modais de forma limpa
 function exibirFeedbackModal(idForm, texto, tipo) {
-  // Tenta encontrar ou cria uma tag de mensagem dinâmica dentro do formulário atual
   const form = document.querySelector(`#${idForm}`);
   if (!form) return;
   
@@ -77,7 +76,6 @@ async function irCodigo() {
       return;
     }
 
-    // Avança de tela se o back-end processar com sucesso
     document.getElementById("telaEmail").style.display = "none";
     document.getElementById("telaCodigo").style.display = "block";
     limparFeedbacksModais();
@@ -163,7 +161,6 @@ async function finalizarRedefinirSenha() {
     exibirFeedbackModal("telaRedefinirSenha form", "Erro ao atualizar senha.", "erro");
   }
 }
-
 
 // ==========================================
 // FLUXO: MODAL ESQUECI EMAIL
@@ -294,7 +291,6 @@ async function finalizarRedefinirEmail() {
 // ==========================================
 // CONFIGURAÇÃO DOS EVENTOS DE SUBMIT DO HTML
 // ==========================================
-// Mapeia os botões finais de execução aos métodos assíncronos criados acima
 document.addEventListener("DOMContentLoaded", () => {
   const btnFinalizarSenha = document.querySelector("#telaRedefinirSenha button");
   if (btnFinalizarSenha) {
@@ -304,5 +300,63 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnFinalizarEmail = document.querySelector("#telaRedefinirEmail button");
   if (btnFinalizarEmail) {
     btnFinalizarEmail.setAttribute("onclick", "finalizarRedefinirEmail()");
+  }
+
+  // INTERCEPTADOR DO FORMULÁRIO DE LOGIN REAL (Adicionado para corrigir o botão travado)
+  const formLogin = document.getElementById("formLogin");
+  const mensagemLogin = document.getElementById("mensagemLogin");
+
+  if (formLogin) {
+    formLogin.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      if (mensagemLogin) {
+        mensagemLogin.textContent = "Autenticando...";
+        mensagemLogin.className = "mensagem-feedback";
+      }
+
+      const email = document.getElementById("emailLogin").value.trim();
+      const senha = document.getElementById("senhaLogin").value;
+
+      try {
+        const response = await fetch(`${BASE_URL}/site/login.php`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, senha })
+        });
+
+        const resultado = await response.json();
+
+        if (resultado.success) {
+          if (mensagemLogin) {
+            mensagemLogin.textContent = "Login realizado com sucesso! Redirecionando...";
+            mensagemLogin.className = "mensagem-feedback sucesso";
+          }
+          
+          // Armazena a sessão completa vinda da API
+          localStorage.setItem("usuarioLogado", JSON.stringify(resultado.data));
+
+          // Redireciona de acordo com o nível de acesso
+          setTimeout(() => {
+            if (resultado.data.tipo === "admin") {
+              window.location.href = "painel_admin.html";
+            } else {
+              window.location.href = "perfil.html";
+            }
+          }, 1500);
+        } else {
+          if (mensagemLogin) {
+            mensagemLogin.textContent = resultado.message || "Credenciais inválidas.";
+            mensagemLogin.className = "mensagem-feedback erro";
+          }
+        }
+      } catch (error) {
+        console.error("Erro na requisição de login:", error);
+        if (mensagemLogin) {
+          mensagemLogin.textContent = "Erro de comunicação com o servidor.";
+          mensagemLogin.className = "mensagem-feedback erro";
+        }
+      }
+    });
   }
 });

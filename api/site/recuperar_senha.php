@@ -5,10 +5,10 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// Inclui os arquivos necessários do PHPMailer
-require 'PHPMailer-master/src/Exception.php';
-require 'PHPMailer-master/src/PHPMailer.php';
-require 'PHPMailer-master/src/SMTP.php';
+// Inclui os arquivos necessários do PHPMailer (Corrigido caminhos de diretório)
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -17,7 +17,7 @@ use PHPMailer\PHPMailer\Exception;
 // CONFIGURAÇÃO DA CONEXÃO COM O BANCO DE DADOS (PDO)
 // -------------------------------------------------------------------------
 $host = "localhost";
-$banco = "toca_dos_peludos"; // Substitua pelo nome real do seu banco de dados
+$banco = "toca_dos_peludos"; 
 $usuario_db = "root";
 $senha_db = "";
 
@@ -117,12 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
       }
 
-      // Busca o código que está gravado no banco para este utilizador
       $stmt = $pdo->prepare("SELECT codigo_recuperacao FROM usuarios WHERE email = :email");
       $stmt->execute(['email' => $email]);
       $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      // Valida se o código bate de forma exata com o guardado
       if ($usuario && $usuario['codigo_recuperacao'] == $codigoDigitado) {
         echo json_encode(["success" => true, "message" => "Código válido!"]);
       } else {
@@ -142,7 +140,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
       }
 
-      // Medida de segurança extra: Verifica novamente se o código bate antes de atualizar
       $stmt = $pdo->prepare("SELECT codigo_recuperacao FROM usuarios WHERE email = :email");
       $stmt->execute(['email' => $email]);
       $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -152,11 +149,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
       }
 
-      // 1. Criptografa a nova senha usando a função nativa e segura do PHP (Bcrypt)
+      // Criptografa a nova senha usando a função nativa do PHP (Bcrypt)
       $senhaSegura = password_hash($novaSenha, PASSWORD_DEFAULT);
 
-      // 2. Faz o UPDATE da senha e limpa o código de recuperação por segurança (colocando NULL)
-      $stmtUpdate = $pdo->prepare("UPDATE usuarios SET senha = :senha, codigo_recuperacao = NULL WHERE email = :email");
+      // Corrigido de 'senha' para 'senha_hash' para bater com a estrutura do seu banco
+      $stmtUpdate = $pdo->prepare("UPDATE usuarios SET senha_hash = :senha, codigo_recuperacao = NULL WHERE email = :email");
       $stmtUpdate->execute([
         'senha' => $senhaSegura,
         'email' => $email
@@ -167,5 +164,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-// Resposta caso tentem acessar o arquivo de forma incorreta
 echo json_encode(["success" => false, "message" => "Requisição inválida."]);
