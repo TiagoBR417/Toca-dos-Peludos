@@ -28,7 +28,7 @@ class GlobalHeader extends HTMLElement {
   justify-content: space-between;
   position: relative;
 }
-      
+
 .nav img {
   width: 60px;
   height: 60px;
@@ -228,7 +228,7 @@ class GlobalHeader extends HTMLElement {
     border-bottom: 1px solid rgba(255,255,255,0.15);
     font-weight: 500;
   }
-      
+
   .nav .links a:last-child {
     border-bottom: none;
   }
@@ -245,7 +245,7 @@ class GlobalHeader extends HTMLElement {
     display: none;
   }
 }
-  
+
 /* Fim do Menu Sanduiche */      
       </style>
       <header class="nav">
@@ -689,3 +689,81 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+/* Verifica se o usuário está logado. Se não estiver, bloqueia o envio e avisa o usuário. */
+function verificarUsuarioLogado() {
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+  return usuarioLogado && usuarioLogado.token ? usuarioLogado : null;
+}
+
+/* Preenche automaticamente campos que combinem com os dados do usuário logado */
+function preencherDadosAutomaticos(mapeamentoCampos) {
+  const usuario = verificarUsuarioLogado();
+  if (!usuario) return;
+
+  // Tenta extrair os dados de dentro do objeto (ex: usuario.nome ou usuario.user.nome)
+  const dados = {
+    ...(usuario.user || {}),
+    ...(usuario.endereco || {}),
+    ...usuario
+  };
+
+  Object.keys(mapeamentoCampos).forEach(chave => {
+    const idCampo = mapeamentoCampos[chave];
+    const input = document.getElementById(idCampo);
+    if (input && dados[chave] !==undefined && dados[chave] !==null) {
+      input.value = dados[chave];
+    }
+  });
+}
+
+/* Valida o limite de inscrições/envios localmente antes de enviar para a API */
+function verificarLimiteEnvios(chaveFormulario, limite = 1) {
+  const usuario = verificarUsuarioLogado();
+  if (!usuario) return false;
+
+  const historico = JSON.parse(localStorage.getItem(`envios_${chaveFormulario}`)) || {};
+  const enviosDoUsuario = historico[usuario.email || usuario.id] || 0;
+
+  return enviosDoUsuario < limite;
+}
+
+/* Registra o envio com sucesso para controle de limite local */
+function registrarEnvioSucesso(chaveFormulario) {
+  const usuario = verificarUsuarioLogado();
+  if (!usuario) return;
+
+  const historico = JSON.parse(localStorage.getItem(`envios_${chaveFormulario}`)) || {};
+  const identificador = usuario.email || usuario.id;
+
+  historico[identificador] = (historico[identificador] || 0) + 1;
+  localStorage.setItem(`envios_${chaveFormulario}`, JSON.stringify(historico));
+}
+
+// Função para buscar o CEP na API externa ViaCEP e preencher os campos do formulário
+async function buscarCepEPreencher(cep, mapeamentoCampos) {
+  // Remove caracteres não numéricos
+  const cepLimpo = cep.replace(/\D/g, "");
+  if (cepLimpo.length !== 8) return;
+
+  try {
+    const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+    const dadosCep = await response.json();
+
+    if (dadosCep.erro) {
+      console.warn("CEP não encontrado.");
+      return;
+    }
+
+    // Preenche os campos baseado no retorno da ViaCEP
+    Object.keys(mapeamentoCampos).forEach(chave => {
+      const idCampo = mapeamentoCampos[chave];
+      const input = document.getElementById(idCampo);
+      if (input && dadosCep[chave]) {
+        input.value = dadosCep[chave];
+      }
+    });
+  } catch (error) {
+    console.error("Erro ao buscar CEP:", error);
+  }
+}

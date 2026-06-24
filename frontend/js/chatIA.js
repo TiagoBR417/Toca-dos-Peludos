@@ -212,15 +212,21 @@ class ChatIA extends HTMLElement {
     this.input = this.shadowRoot.querySelector("#input");
     this.messages = this.shadowRoot.querySelector("#messages");
 
-    this.button.addEventListener("click", () => {
-      this.window.classList.toggle("open");
-    });
+    if (this.button && this.window) {
+      this.button.addEventListener("click", () => {
+        this.window.classList.toggle("open");
+      });
+    }
 
-    this.closeBtn.addEventListener("click", () => {
-      this.window.classList.remove("open");
-    });
+    if (this.closeBtn && this.window) {
+      this.closeBtn.addEventListener("click", () => {
+        this.window.classList.remove("open");
+      });
+    }
 
-    this.sendBtn.addEventListener("click", () => this.sendMessage());
+    if (this.sendBtn) {
+      this.sendBtn.addEventListener("click", () => this.sendMessage());
+    }
   }
 
   sendMessage() {

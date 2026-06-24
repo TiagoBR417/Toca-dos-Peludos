@@ -28,7 +28,7 @@
   object-fit: cover;
 }
 
-.titulo{
+.titulo {
   color: #ffffff;
 }
 
@@ -268,7 +268,7 @@
   z-index: 10;
 }
 
-.logo {
+.dashboard {
   color: #ffffff;
   text-decoration: none;
   font-size: 1.3rem;
@@ -760,7 +760,7 @@ h2::after {
   }
   
   /* Esconde o texto da logo no tablet, mantém só o ícone */
-  .logo {
+  .dashboard {
     font-size: 0; 
     padding: 0;
     margin-bottom: 20px;

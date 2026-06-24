@@ -36,6 +36,19 @@ document.addEventListener("DOMContentLoaded", () => {
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    const usuarioLogado = verificarUsuarioLogado(); // Usando nossa nova função centralizada
+    if (!usuarioLogado) {
+        mensagem.textContent = "Você precisa estar logado no sistema para cadastrar uma denúncia.";
+        mensagem.className = "erro";
+        return;
+    }
+
+    if (!verificarLimiteEnvios("denuncias", 3)) {
+        mensagem.textContent = "Você atingiu o limite máximo de denúncias permitidas por hoje.";
+        mensagem.className = "erro";
+        return;
+    }
+
     mensagem.textContent = "";
     mensagem.className = "";
 
@@ -84,7 +97,8 @@ form.addEventListener("submit", async (e) => {
         return;
       }
 
-      mensagem.textContent = "Denúncia cadastrada com sucesso!";
+      registrarEnvioSucesso("denuncias");
+      mensagem.textContent = "Denúncia cadastrada com sucesso! Um e-mail de confirmação foi emitido.";
       mensagem.className = "sucesso";
       form.reset();
       labelImagem.innerHTML = `📸 Selecionar fotos da ocorrência`;

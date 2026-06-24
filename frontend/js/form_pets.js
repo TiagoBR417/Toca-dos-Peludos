@@ -7,6 +7,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  preencherDadosAutomaticos({
+    nome: "nomeInteressado",
+    email: "emailInteressado",
+    telefone: "telefoneInteressado"
+  });
+
+  const campoCep = document.getElementById("cepInteressado");
+  if (campoCep) {
+    campoCep.addEventListener("blur", async () => { // Executa ao sair do campo
+      await buscarCepEPreencher(campoCep.value, {
+        logradouro: "endereçoInteressado",
+        localidade: "cidadeInteressado",
+        uf: "ufInteressado"
+      });
+    });
+  }
+
   await carregarDetalhesPet(petId);
   configurarFormularioAgendamento(petId);
 });
@@ -85,6 +102,19 @@ function configurarFormularioAgendamento(petId) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    const usuario = verificarUsuarioLogado();
+    if (!usuario) {
+      mensagem.textContent = "Você precisa estar logado para agendar uma visita.";
+      mensagem.className = "mensagem-agendamento erro";
+      return;
+    }
+
+    if (!verificarLimiteEnvios(`pet_${petId}`, 2)) { // limite de 2 por pet, por exemplo
+      mensagem.textContent = "Você já possui um agendamento para este pet.";
+      mensagem.className = "mensagem-agendamento erro";
+      return;
+    }
+
     mensagem.textContent = "";
     mensagem.className = "mensagem-agendamento";
 
@@ -110,7 +140,7 @@ function configurarFormularioAgendamento(petId) {
       const response = await fetch(API_AGENDAMENTOS_URL, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json", "Authorization": `Bearer ${usuario.token}`
         },
         body: JSON.stringify(payload)
       });
@@ -123,7 +153,9 @@ function configurarFormularioAgendamento(petId) {
         return;
       }
 
-      mensagem.textContent = "Agendamento realizado com sucesso!";
+      registrarEnvioSucesso(`pet_${petId}`);
+
+      mensagem.textContent = "Agendamento realizado com sucesso! Um e-mail de confirmação foi enviado.";
       mensagem.classList.add("sucesso");
       form.reset();
     } catch (error) {

@@ -177,7 +177,6 @@ function renderizarTabela(secao, dados) {
       html += `<td>${valor}</td>`;
     });
 
-    // --- CORREÇÃO AQUI: Mudando 'btn-accent' para 'btn-accent-ce' nas ações principais ---
     if (secao === 'pets') {
       html += `<td>
                 <button class="btn-accent-editar" onclick="abrirModalPet(${item.id})">Editar</button>

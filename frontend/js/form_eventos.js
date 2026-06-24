@@ -4,6 +4,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const nomeEventoSpan = document.getElementById("nomeEventoSelecionado");
   const mensagem = document.getElementById("mensagemFormulario");
 
+  preencherDadosAutomaticos({
+    nome: "nome",
+    email: "email",
+    telefone: "telefone"
+  });
+
   if (eventoId) {
     document.getElementById("eventoId").value = eventoId;
 
@@ -41,6 +47,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       mensagem.className = "";
     }
 
+    const usuario = verificarUsuarioLogado();
+    if (!usuario) {
+      mensagem.textContent = "Você precisa estar logado para se inscrever neste evento.";
+      mensagem.className = "erro";
+      return;
+    }
+
+    const eventoId = document.getElementById("eventoId").value;
+
+    if (!verificarLimiteEnvios(`evento_${eventoId}`, 1)) {
+      mensagem.textContent = "Você já está inscrito neste evento.";
+      mensagem.className = "erro";
+      return;
+    }
+
     const payload = {
       evento_id: Number(document.getElementById("eventoId").value),
       nome: document.getElementById("nome").value.trim(),
@@ -64,7 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const response = await fetch(API_INSCRICOES_URL, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json", "Authorization": `Bearer ${usuario.token}`
         },
         body: JSON.stringify(payload)
       });
@@ -81,8 +102,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
+      registrarEnvioSucesso(`evento_${eventoId}`);
+
       if (mensagem) {
-        mensagem.textContent = "Inscrição realizada com sucesso!";
+        mensagem.textContent = "Inscrição realizada com sucesso! Confirmação enviada por e-mail.";
         mensagem.classList.add("sucesso");
       } else {
         alert("Inscrição realizada com sucesso!");

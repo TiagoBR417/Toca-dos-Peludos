@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Redireciona de acordo com o nível de acesso
           setTimeout(() => {
             if (resultado.data.tipo === "admin") {
-              window.location.href = "painel_admin.html";
+              window.location.href = "painelteste.html";
             } else {
               window.location.href = "perfil.html";
             }
