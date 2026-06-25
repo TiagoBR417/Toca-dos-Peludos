@@ -283,6 +283,38 @@ async function atualizarFotoPerfil(input) {
   }
 }
 
+// VISIBILIDADE DA SENHA
+function alternarVisibilidadeSenha(inputId, iconeElemento) {
+  const inputSenha = document.getElementById(inputId);
+  if (!inputSenha) return;
+
+  if (inputSenha.type === "password") {
+    inputSenha.type = "text";
+    iconeElemento.classList.remove("fa-eye");
+    iconeElemento.classList.add("fa-eye-slash");
+  } else {
+    inputSenha.type = "password";
+    iconeElemento.classList.remove("fa-eye-slash");
+    iconeElemento.classList.add("fa-eye");
+  }
+}
+
+// ÍCONES DAS ESPÉCIES
+function atualizarIconeEspecie(selectElement) {
+  // Encontra o ícone decorativo dentro do mesmo wrapper do select
+  const icone = selectElement.parentElement.querySelector('.input-icon-left');
+  if (!icone) return;
+
+  // Altera a classe com base no valor do select
+  if (selectElement.value === "Cachorro") {
+    icone.className = "fa-solid fa-dog input-icon-left";
+  } else if (selectElement.value === "Gato") {
+    icone.className = "fa-solid fa-cat input-icon-left";
+  } else {
+    icone.className = "fa-solid fa-paw input-icon-left";
+  }
+}
+
 // RENDERIZAÇÃO DAS SEÇÕES OPERACIONAIS
 function renderizarMeusPets(pets) {
   const div = document.getElementById("listaMeusPets");

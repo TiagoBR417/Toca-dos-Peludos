@@ -2,6 +2,7 @@
   max-width: 1200px;
   margin: 10px auto;
   padding: 20px;
+  font-family: 'Roboto', sans-serif;
 }
 
 /* HERO */
@@ -22,26 +23,33 @@
 }
 
 .perfil-avatar {
-  position: relative;
-  display: inline-block;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .btn-upload-foto {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 5px;
+  right: 5px;
   background: var(--primary);
   color: #1e293b;
-  width: 36px;
-  height: 36px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: 0.3s ease;
-  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
 }
 
 .btn-upload-foto:hover {
@@ -103,8 +111,8 @@
 
 .perfil-hero-info h1 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  margin: 5px 0;
 }
 
 .perfil-hero-info p {
@@ -121,6 +129,7 @@
   border-radius: 999px;
   margin-bottom: 15px;
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 /* GRID */
@@ -136,6 +145,7 @@
   border-radius: 20px;
   padding: 25px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
 }
 
 .card-header {
@@ -143,17 +153,21 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
 }
 
 .card-header h2 {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   color: #6A1B9A;
+  font-family: 'Montserrat', sans-serif;
 }
 
-.btn-editar {
+.btn-editar,
+.btn-senha {
   border: none;
   background: #f3e5f5;
   color: #6A1B9A;
@@ -164,18 +178,22 @@
   font-weight: 600;
 }
 
-.btn-editar:hover {
+.btn-editar:hover,
+.btn-senha:hover {
   background: #6A1B9A;
   color: white;
 }
 
 .info-usuario {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 }
 
 .info-item {
+  display: flex;
+  flex-direction: column;
   padding-bottom: 14px;
   border-bottom: 1px solid #ececec;
 }
@@ -189,20 +207,28 @@
 
 .info-item strong {
   font-size: 1rem;
+  color: #444;
 }
 
 /* STATS */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: 1fr;
   gap: 16px;
+  height: 100%;
 }
 
 .stat-item {
   background: linear-gradient(135deg, #faf5ff, #f3e5f5);
+  border: 1px solid #ded6f5;
   border-radius: 18px;
   padding: 20px;
   text-align: center;
+  transition: transform 0.2s;
+}
+
+.stat-item:hover {
+  transform: translateY(-3px);
 }
 
 .stat-item i {
@@ -218,6 +244,8 @@
 
 .stat-item p {
   color: #666;
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 /* SEÇÕES */
@@ -238,6 +266,8 @@
   padding: 14px 22px;
   border-radius: 14px;
   font-size: 1.1rem;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 20px;
 }
 
 .cards-lista {
@@ -358,14 +388,253 @@
   font-weight: 500;
 }
 
-.modal-perfil-content input, 
+.modal-perfil-content input,
 .modal-perfil-content select {
   width: 100%;
   padding: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 8px 0 16px 0;
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 1rem;
+}
+
+/* Customizações exclusivas do Modal de Perfil */
+.modal-perfil-custom {
+  max-width: 520px;
+}
+
+/* Wrappers genéricos de inputs com ícones */
+.input-group-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.input-group-wrapper .input-icon-left {
+  position: absolute;
+  left: 14px;
+  color: #a0aec0;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+/* Padronização dos Inputs no Modal */
+.input-group-wrapper input {
+  width: 100%;
+  padding: 12px 14px 12px 38px !important; /* Espaço para o ícone esquerdo */
+  margin-bottom: 0 !important;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+  background-color: #f8fafc;
+}
+
+/* Inputs que NÃO possuem ícone esquerdo (ex: Número e UF) */
+.text-center-input .input-group-wrapper input {
+  padding: 12px 10px !important;
+  text-align: center;
+}
+
+.input-group-wrapper input:focus {
+  border-color: var(--accent, #6F42C1);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.15);
+  outline: none;
+}
+
+/* Estrutura de Grids Responsivos para as linhas combinadas */
+.form-row-endereco {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 12px;
+}
+
+.form-row-localidade {
+  display: grid;
+  grid-template-columns: 3.2fr 1fr;
+  gap: 12px;
+}
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botão de Salvar Customizado */
+.btn-salvar-perfil {
+  background: var(--secondary, #4B2E83);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-salvar-perfil:hover {
+  background: var(--accent, #6F42C1);
+}
+
+.btn-salvar-perfil:active {
+  transform: scale(0.98);
+}
+
+/* Customizações exclusivas do Modal de Senha */
+.modal-senha-custom {
+  max-width: 420px; /* Deixa o modal de senha mais compacto e elegante */
+}
+
+.modal-subtitulo {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+/* Container do Input de Senha */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+/* Ícone decorativo da esquerda */
+.input-icon-left {
+  position: absolute;
+  left: 14px;
+  color: #a0aec0;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+/* Ajuste do Input para acomodar os ícones */
+.password-wrapper input {
+  width: 100%;
+  padding: 12px 40px 12px 38px !important; /* Espaço extra nas laterais */
+  margin-bottom: 0 !important; /* Reseta o margin padrão do modal */
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+  background-color: #f8fafc;
+}
+
+.password-wrapper input:focus {
+  border-color: var(--accent, #6F42C1);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.15);
+  outline: none;
+}
+
+/* Ícone do Olhinho (Direita) */
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  color: #a0aec0;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.toggle-password:hover {
+  color: var(--secondary, #4B2E83);
+}
+
+/* Customização do Botão de Salvar Senha */
+.btn-salvar-senha {
+  background: var(--secondary, #4B2E83);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-salvar-senha:hover {
+  background: var(--accent, #6F42C1);
+}
+
+.btn-salvar-senha:active {
+  transform: scale(0.98);
+}
+
+/* Customizações exclusivas do Modal de Pets */
+.modal-pet-custom {
+  max-width: 450px;
+}
+
+/* Customização do Select do Pet */
+.select-custom-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-custom-wrapper select {
+  width: 100%;
+  padding: 12px 40px 12px 38px !important; /* Espaço para o ícone esquerdo e a seta direita */
+  margin-bottom: 0 !important;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+  background-color: #f8fafc;
+  appearance: none; /* Remove a seta padrão do sistema operacional */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.select-custom-wrapper select:focus {
+  border-color: var(--accent, #6F42C1);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.15);
+  outline: none;
+}
+
+/* Seta customizada para o Select */
+.select-arrow-right {
+  position: absolute;
+  right: 14px;
+  color: #a0aec0;
+  font-size: 0.85rem;
+  pointer-events: none; /* Garante que o clique passe direto para o select */
+}
+
+/* Botão de Gravar Pet */
+.btn-salvar-pet {
+  background: var(--secondary, #4B2E83);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-salvar-pet:hover {
+  background: var(--accent, #6F42C1);
+}
+
+.btn-salvar-pet:active {
+  transform: scale(0.98);
 }
 
 .modal-perfil-botoes {
@@ -375,12 +644,13 @@
 }
 
 .modal-perfil-botoes button {
-  padding: 10px 20px;
+  padding: 10px 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
+  gap: 10px;
 }
 
 .btn-cancelar {
@@ -421,5 +691,18 @@ body.no-scroll {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
+  }
+
+  .info-usuario {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row-endereco, .form-row-localidade {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .text-center-input .input-group-wrapper input {
+    text-align: left;
+    padding-left: 14px !important;
   }
 }
