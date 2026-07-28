@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS eventos (
 CREATE TABLE IF NOT EXISTS inscricoes_evento (
   id BIGINT NOT NULL AUTO_INCREMENT,
   evento_id BIGINT NOT NULL,
-  usuario_id BIGINT NOT NULL, -- Nova FK: Se o adotante já tiver cadastro, vincula aqui automaticamente
+  usuario_id BIGINT NULL, 
   nome VARCHAR(150) NOT NULL,
   email VARCHAR(150) NOT NULL,
   telefone VARCHAR(20) NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS inscricoes_evento (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   CONSTRAINT fk_inscricoes_evento FOREIGN KEY (evento_id) REFERENCES eventos(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT fk_inscricoes_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT fk_inscricoes_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- ======================== --
