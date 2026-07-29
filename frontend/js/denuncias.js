@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formDenuncia");
+  console.log(form);
   const mensagem = document.getElementById("mensagemDenuncia");
   const checkbox = document.getElementById("anonimoCheckbox");
   const campoContato = document.getElementById("contatoDenuncia");
@@ -69,7 +70,7 @@ form.addEventListener("submit", async (e) => {
     formData.append('contato', campoContato.value.trim());
     formData.append('imagem_ocorrencia', inputImagem.files[0]);
 
-    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+    
     const headers = {};
     if (usuarioLogado && usuarioLogado.token) {
         headers["Authorization"] = `Bearer ${usuarioLogado.token}`;

@@ -32,7 +32,7 @@ if ($email === '' || $senha === '') {
 }
 
 $stmt = $conn->prepare("
-    SELECT id, nome, sobrenome, email, telefone, tipo, senha_hash, ativo
+    SELECT id, nome, sobrenome, email, telefone, endereco, numero, cidade, estado, cep, tipo, senha_hash, ativo
     FROM usuarios
     WHERE email = ?
     LIMIT 1
