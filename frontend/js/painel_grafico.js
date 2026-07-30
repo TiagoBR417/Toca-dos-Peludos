@@ -303,14 +303,24 @@ document.querySelectorAll('.nav-links li[data-dashboard], .submenu li[data-dashb
 });
 
 // GRÁFICO DE PETS
-function renderPetsCharts() {
+async function renderPetsCharts() {
+
+    const response = await fetch(`${BASE_URL}/admin/dashboard_status_pets.php`,{
+        headers:{
+            Authorization:`Bearer ${TOKEN}`
+        }
+    });
+
+    const resultado = await response.json();
+
+    const dados = resultado.data;
 
   // PETS: Status dos pets
   const statusPets = new ApexCharts(document.querySelector("#statusPets"), {
 
     chart: {type: 'donut', height: 300},
-    series: [40, 25, 20, 15],
-    labels: ['Disponível', 'Tratamento', 'Adotado', 'Lar Temporário'],
+    series:dados.map(item=>Number(item.quantidade)),
+    labels:dados.map(item=>item.status),
     colors: ['#4CAF50', '#FFC107', '#2196F3', '#9C27B0']});
 
   statusPets.render();
