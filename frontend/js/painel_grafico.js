@@ -15,11 +15,7 @@ const dashboards = {
           <div id="portesPets"></div>
         </div>
         <div class="chart-card">
-          <h3>🐾 Taxa de adoção</h3>
-          <div id="adocaoPets"></div>
-        </div>
-        <div class="chart-card">
-          <h3>🎂 Idade média</h3>
+          <h3>🎂 Faixa Etária</h3>
           <div id="idadePets"></div>
         </div>
       </div>
@@ -60,17 +56,13 @@ const dashboards = {
       <div id="container-tabela-eventos"></div>
     `
   },
-  denuncias: {
+denuncias: {
     graficos: `
       <h1>Dashboard Denúncias - Gráficos</h1>
       <div class="charts-grid">
         <div class="chart-card">
           <h3>🚨 Denúncias por tipo</h3>
           <div id="denunciasTipo"></div>
-        </div>
-        <div class="chart-card">
-          <h3>📍 Mapa de denúncias</h3>
-          <div id="mapaDenuncias"></div>
         </div>
         <div class="chart-card">
           <h3>📋 Status</h3>
@@ -86,21 +78,13 @@ const dashboards = {
       <div id="container-tabela-denuncias"></div>
     `
   },
-  inscricoes: {
+inscricoes: {
     graficos: `
       <h1>Dashboard Inscrições - Gráficos</h1>
       <div class="charts-grid">
         <div class="chart-card">
           <h3>📝 Inscrições por período</h3>
           <div id="inscricoesPeriodo"></div>
-        </div>
-        <div class="chart-card">
-          <h3>📈 Taxa de aprovação</h3>
-          <div id="taxaAprovacao"></div>
-        </div>
-        <div class="chart-card">
-          <h3>🌐 Origem inscrições</h3>
-          <div id="origemInscricoes"></div>
         </div>
       </div>
     `,
@@ -112,21 +96,17 @@ const dashboards = {
       <div id="container-tabela-inscricoes"></div>
     `
   },
-  agendamentos: {
+agendamentos: {
     graficos: `
       <h1>Dashboard Agendamentos - Gráficos</h1>
       <div class="charts-grid">
         <div class="chart-card">
-          <h3>📅 Agendamentos</h3>
-          <div id="agendamentosDia"></div>
+          <h3>📅 Agendamentos por Mês</h3>
+          <div id="agendamentosMes"></div>
         </div>
         <div class="chart-card">
-          <h3>⏰ Horários movimentados</h3>
+          <h3>⏰ Fluxo de agendamentos por horário</h3>
           <div id="horariosMovimentados"></div>
-        </div>
-        <div class="chart-card">
-          <h3>✅ Comparecimento</h3>
-          <div id="taxaComparecimento"></div>
         </div>
       </div>
     `,
@@ -161,22 +141,17 @@ const dashboards = {
       <div id="container-tabela-doacoes"></div>
     `
   },
-  usuarios: {
+usuarios: {
     graficos: `
       <h1>Dashboard Usuários - Gráficos</h1>
       <div class="charts-grid">
         <div class="kpi-card">
           <h3>🔥 Usuários Ativos</h3>
-          <span>1.284</span>
-          <p>+12% em relação ao mês anterior</p>
+          <span id="kpiUsuariosAtivos">0</span>
         </div>
         <div class="chart-card">
-          <h3>👥 Crescimento</h3>
+          <h3>👥 Crescimento (Novos)</h3>
           <div id="crescimentoUsuarios"></div>
-        </div>
-        <div class="chart-card">
-          <h3>📊 Retenção</h3>
-          <div id="retencaoUsuarios"></div>
         </div>
         <div class="chart-card">
           <h3>➗ Distribuição</h3>
@@ -324,63 +299,75 @@ document.querySelectorAll('.submenu li[data-dashboard]').forEach(item => {
 });
 
 // GRÁFICO DE PETS
+// GRÁFICO DE PETS
 async function renderPetsCharts() {
+    try {
+        // CORREÇÃO: Atualizado para o nome correto do seu arquivo PHP
+        const response = await fetch(`${BASE_URL}/admin/dashboard_status_pets.php`, {
+            headers: { Authorization: `Bearer ${TOKEN}` }
+        });
+        const resultado = await response.json();
+        
+        if(!resultado.success) return;
+        
+        const dados = resultado.data;
 
-    const response = await fetch(`${BASE_URL}/admin/dashboard_status_pets.php`,{
-        headers:{
-            Authorization:`Bearer ${TOKEN}`
-        }
-    });
+        // 1. PETS: Status dos pets (Dinâmico)
+        const statusLabels = dados.status.map(item => {
+          let label = item.status.replace(/_/g, ' ');
+          return label.charAt(0).toUpperCase() + label.slice(1);
+        });
+        const statusSeries = dados.status.map(item => Number(item.quantidade));
+        
+        new ApexCharts(document.querySelector("#statusPets"), {
+            chart: {type: 'donut', height: 300},
+            series: statusSeries,
+            labels: statusLabels,
+            colors: ['#4CAF50', '#FFC107', '#2196F3', '#9C27B0']
+        }).render();
 
-    const resultado = await response.json();
+        // 2. PETS: Espécies e portes (Dinâmico)
+        let pequeno = [0, 0]; // Index 0: Cachorro, Index 1: Gato
+        let medio = [0, 0];
+        let grande = [0, 0];
 
-    const dados = resultado.data;
+        dados.portes.forEach(item => {
+            let tipoIdx = item.tipo.toLowerCase() === 'cachorro' ? 0 : 1;
+            let qtd = Number(item.quantidade);
+            
+            if(item.porte === 'pequeno') pequeno[tipoIdx] = qtd;
+            else if(item.porte === 'medio') medio[tipoIdx] = qtd;
+            else if(item.porte === 'grande') grande[tipoIdx] = qtd;
+        });
 
-  // PETS: Status dos pets
-  const statusPets = new ApexCharts(document.querySelector("#statusPets"), {
+        new ApexCharts(document.querySelector("#portesPets"), {
+            chart: {type: 'bar', stacked: true, height: 300},
+            series: [
+                {name: 'Pequeno', data: pequeno}, 
+                {name: 'Médio', data: medio}, 
+                {name: 'Grande', data: grande}
+            ],
+            xaxis: {categories: ['Cachorros', 'Gatos']},
+            colors: ['#7956a6', '#f4b400', '#4CAF50']
+        }).render();
 
-    chart: {type: 'donut', height: 300},
-    series:dados.map(item=>Number(item.quantidade)),
-    labels:dados.map(item=>item.status),
-    colors: ['#4CAF50', '#FFC107', '#2196F3', '#9C27B0']});
+        // 3. PETS: Idade Média/Faixa Etária (Dinâmico)
+        const idades = dados.idades;
+        new ApexCharts(document.querySelector("#idadePets"), {
+            chart: {type: 'bar', height: 300, toolbar: {show: false}},
+            series: [{name: 'Quantidade', data: [Number(idades.filhote), Number(idades.adulto), Number(idades.idoso)]}],
+            xaxis: {categories: ['Filhote (até 1)', 'Adulto (2-7)', 'Idoso (8+)'], title: {text: 'Faixa etária em Anos'}},
+            yaxis: {title: {text: 'Quantidade de pets'}},
+            plotOptions: {bar: {borderRadius: 6, columnWidth: '55%', distributed: true}},
+            colors: ['#4CAF50', '#FFC107', '#7956A6'],
+            dataLabels: {enabled: false},
+            grid: {borderColor: '#e0e0e0'}
+        }).render();
 
-  statusPets.render();
-
-  // PETS: Espécies e portes
-  const portesPets = new ApexCharts(document.querySelector("#portesPets"), {
-
-    chart: {type: 'bar', stacked: true, height: 300},
-    series: [{name: 'Pequeno', data: [30, 20, 10]}, {name: 'Médio', data: [25, 18, 5]}, {name: 'Grande', data: [10, 5, 2]}],
-    xaxis: {categories: ['Cachorros', 'Gatos', 'Outros']},
-    colors: ['#7956a6', '#f4b400', '#4CAF50']});
-
-  portesPets.render();
-
-  // PETS: Taxa de adoção
-  const adocaoPets = new ApexCharts(document.querySelector("#adocaoPets"), {
-
-    chart: {type: 'line', height: 300},
-    series: [{name: 'Adoções', data: [15, 22, 30, 28, 35, 42]}],
-    xaxis: {categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']},
-    stroke: {curve: 'smooth'},
-    colors: ['#E91E63']});
-
-  adocaoPets.render();
-
-  // PETS: Idade média dos pets
-  const idadePets = new ApexCharts(document.querySelector("#idadePets"), {
-
-    chart: {type: 'bar', height: 300, toolbar: {show: false}},
-    series: [{name: 'Quantidade', data: [18, 35, 12]}],
-    xaxis: {categories: ['Filhote', 'Adulto', 'Idoso'], title: {text: 'Faixa etária'}},
-    yaxis: {title: {text: 'Quantidade de pets'}},
-    plotOptions: {bar: {borderRadius: 6, columnWidth: '55%', distributed: true}},
-    colors: ['#4CAF50', '#FFC107', '#7956A6'],
-    dataLabels: {enabled: false},
-    grid: {borderColor: '#e0e0e0'}});
-
-  idadePets.render()};
-
+    } catch (e) {
+        console.error("Erro ao carregar gráficos dinâmicos de pets: ", e);
+    }
+}
 // GRÁFICO DOS EVENTOS
 function renderEventsCharts() {
 
@@ -423,169 +410,196 @@ function renderEventsCharts() {
   conversaoEventos.render()};
 
 // GRÁFICOS DE DENÚNCIAS
-function renderReportsCharts() {
+// GRÁFICOS DE DENÚNCIAS
+async function renderReportsCharts() {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/dashboard_graficos_denuncias.php`, {
+      headers: { Authorization: `Bearer ${TOKEN}` }
+    });
+    const resultado = await response.json();
+    
+    if (!resultado.success) return;
+    
+    const dados = resultado.data;
 
-  // DENÚNCIAS: Denúncias por tipo
-  const denunciasTipo = new ApexCharts(document.querySelector("#denunciasTipo"), {
+    // 1. DENÚNCIAS: Denúncias por tipo (Dinâmico)
+    const tiposLabels = dados.tipos.map(item => {
+      // Deixa a primeira letra maiúscula
+      return item.tipo.charAt(0).toUpperCase() + item.tipo.slice(1);
+    });
+    const tiposSeries = dados.tipos.map(item => Number(item.quantidade));
 
-    chart: {type: 'bar', height: 300},
-    series: [{name: 'Quantidade', data: [45, 30, 20, 15]}],
-    xaxis: {categories: ['Maus-tratos', 'Abandono', 'Negligência', 'Exploração']},
-    plotOptions: {bar: {horizontal: true, borderRadius: 6, barHeight: '55%'}},
-    colors: ['#E53935'],
-    dataLabels: {enabled: false},
-    grid: {borderColor: '#e0e0e0'}});
-  
-  denunciasTipo.render();
-  
-  // DENÚNCIAS: Status das denúncias
-  const statusDenuncias = new ApexCharts(document.querySelector("#statusDenuncias"), {
-  
-    chart: {type: 'donut', height: 300},
-    series: [35, 25, 40], 
-    labels: ['Aberta', 'Em análise', 'Resolvida'],
-    colors: ['#FFC107', '#2196F3', '#4CAF50'],
-    legend: {position: 'bottom'}});
-  
-  statusDenuncias.render();
-  
-  // DENÚNCIAS: Mapa de denúncias (Heatmap)  
-  const mapaDenuncias = new ApexCharts(document.querySelector("#mapaDenuncias"), {
-        
-    chart: {type: 'heatmap', height: 320},
-    series: [{name: 'Centro', data: [
-      { x: 'Seg', y: 10 }, 
-      { x: 'Ter', y: 14 }, 
-      { x: 'Qua', y: 18 }, 
-      { x: 'Qui', y: 12 }, 
-      { x: 'Sex', y: 20 }]},
-            {name: 'Zona Norte', data: [
-      { x: 'Seg', y: 5 }, 
-      { x: 'Ter', y: 8 }, 
-      { x: 'Qua', y: 11 }, 
-      { x: 'Qui', y: 7 }, 
-      { x: 'Sex', y: 13 }]},
-            {name: 'Zona Sul', data: [
-      { x: 'Seg', y: 7 }, 
-      { x: 'Ter', y: 10 }, 
-      { x: 'Qua', y: 15 }, 
-      { x: 'Qui', y: 9 }, 
-      { x: 'Sex', y: 16 }]},
-            {name: 'Zona Leste', data: [
-      { x: 'Seg', y: 12 }, 
-      { x: 'Ter', y: 16 }, 
-      { x: 'Qua', y: 20 }, 
-      { x: 'Qui', y: 18 }, 
-      { x: 'Sex', y: 22 }]}],
-    colors: ['#E53935'], 
-    dataLabels: {enabled: true},
-    title: {text: 'Incidência de denúncias por região'}});
-  
-  mapaDenuncias.render()};
+    new ApexCharts(document.querySelector("#denunciasTipo"), {
+      chart: {type: 'bar', height: 300},
+      series: [{name: 'Quantidade', data: tiposSeries}],
+      xaxis: {categories: tiposLabels},
+      plotOptions: {bar: {horizontal: true, borderRadius: 6, barHeight: '55%'}},
+      colors: ['#E53935'],
+      dataLabels: {enabled: false},
+      grid: {borderColor: '#e0e0e0'}
+    }).render();
+    
+    // 2. DENÚNCIAS: Status das denúncias (Dinâmico)
+    const statusLabels = dados.status.map(item => {
+      // Remove o underline se existir (ex: "em_analise" vira "Em analise")
+      let label = item.status.replace(/_/g, ' ');
+      return label.charAt(0).toUpperCase() + label.slice(1);
+    });
+    const statusSeries = dados.status.map(item => Number(item.quantidade));
 
+    new ApexCharts(document.querySelector("#statusDenuncias"), {
+      chart: {type: 'donut', height: 300},
+      series: statusSeries, 
+      labels: statusLabels,
+      colors: ['#FFC107', '#2196F3', '#4CAF50', '#9E9E9E'],
+      legend: {position: 'bottom'}
+    }).render();
+    
+    // 3. DENÚNCIAS: Mapa de denúncias (Mantido Estático por enquanto)  
+    new ApexCharts(document.querySelector("#mapaDenuncias"), {
+      chart: {type: 'heatmap', height: 320},
+      series: [
+        {name: 'Centro', data: [{ x: 'Seg', y: 10 }, { x: 'Ter', y: 14 }, { x: 'Qua', y: 18 }, { x: 'Qui', y: 12 }, { x: 'Sex', y: 20 }]},
+        {name: 'Zona Norte', data: [{ x: 'Seg', y: 5 }, { x: 'Ter', y: 8 }, { x: 'Qua', y: 11 }, { x: 'Qui', y: 7 }, { x: 'Sex', y: 13 }]},
+        {name: 'Zona Sul', data: [{ x: 'Seg', y: 7 }, { x: 'Ter', y: 10 }, { x: 'Qua', y: 15 }, { x: 'Qui', y: 9 }, { x: 'Sex', y: 16 }]},
+        {name: 'Zona Leste', data: [{ x: 'Seg', y: 12 }, { x: 'Ter', y: 16 }, { x: 'Qua', y: 20 }, { x: 'Qui', y: 18 }, { x: 'Sex', y: 22 }]}
+      ],
+      colors: ['#E53935'], 
+      dataLabels: {enabled: true},
+      title: {text: 'Incidência de denúncias por região'}
+    }).render();
+
+  } catch (e) {
+    console.error("Erro ao carregar gráficos dinâmicos de denúncias: ", e);
+  }
+}
 // GRÁFICOS DE INSCRIÇÕES
-function renderRegistrationsCharts() {
 
-  // INSCRIÇÕES: Inscrições por período
-  const inscricoesPeriodo = new ApexCharts(document.querySelector("#inscricoesPeriodo"), {
-  
-    chart: {type: 'line', height: 300},
-    series: [{name: 'Inscrições', data: [18, 25, 32, 28, 40, 52]}],
-    xaxis: {categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']},
-    stroke: {curve: 'smooth', width: 3},
-    colors: ['#7956A6'], 
-    dataLabels: {enabled: false},
-    grid: {borderColor: '#e0e0e0'}});
-  
-  inscricoesPeriodo.render();
-  
-    // INSCRIÇÕES: Origem das inscrições
-    const origemInscricoes = new ApexCharts(document.querySelector("#origemInscricoes"), {
-  
-      chart: {type: 'pie', height: 300}, 
-      series: [45, 30, 15, 10], 
-      labels: ['Site', 'Instagram', 'Facebook', 'Indicação'],
-      colors: ['#4CAF50', '#E91E63', '#2196F3', '#FFC107'],
-      legend: {position: 'bottom'}});
-  
-    origemInscricoes.render();
-  
-    // INSCRIÇÕES: Taxa de aprovação
-    const taxaAprovacao = new ApexCharts(document.querySelector("#taxaAprovacao"),{
-  
-      chart: {type: 'radialBar', height: 320},
-      series: [78],
-      labels: ['Aprovação'],
-      colors: ['#4CAF50'],
-      plotOptions: {radialBar: {hollow: {size: '60%'},
-      dataLabels: {name: {fontSize: '16px'},
-      value: {fontSize: '28px', formatter: function (val) {return val + '%';}}}}}});
-  
-  taxaAprovacao.render()};
+async function renderRegistrationsCharts() {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/dashboard_graficos_inscricoes.php`, {
+      headers: { Authorization: `Bearer ${TOKEN}` }
+    });
+    const resultado = await response.json();
+    
+    if (!resultado.success) return;
+    
+    const dados = resultado.data;
+    
+    // Nomes dos meses para formatar o eixo X do gráfico
+    const mesesNomes = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    
+    // Mapeia os dados do banco para os arrays que o ApexCharts espera
+    const categorias = dados.map(item => `${mesesNomes[item.mes - 1]}/${item.ano.toString().slice(-2)}`);
+    const seriesData = dados.map(item => Number(item.quantidade));
+
+    // Fallback: se não houver dados no banco ainda, exibe um gráfico zerado
+    if (categorias.length === 0) {
+        categorias.push('Sem dados');
+        seriesData.push(0);
+    }
+
+    // Verificador de Segurança para a biblioteca
+    const checarE_Renderizar = () => {
+        if (typeof ApexCharts !== 'undefined') {
+            const inscricoesPeriodo = new ApexCharts(document.querySelector("#inscricoesPeriodo"), {
+              chart: {type: 'line', height: 300},
+              series: [{name: 'Inscrições', data: seriesData}],
+              xaxis: {categories: categorias},
+              stroke: {curve: 'smooth', width: 3},
+              colors: ['#7956A6'], 
+              dataLabels: {enabled: false},
+              grid: {borderColor: '#e0e0e0'}
+            });
+            inscricoesPeriodo.render();
+        } else {
+            // Se o CDN demorou para responder, espera 100ms e tenta novamente
+            setTimeout(checarE_Renderizar, 100);
+        }
+    };
+    
+    // Inicia a função de segurança
+    checarE_Renderizar();
+
+  } catch (e) {
+    console.error("Erro ao carregar gráficos dinâmicos de inscrições: ", e);
+  }
+}
 
 // GRÁFICOS DOS AGENDAMENTOS  
-function renderAppointmentsCharts() {
+// GRÁFICOS DOS AGENDAMENTOS  
+async function renderAppointmentsCharts() {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/dashboard_graficos_agendamentos.php`, {
+      headers: { Authorization: `Bearer ${TOKEN}` }
+    });
+    const resultado = await response.json();
+    
+    if (!resultado.success) return;
+    
+    const dados = resultado.data;
 
-  // AGENDAMENTOS: Agendamentos por dia
-  const agendamentosDia = new ApexCharts(document.querySelector("#agendamentosDia"), {
+    // --- LÓGICA 1: AGENDAMENTOS POR MÊS ---
+    const mesesNomes = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const categoriasMes = dados.meses.map(item => `${mesesNomes[item.mes - 1]}/${item.ano.toString().slice(-2)}`);
+    const seriesMes = dados.meses.map(item => Number(item.quantidade));
 
-    chart: {type: 'line', height: 300},  
-    series: [{name: 'Agendamentos', data: [12, 18, 15, 22, 28, 20, 16]}],
-    xaxis: {categories: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']},
-    stroke: {curve: 'smooth', width: 3},
-    colors: ['#2196F3'],
-    dataLabels: {enabled: false},
-    grid: {borderColor: '#e0e0e0'}});
-  
-  agendamentosDia.render();
-  
-  // AGENDAMENTOS: Taxa de comparecimento
-  const taxaComparecimento = new ApexCharts(document.querySelector("#taxaComparecimento"), {
-  
-    chart: {type: 'radialBar', height: 320},
-    series: [82],  
-    labels: ['Comparecimento'],
-    colors: ['#4CAF50'],
-    plotOptions: {radialBar: {hollow: {size: '60%'},
-    dataLabels: {name: {fontSize: '16px'},
-    value: {fontSize: '28px', formatter: function (val) {return val + '%';}}}}}});
-  
-  taxaComparecimento.render();
-  
-  // AGENDAMENTOS: Horários mais movimentados
-  const horariosMovimentados = new ApexCharts(document.querySelector("#horariosMovimentados"), {
-  
-    chart: {type: 'heatmap', height: 320},
-    series: [{name: '08h', data: [
-      { x: 'Seg', y: 5 },
-      { x: 'Ter', y: 8 },
-      { x: 'Qua', y: 6 },
-      { x: 'Qui', y: 9 },
-      { x: 'Sex', y: 7 }]},
-            {name: '10h', data: [
-      { x: 'Seg', y: 10 },
-      { x: 'Ter', y: 12 },
-      { x: 'Qua', y: 15 },
-      { x: 'Qui', y: 13 },
-      { x: 'Sex', y: 16 }]},
-            {name: '14h', data: [
-      { x: 'Seg', y: 14 },
-      { x: 'Ter', y: 18 },
-      { x: 'Qua', y: 20 },
-      { x: 'Qui', y: 17 },
-      { x: 'Sex', y: 22 }]},
-            {name: '16h', data: [
-      { x: 'Seg', y: 8 },
-      { x: 'Ter', y: 11 },
-      { x: 'Qua', y: 13 },
-      { x: 'Qui', y: 12 },
-      { x: 'Sex', y: 15 }]}],
-    colors: ['#7956A6'],
-    dataLabels: {enabled: true},
-    title: {text: 'Fluxo de agendamentos por horário'}});
-  
-  horariosMovimentados.render()};
+    if (categoriasMes.length === 0) {
+        categoriasMes.push('Sem dados');
+        seriesMes.push(0);
+    }
 
+    // --- LÓGICA 2: FLUXO POR HORÁRIO (Heatmap) ---
+    // Mapeando do padrão MySQL (1=Dom, 2=Seg...) para os nomes e ordem que queremos exibir
+    const diasMap = { 2: 'Seg', 3: 'Ter', 4: 'Qua', 5: 'Qui', 6: 'Sex', 7: 'Sáb', 1: 'Dom' };
+    const diasOrdem = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+    
+    // Horários de funcionamento (Ex: das 08h às 17h). Se o abrigo tiver outros horários, basta alterar aqui
+    const horasTrabalho = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+    
+    const heatmapSeries = horasTrabalho.map(hora => {
+        const dataDia = diasOrdem.map(diaNome => {
+            const dbDia = Object.keys(diasMap).find(k => diasMap[k] === diaNome);
+            // Busca se existe registro para esse dia e hora específicos
+            const registro = dados.fluxo.find(r => Number(r.dia_semana) === Number(dbDia) && Number(r.hora) === hora);
+            return { x: diaNome, y: registro ? Number(registro.quantidade) : 0 };
+        });
+        return { name: `${hora.toString().padStart(2, '0')}h`, data: dataDia };
+    });
+
+    // --- RENDERIZAÇÃO ---
+    const checarE_Renderizar = () => {
+        if (typeof ApexCharts !== 'undefined') {
+            // Renderiza Agendamentos por Mês
+            new ApexCharts(document.querySelector("#agendamentosMes"), {
+              chart: {type: 'line', height: 300},  
+              series: [{name: 'Agendamentos', data: seriesMes}],
+              xaxis: {categories: categoriasMes},
+              stroke: {curve: 'smooth', width: 3},
+              colors: ['#2196F3'],
+              dataLabels: {enabled: false},
+              grid: {borderColor: '#e0e0e0'}
+            }).render();
+
+            // Renderiza Fluxo por Horário
+            new ApexCharts(document.querySelector("#horariosMovimentados"), {
+              chart: {type: 'heatmap', height: 320},
+              series: heatmapSeries,
+              colors: ['#7956A6'],
+              dataLabels: {enabled: true},
+              title: {text: 'Quantidade de agendamentos por dia/hora'}
+            }).render();
+        } else {
+            setTimeout(checarE_Renderizar, 100);
+        }
+    };
+    
+    checarE_Renderizar();
+
+  } catch (e) {
+    console.error("Erro ao carregar gráficos dinâmicos de agendamentos: ", e);
+  }
+}
 // GRÁFICOS DAS DOAÇÕES  
 function renderDonationsCharts() {
   
@@ -605,45 +619,74 @@ function renderDonationsCharts() {
   doacoesMes.render()};
 
 // GRÁFICOS DOS USUÁRIOS
-function renderUsersCharts() {
+// GRÁFICOS DOS USUÁRIOS
+async function renderUsersCharts() {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/dashboard_graficos_usuarios.php`, {
+      headers: { Authorization: `Bearer ${TOKEN}` }
+    });
+    const resultado = await response.json();
+    
+    if (!resultado.success) return;
+    
+    const dados = resultado.data;
 
-  // USUÁRIOS: Crescimento de usuários
-  const crescimentoUsuarios = new ApexCharts(document.querySelector("#crescimentoUsuarios"), {
-  
-    chart: {type: 'line', height: 300},
-    series: [{name: 'Usuários', data: [120, 180, 260, 340, 420, 510]}],
-    xaxis: {categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']},
-    stroke: {curve: 'smooth', width: 4},
-    colors: ['#2196F3'],
-    dataLabels: {enabled: false},
-    grid: {borderColor: '#e0e0e0'}});
-  
-  crescimentoUsuarios.render();
-  
-  // USUÁRIOS: Distribuição de perfis
-  const distribuicaoPerfis = new ApexCharts(document.querySelector("#distribuicaoPerfis"), {
-  
-    chart: {type: 'donut', height: 300},
-    series: [55, 30, 15],
-    labels: ['Voluntário', 'Adotante', 'Administrador'],
-    colors: ['#7956A6', '#4CAF50', '#FFC107'],
-    legend: {position: 'bottom'}});
-  
-  distribuicaoPerfis.render();
-  
-  // USUÁRIOS: Retenção de usuários
-  const retencaoUsuarios = new ApexCharts(document.querySelector("#retencaoUsuarios"), {
-  
-    chart: {type: 'line', height: 300},
-    series: [{name: 'Retenção (%)', data: [68, 72, 75, 73, 78, 82]}],
-    xaxis: {categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']}, 
-    stroke: {curve: 'smooth', width: 4},
-    colors: ['#E91E63'],
-    dataLabels: {enabled: false},
-    yaxis: {max: 100, title: {text: 'Percentual (%)'}},
-    grid: {borderColor: '#e0e0e0'}});
-  
-  retencaoUsuarios.render()};
+    // 1. Atualiza o Card KPI (Número em texto)
+    const kpiElement = document.getElementById("kpiUsuariosAtivos");
+    if (kpiElement) {
+        kpiElement.textContent = dados.ativos;
+    }
+
+    // 2. Formata Dados de Crescimento (Linha)
+    const mesesNomes = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const categoriasCrescimento = dados.crescimento.map(item => `${mesesNomes[item.mes - 1]}/${item.ano.toString().slice(-2)}`);
+    const seriesCrescimento = dados.crescimento.map(item => Number(item.quantidade));
+
+    if (categoriasCrescimento.length === 0) {
+        categoriasCrescimento.push('Sem dados');
+        seriesCrescimento.push(0);
+    }
+
+    // 3. Formata Dados de Distribuição (Donut)
+    const distribuicaoLabels = dados.distribuicao.map(item => {
+        let label = item.tipo.replace(/_/g, ' ');
+        return label.charAt(0).toUpperCase() + label.slice(1);
+    });
+    const distribuicaoSeries = dados.distribuicao.map(item => Number(item.quantidade));
+
+    // RENDERIZAÇÃO
+    const checarE_Renderizar = () => {
+        if (typeof ApexCharts !== 'undefined') {
+            // Gráfico Crescimento
+            new ApexCharts(document.querySelector("#crescimentoUsuarios"), {
+              chart: {type: 'line', height: 300},
+              series: [{name: 'Novos Usuários', data: seriesCrescimento}],
+              xaxis: {categories: categoriasCrescimento},
+              stroke: {curve: 'smooth', width: 4},
+              colors: ['#2196F3'],
+              dataLabels: {enabled: false},
+              grid: {borderColor: '#e0e0e0'}
+            }).render();
+
+            // Gráfico Distribuição
+            new ApexCharts(document.querySelector("#distribuicaoPerfis"), {
+              chart: {type: 'donut', height: 300},
+              series: distribuicaoSeries,
+              labels: distribuicaoLabels,
+              colors: ['#7956A6', '#4CAF50', '#FFC107'],
+              legend: {position: 'bottom'}
+            }).render();
+        } else {
+            setTimeout(checarE_Renderizar, 100);
+        }
+    };
+
+    checarE_Renderizar();
+
+  } catch (e) {
+    console.error("Erro ao carregar gráficos dinâmicos de usuários: ", e);
+  }
+}
 
 // GRÁFICOS DAS CONFIGURAÇÕES DO SISTEMA
 function renderSettingsCharts() {
