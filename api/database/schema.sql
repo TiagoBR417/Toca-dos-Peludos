@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS agendamentos_visita (
 CREATE INDEX idx_pets_busca ON pets(tipo, status);
 CREATE INDEX idx_eventos_data_evento ON eventos(data_evento);
 CREATE INDEX idx_denuncias_status ON denuncias(status);
-CREATE INDEX idx_doacoes_data_doacao ON ddoacoes(data_doacao);
+CREATE INDEX idx_doacoes_data_doacao ON doacoes(data_doacao);
 CREATE INDEX idx_agendamentos_data_visita ON agendamentos_visita(data_visita);
 
 USE toca_dos_peludos;

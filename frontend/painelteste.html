@@ -10,6 +10,72 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style_global.css">
+    <!-- Adicionando o CSS específico dos modais -->
+    <style>
+      /* =========================================
+         MODAL DO PAINEL ADMIN 
+         ========================================= */
+      .modal-admin {
+        display: none; 
+        position: fixed; 
+        z-index: 9999; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        background-color: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(4px);
+      }
+      .modal-conteudo {
+        background-color: #fff;
+        margin: 5vh auto; 
+        padding: 30px;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        position: relative;
+        text-align: left;
+        max-height: 85vh; 
+        overflow-y: auto; 
+      }
+      .fechar-modal {
+        color: #aaa;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .fechar-modal:hover { color: #e74c3c; }
+      .modal-conteudo input, 
+      .modal-conteudo select, 
+      .modal-conteudo textarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        font-family: inherit;
+        background-color: #f8fafc;
+        outline: none;
+        transition: 0.2s;
+        box-sizing: border-box;
+      }
+      .modal-conteudo input:focus, 
+      .modal-conteudo select:focus, 
+      .modal-conteudo textarea:focus {
+        border-color: #6a1b9a;
+        box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.1);
+        background-color: #fff;
+      }
+      .admin-mensagem { margin-top: 10px; font-weight: 600; text-align: center; font-size: 14px; }
+      .admin-mensagem.sucesso { color: #10b981; }
+      .admin-mensagem.erro { color: #ef4444; }
+    </style>
   </head>
   <body>
     <!-- Componentes globais -->
@@ -39,6 +105,7 @@
         </div>
       </div>
     </header>
+
     <div class="app-container">
       <aside class="sidebar">
         <div class="dashboard">Dashboard</div>
@@ -57,17 +124,315 @@
               <li data-dashboard="eventos" data-view="tabelas"><span>📋</span> Tabelas</li>
             </ul>
           </li>
-          <li data-dashboard="denuncias"><span>🚨</span> Denúncias</li>
-          <li data-dashboard="inscricoes"><span>📝</span> Inscrições</li>
-          <li data-dashboard="agendamentos"><span>📅</span> Agendamentos</li>
-          <li data-dashboard="doacoes"><span>💰</span> Doações</li>
-          <li data-dashboard="usuarios"><span>👥</span> Usuários</li>
-          <li data-dashboard="configuracoes"><span>⚙️</span> Configurações</li>
+          <li class="has-submenu" id="menu-denuncias">
+            <div class="menu-toggle"><span>🚨</span> Denúncias</div>
+            <ul class="submenu">
+              <li data-dashboard="denuncias" data-view="graficos"><span>📊</span> Gráficos</li>
+              <li data-dashboard="denuncias" data-view="tabelas"><span>📋</span> Tabelas</li>
+            </ul>
+          </li>
+          <li class="has-submenu" id="menu-inscricoes">
+            <div class="menu-toggle"><span>📝</span> Inscrições</div>
+            <ul class="submenu">
+              <li data-dashboard="inscricoes" data-view="graficos"><span>📊</span> Gráficos</li>
+              <li data-dashboard="inscricoes" data-view="tabelas"><span>📋</span> Tabelas</li>
+            </ul>
+          </li>
+          <li class="has-submenu" id="menu-agendamentos">
+            <div class="menu-toggle"><span>📅</span> Agendamentos</div>
+            <ul class="submenu">
+              <li data-dashboard="agendamentos" data-view="graficos"><span>📊</span> Gráficos</li>
+              <li data-dashboard="agendamentos" data-view="tabelas"><span>📋</span> Tabelas</li>
+            </ul>
+          </li>
+          <li class="has-submenu" id="menu-doacoes">
+            <div class="menu-toggle"><span>💰</span> Doações</div>
+            <ul class="submenu">
+              <li data-dashboard="doacoes" data-view="graficos"><span>📊</span> Gráficos</li>
+              <li data-dashboard="doacoes" data-view="tabelas"><span>📋</span> Tabelas</li>
+            </ul>
+          </li>
+          <li class="has-submenu" id="menu-usuarios">
+            <div class="menu-toggle"><span>👥</span> Usuários</div>
+            <ul class="submenu">
+              <li data-dashboard="usuarios" data-view="graficos"><span>📊</span> Gráficos</li>
+              <li data-dashboard="usuarios" data-view="tabelas"><span>📋</span> Tabelas</li>
+            </ul>
+          </li>
+          <li class="has-submenu" id="menu-configuracoes">
+            <div class="menu-toggle"><span>⚙️</span> Sistema</div>
+            <ul class="submenu">
+              <li data-dashboard="configuracoes" data-view="graficos"><span>📊</span> Gráficos</li>
+              <li data-dashboard="configuracoes" data-view="tabelas"><span>📋</span> Logs</li>
+            </ul>
+          </li>
         </ul>
       </aside>
+
       <!-- Área do dashboard -->
       <main class="main-content" id="dashboard-content"></main>
     </div>
+
+    <!-- TODOS OS MODAIS FICAM AQUI FORA DO APP-CONTAINER -->
+
+    <!-- Modal Criar Pet -->
+<div id="modalCriarPet" class="modal-admin">
+        <div class="modal-conteudo">
+          <span class="fechar-modal" onclick="fecharModalCriarPet()">&times;</span>
+          <h3>Cadastrar Novo Pet</h3>
+          <form id="formCriarPet">
+            <label class="label_text required-label">Nome:</label>
+            <input type="text" id="novoPetNome" required placeholder="Ex: Thor, Mel...">
+            
+            <label class="label_text required-label">Espécie:</label>
+            <select id="novoPetTipo" required>
+              <option value="cachorro">Cachorro</option>
+              <option value="gato">Gato</option>
+              <option value="outro">Outro</option>
+            </select>
+
+            <label class="label_text">Porte:</label>
+            <select id="novoPetPorte">
+              <option value="pequeno">Pequeno</option>
+              <option value="medio">Médio</option>
+              <option value="grande">Grande</option>
+            </select>
+
+            <label class="label_text">Cor:</label>
+            <input type="text" id="novoPetCor" placeholder="Ex: Caramelo, Preto e Branco...">
+
+            <label class="label_text">Idade (anos):</label>
+            <input type="number" id="novoPetIdade" min="0" placeholder="Ex: 3">
+
+            <label class="label_text required-label">Status Inicial:</label>
+            <select id="novoPetStatus" required>
+              <option value="disponivel">Disponível</option>
+              <option value="em_tratamento">Em Tratamento</option>
+              <option value="lar_temporario">Lar Temporário</option>
+              <option value="adotado">Adotado</option>
+            </select>
+
+            <label class="label_text">Descrição:</label>
+            <textarea id="novoPetDescricao" rows="4" placeholder="Conte um pouco sobre a história e personalidade do pet..."></textarea>
+
+            <button type="submit" class="btn-accent" style="width: 100%; margin-top: 15px; background-color: #4CAF50;">Salvar Novo Pet</button>
+          </form>
+          <p id="msgCriarPet" class="admin-mensagem"></p>
+        </div>
+      </div>
+
+    <!-- Modal Editar Pet -->
+<div id="modalPet" class="modal-admin">
+        <div class="modal-conteudo">
+          <span class="fechar-modal" onclick="fecharModalPet()">&times;</span>
+          <h3 id="modalPetTitulo">Detalhes do Pet</h3>
+          <form id="formEditarPet">
+            <input type="hidden" id="editPetId">
+            
+            <label class="label_text">Nome:</label>
+            <input type="text" id="editPetNome" required>
+            
+            <label class="label_text">Porte:</label>
+            <select id="editPetPorte">
+              <option value="pequeno">Pequeno</option>
+              <option value="medio">Médio</option>
+              <option value="grande">Grande</option>
+            </select>
+
+            <label class="label_text">Cor:</label>
+            <input type="text" id="editPetCor">
+
+            <label class="label_text">Idade (anos):</label>
+            <input type="number" id="editPetIdade" min="0">
+
+            <label class="label_text">Status:</label>
+            <select id="editPetStatus" required>
+              <option value="disponivel">Disponível</option>
+              <option value="em_tratamento">Em Tratamento</option>
+              <option value="lar_temporario">Lar Temporário</option>
+              <option value="adotado">Adotado</option>
+            </select>
+            
+            <label class="label_text">Nova Descrição:</label>
+            <textarea id="editPetDescricao" rows="5" required placeholder="Digite a nova descrição aqui..."></textarea>
+            
+            <button type="submit" class="btn-accent" style="width: 100%; margin-top: 15px;">Salvar Alterações</button>
+          </form>
+          <p id="msgEditPet" class="admin-mensagem"></p>
+        </div>
+      </div>
+
+<!-- Modal Agendamento -->
+    <div id="modalAgendamento" class="modal-admin">
+      <div class="modal-conteudo" style="max-width: 450px;">
+        <span class="fechar-modal" onclick="fecharModalAgendamento()">&times;</span>
+        <h3>Gerenciar Visita</h3>
+        
+        <p style="margin-bottom: 15px; color: #333;">
+          <strong style="color: #6A1B9A;">Pet da visita:</strong> 
+          <span id="infoAgendPet" style="font-weight: 500;"></span>
+        </p>
+
+        <form id="formEditarAgendamento">
+          <input type="hidden" id="editAgendId">
+          
+          <label class="label_text required-label">Nome do Adotante:</label>
+          <input type="text" id="editAgendNome" required placeholder="Nome completo">
+          
+          <label class="label_text required-label">Telefone:</label>
+          <input type="tel" id="editAgendTelefone" required placeholder="(11) 99999-9999">
+          
+          <label class="label_text required-label">Data da Visita:</label>
+          <input type="date" id="editAgendData" required>
+          
+          <label class="label_text required-label">Horário:</label>
+          <input type="time" id="editAgendHorario" required>
+
+          <label class="label_text required-label">Alterar Status:</label>
+          <select id="editAgendStatus" required>
+            <option value="agendado">Agendado (Pendente)</option>
+            <option value="confirmada">Visita Confirmada</option>
+            <option value="concluida">Visita Concluída</option>
+            <option value="cancelada">Cancelada</option>
+          </select>
+          
+          <button type="submit" class="btn-accent" style="width: 100%; margin-top: 15px; background-color: #2196F3;">Atualizar Agendamento</button>
+        </form>
+        <p id="msgEditAgendamento" class="admin-mensagem"></p>
+      </div>
+    </div>
+
+    <!-- Modal Inscricao -->
+    <div id="modalInscricao" class="modal-admin">
+      <div class="modal-conteudo">
+        <span class="fechar-modal" onclick="fecharModalInscricao()">&times;</span>
+        <h3>Gerenciar Inscrição</h3>
+        <div style="margin: 15px 0; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+          <p><strong>Evento:</strong> <span id="inscEvento"></span></p>
+          <p><strong>Participante:</strong> <span id="inscNome"></span></p>
+        </div>
+        <form id="formEditarInscricao">
+          <input type="hidden" id="editInscId">
+          <label class="label_text">Status:</label>
+          <select id="editInscStatus">
+            <option value="confirmada">Confirmada</option>
+            <option value="cancelada">Cancelada</option>
+            <option value="pendente">Pendente</option>
+          </select>
+          <button type="submit" class="btn-accent" style="width: 100%; margin-top: 10px;">Atualizar Inscrição</button>
+        </form>
+        <p id="msgEditInsc" class="admin-mensagem"></p>
+      </div>
+    </div>
+
+    <!-- Modal Denuncia -->
+    <div id="modalDenuncia" class="modal-admin">
+      <div class="modal-conteudo">
+        <span class="fechar-modal" onclick="fecharModalDenuncia()">&times;</span>
+        <h3>Detalhes da Denúncia</h3>
+        <div style="margin: 15px 0; padding: 15px; background: #fff5f5; border-radius: 8px;">
+          <p><strong>Tipo:</strong> <span id="denTipo"></span></p>
+          <p><strong>Local:</strong> <span id="denLocal"></span></p>
+          <p><strong>Relato:</strong> <br><i id="denRelato"></i></p>
+        </div>
+        <form id="formEditarDenuncia">
+          <input type="hidden" id="editDenId">
+          <label class="label_text">Alterar Status:</label>
+          <select id="editDenStatus">
+            <option value="pendente">Pendente</option>
+            <option value="em_analise">Em Análise</option>
+            <option value="resolvido">Resolvido</option>
+            <option value="arquivado">Arquivado / Falso</option>
+          </select>
+          <button type="submit" class="btn-accent" style="width: 100%; margin-top: 10px; background-color: #e74c3c;">Atualizar Status</button>
+        </form>
+        <p id="msgEditDen" class="admin-mensagem"></p>
+      </div>
+    </div>
+
+    <!-- Modal Criar Evento -->
+    <div id="modalCriarEvento" class="modal-admin">
+      <div class="modal-conteudo">
+        <span class="fechar-modal" onclick="fecharModalCriarEvento()">&times;</span>
+        <h3>Cadastrar Novo Evento</h3>
+        <form id="formCriarEvento">
+          <label class="label_text required-label">Título:</label>
+          <input type="text" id="novoEventoTitulo" required>
+          <label class="label_text required-label">Data:</label>
+          <input type="date" id="novoEventoData" required>
+          <label class="label_text required-label">Local:</label>
+          <input type="text" id="novoEventoLocal" required>
+          <label class="label_text required-label">Cidade:</label>
+          <input type="text" id="novoEventoCidade" required>
+          <button type="submit" class="btn-accent" style="width: 100%; margin-top: 15px; background-color: #4CAF50;">Criar Evento</button>
+        </form>
+        <p id="msgCriarEvento" class="admin-mensagem"></p>
+      </div>
+    </div>
+
+    <!-- Modal Editar Evento -->
+    <div id="modalEvento" class="modal-admin">
+      <div class="modal-conteudo">
+        <span class="fechar-modal" onclick="fecharModalEvento()">&times;</span>
+        <h3>Gerenciar Evento</h3>
+        <form id="formEditarEvento">
+          <input type="hidden" id="editEventoId">
+          
+          <label class="label_text required-label">Título:</label>
+          <input type="text" id="editEventoTitulo" required>
+          
+          <label class="label_text required-label">Data:</label>
+          <input type="date" id="editEventoData" required>
+          
+          <label class="label_text required-label">Local:</label>
+          <input type="text" id="editEventoLocal" required>
+          
+          <label class="label_text required-label">Cidade:</label>
+          <input type="text" id="editEventoCidade" required>
+
+          <label class="label_text">Alterar Status:</label>
+          <select id="editEventoStatus" required>
+            <option value="ativo">Ativo (Em andamento)</option>
+            <option value="encerrado">Encerrado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+          <button type="submit" class="btn-accent" style="width: 100%; margin-top: 15px; background-color: #9C27B0;">Atualizar Evento</button>
+        </form>
+        <p id="msgEditEvento" class="admin-mensagem"></p>
+      </div>
+    </div>
+
+    <!-- Modal Editar Usuário -->
+    <div id="modalUsuario" class="modal-admin">
+      <div class="modal-conteudo" style="max-width: 450px;">
+        <span class="fechar-modal" onclick="fecharModalUsuario()">&times;</span>
+        <h3>Gerenciar Usuário</h3>
+        <div style="margin: 15px 0; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+          <p><strong style="color: #6A1B9A;">Nome:</strong> <span id="infoUsuarioNome" style="color: #333;"></span></p>
+          <p style="margin-bottom: 0;"><strong style="color: #6A1B9A;">E-mail:</strong> <span id="infoUsuarioEmail" style="color: #333;"></span></p>
+        </div>
+        <form id="formEditarUsuario">
+          <input type="hidden" id="editUsuarioId">
+          
+          <label class="label_text">Permissão de Acesso:</label>
+          <select id="editUsuarioTipo" required>
+            <option value="adotante">Adotante (Usuário Comum)</option>
+            <option value="admin">Administrador</option>
+          </select>
+
+          <label class="label_text">Status da Conta:</label>
+          <select id="editUsuarioAtivo" required>
+            <option value="1">Ativa (Permitir Acesso)</option>
+            <option value="0">Inativa (Bloqueado/Banido)</option>
+          </select>
+          
+          <button type="submit" class="btn-accent" style="width: 100%; margin-top: 15px; background-color: #f39c12;">Atualizar Conta</button>
+        </form>
+        <p id="msgEditUsuario" class="admin-mensagem"></p>
+      </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="js/apiScript.js"></script>
     <script src="js/painel_admin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>

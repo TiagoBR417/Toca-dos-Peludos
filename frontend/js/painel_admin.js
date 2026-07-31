@@ -19,7 +19,8 @@ const ADMIN_ENDPOINTS = {
   eventos: `${BASE_URL}/admin/eventos.php`,
   denuncias: `${BASE_URL}/admin/denuncias.php`,
   inscricoes: `${BASE_URL}/admin/inscricoes.php`,
-  agendamentos: `${BASE_URL}/admin/agendamentos.php`
+  agendamentos: `${BASE_URL}/admin/agendamentos.php`,
+  usuarios: `${BASE_URL}/admin/usuarios.php` // <-- ADICIONADO O ENDPOINT DE USUÁRIOS
 };
 
 let dadosTabelaAtual = [];
@@ -162,7 +163,7 @@ function renderizarTabela(secao, dados) {
   html += `<div class="admin-table-wrapper"><table class="admin-table"><thead><tr>`;
   
   colunas.forEach(col => {
-    let nomeFormatado = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    let nomeFormatado = col.replace(/_/g, ' ').replace(/\w/g, l => l.toUpperCase());
     html += `<th>${nomeFormatado}</th>`;
   });
   html += `<th>Ações</th></tr></thead><tbody>`;
@@ -171,27 +172,36 @@ function renderizarTabela(secao, dados) {
     html += `<tr>`;
     colunas.forEach(col => {
       let valor = item[col] || '-';
-      if(col.includes('data')) {
+      if(col.includes('data') || col.includes('created_at')) {
           valor = new Date(valor).toLocaleDateString('pt-BR');
       }
       html += `<td>${valor}</td>`;
     });
 
+    // Botões padronizados
     if (secao === 'pets') {
       html += `<td>
                 <button class="btn-accent-editar" onclick="abrirModalPet(${item.id})">Editar</button>
                 <button class="btn-accent-excluir" onclick="excluirPet(${item.id})">Excluir</button>
               </td>`;
-    } else if (secao === 'agendamentos') {
-      html += `<td><button class="btn-accent" style="background-color: #2196F3;" onclick="abrirModalAgendamento(${item.id})">Gerenciar</button></td>`;
-    } else if (secao === 'inscricoes') {
-      html += `<td><button class="btn-accent" style="background-color: #4CAF50;" onclick="abrirModalInscricao(${item.id})">Gerenciar</button></td>`;
-    } else if (secao === 'denuncias') {
-      html += `<td><button class="btn-accent" style="background-color: #e74c3c;" onclick="abrirModalDenuncia(${item.id})">Ver Caso</button></td>`;
     } else if (secao === 'eventos') {
       html += `<td>
                 <button class="btn-accent-editar" onclick="abrirModalEvento(${item.id})">Gerenciar</button>
                 <button class="btn-accent-excluir" onclick="excluirEvento(${item.id})">Excluir</button>
+               </td>`;
+    } else if (secao === 'agendamentos') {
+      html += `<td>
+                <button class="btn-accent-editar" onclick="abrirModalAgendamento(${item.id})">Gerenciar</button>
+                <button class="btn-accent-excluir" onclick="excluirAgendamento(${item.id})">Excluir</button>
+               </td>`;
+    } else if (secao === 'inscricoes') {
+      html += `<td><button class="btn-accent-editar" onclick="abrirModalInscricao(${item.id})">Gerenciar</button></td>`;
+    } else if (secao === 'denuncias') {
+      html += `<td><button class="btn-accent-editar" onclick="abrirModalDenuncia(${item.id})">Gerenciar</button></td>`;
+    } else if (secao === 'usuarios') {
+      html += `<td>
+                <button class="btn-accent-editar" style="background-color: #f39c12;" onclick="abrirModalUsuario(${item.id})">Gerenciar</button>
+                <button class="btn-accent-excluir" onclick="excluirUsuario(${item.id})">Excluir</button>
                </td>`;
     } else {
       html += `<td>-</td>`;
@@ -233,30 +243,87 @@ document.getElementById("formEditarPet")?.addEventListener("submit", async (e) =
   await enviarAtualizacao(`${BASE_URL}/admin/atualizar_pet.php`, payload, "msgEditPet", fecharModalPet, "pets");
 });
 
+document.getElementById("formCriarPet")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = {
+    nome: document.getElementById("novoPetNome").value,
+    tipo: document.getElementById("novoPetTipo").value,
+    status: document.getElementById("novoPetStatus").value,
+    descricao: document.getElementById("novoPetDescricao").value
+  };
+  await enviarAtualizacao(`${BASE_URL}/admin/criar_pet.php`, payload, "msgCriarPet", fecharModalCriarPet, "pets");
+});
+
 // AGENDAMENTOS
 function abrirModalAgendamento(id) {
   const item = dadosTabelaAtual.find(a => Number(a.id) === Number(id));
   if(item) {
     document.getElementById("editAgendId").value = item.id;
-    document.getElementById("infoAgendNome").textContent = item.nome_interessado;
     document.getElementById("infoAgendPet").textContent = item.nome_pet || "Pet não encontrado";
-    const dataFormatada = new Date(item.data_visita).toLocaleDateString('pt-BR');
-    document.getElementById("infoAgendData").textContent = `${dataFormatada} às ${item.horario_visita}`;
+    
+    // Injeta os valores editáveis
+    document.getElementById("editAgendNome").value = item.nome_interessado;
+    document.getElementById("editAgendTelefone").value = item.telefone_interessado;
+    
+    // Trata a data para o input HTML5 type="date"
+    const dataDB = item.data_visita;
+    document.getElementById("editAgendData").value = dataDB ? dataDB.split(' ')[0] : '';
+    
+    // Trata a hora para o input HTML5 type="time" (Pega só o HH:MM)
+    const horarioDB = item.horario_visita;
+    document.getElementById("editAgendHorario").value = horarioDB ? horarioDB.substring(0, 5) : '';
+
     document.getElementById("editAgendStatus").value = item.status;
     document.getElementById("modalAgendamento").style.display = "block";
     document.body.classList.add("no-scroll");
   }
 }
+
 function fecharModalAgendamento() {
   document.getElementById("modalAgendamento").style.display = "none";
   document.body.classList.remove("no-scroll");
   document.getElementById("msgEditAgendamento").textContent = "";
 }
+
 document.getElementById("formEditarAgendamento")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const payload = { id: document.getElementById("editAgendId").value, status: document.getElementById("editAgendStatus").value };
+  const payload = { 
+    id: document.getElementById("editAgendId").value,
+    nome_interessado: document.getElementById("editAgendNome").value,
+    telefone_interessado: document.getElementById("editAgendTelefone").value,
+    data_visita: document.getElementById("editAgendData").value,
+    horario_visita: document.getElementById("editAgendHorario").value,
+    status: document.getElementById("editAgendStatus").value 
+  };
   await enviarAtualizacao(`${BASE_URL}/admin/atualizar_agendamento.php`, payload, "msgEditAgendamento", fecharModalAgendamento, "agendamentos");
 });
+
+// Lógica para excluir o agendamento
+async function excluirAgendamento(id) {
+  if (!confirm("Tem certeza que deseja excluir permanentemente este agendamento?")) return;
+
+  try {
+    const response = await fetch(`${BASE_URL}/admin/excluir_agendamento.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${TOKEN}` },
+      body: JSON.stringify({ id: id })
+    });
+
+    if (response.status === 401 || response.status === 403) { fazerLogout(); return; }
+    
+    const resultado = await response.json();
+    if (resultado.success) {
+      // Recarrega automaticamente caso esteja em "Tabelas" ou "Gráficos"
+      carregarDadosTabelaDashboard('agendamentos', 'container-tabela-agendamentos'); 
+      carregarSecao('agendamentos');
+      carregarResumoDashboard(); 
+    } else {
+      alert(resultado.message);
+    }
+  } catch (error) {
+    alert("Erro de conexão ao tentar excluir.");
+  }
+}
 
 // INSCRIÇÕES
 function abrirModalInscricao(id) {
@@ -308,12 +375,16 @@ function abrirModalEvento(id) {
   const item = dadosTabelaAtual.find(e => Number(e.id) === Number(id));
   if(item) {
     document.getElementById("editEventoId").value = item.id;
-    document.getElementById("infoEventoTitulo").textContent = item.titulo;
-    const dataObj = new Date(item.data_evento);
-    const dataFormatada = `${String(dataObj.getUTCDate()).padStart(2, '0')}/${String(dataObj.getUTCMonth() + 1).padStart(2, '0')}/${dataObj.getUTCFullYear()}`;
-    document.getElementById("infoEventoData").textContent = dataFormatada;
-    document.getElementById("infoEventoLocal").textContent = `${item.local} (${item.cidade})`;
+    document.getElementById("editEventoTitulo").value = item.titulo;
+    
+    // Tratamento para garantir que a data seja lida corretamente pelo input type="date"
+    const dataDB = item.data_evento;
+    document.getElementById("editEventoData").value = dataDB ? dataDB.split(' ')[0] : '';
+    
+    document.getElementById("editEventoLocal").value = item.local;
+    document.getElementById("editEventoCidade").value = item.cidade;
     document.getElementById("editEventoStatus").value = item.status;
+    
     document.getElementById("modalEvento").style.display = "block";
     document.body.classList.add("no-scroll");
   }
@@ -321,10 +392,18 @@ function abrirModalEvento(id) {
 function fecharModalEvento() {
   document.getElementById("modalEvento").style.display = "none";
   document.body.classList.remove("no-scroll");
+  document.getElementById("msgEditEvento").textContent = "";
 }
 document.getElementById("formEditarEvento")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const payload = { id: document.getElementById("editEventoId").value, status: document.getElementById("editEventoStatus").value };
+  const payload = { 
+    id: document.getElementById("editEventoId").value, 
+    titulo: document.getElementById("editEventoTitulo").value,
+    data_evento: document.getElementById("editEventoData").value,
+    local: document.getElementById("editEventoLocal").value,
+    cidade: document.getElementById("editEventoCidade").value,
+    status: document.getElementById("editEventoStatus").value 
+  };
   await enviarAtualizacao(`${BASE_URL}/admin/atualizar_evento.php`, payload, "msgEditEvento", fecharModalEvento, "eventos");
 });
 
@@ -449,7 +528,7 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
       let html = `<div class="admin-table-wrapper"><table class="admin-table"><thead><tr>`;
       
       colunas.forEach(col => {
-        let nomeFormatado = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        let nomeFormatado = col.replace(/_/g, ' ').replace(/\w/g, l => l.toUpperCase());
         html += `<th>${nomeFormatado}</th>`;
       });
       html += `<th>Ações</th></tr></thead><tbody>`;
@@ -458,13 +537,13 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
         html += `<tr>`;
         colunas.forEach(col => {
           let valor = item[col] || '-';
-          if(col.includes('data')) {
+          if(col.includes('data') || col.includes('created_at')) {
               valor = new Date(valor).toLocaleDateString('pt-BR');
           }
           html += `<td>${valor}</td>`;
         });
 
-        // Botões diferenciados para as ações do Administrador
+        // AGORA TODOS OS MÓDULOS TÊM SEUS BOTÕES DE GERENCIAR
         if (secao === 'pets') {
           html += `<td>
                     <button class="btn-accent-editar" onclick="abrirModalPet(${item.id})">Editar</button>
@@ -475,7 +554,24 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
                     <button class="btn-accent-editar" onclick="abrirModalEvento(${item.id})">Gerenciar</button>
                     <button class="btn-accent-excluir" onclick="excluirEvento(${item.id})">Excluir</button>
                    </td>`;
+        } else if (secao === 'agendamentos') {
+          html += `<td>
+                    <button class="btn-accent-editar" onclick="abrirModalAgendamento(${item.id})">Gerenciar</button>
+                    <button class="btn-accent-excluir" onclick="excluirAgendamento(${item.id})">Excluir</button>
+                   </td>`;
+        } else if (secao === 'inscricoes') {
+          html += `<td><button class="btn-accent-editar" onclick="abrirModalInscricao(${item.id})">Gerenciar</button></td>`;
+        } else if (secao === 'denuncias') {
+          html += `<td><button class="btn-accent-editar" onclick="abrirModalDenuncia(${item.id})">Gerenciar</button></td>`;
+        } else if (secao === 'usuarios') {
+          html += `<td>
+                    <button class="btn-accent-editar" style="background-color: #f39c12;" onclick="abrirModalUsuario(${item.id})">Gerenciar</button>
+                    <button class="btn-accent-excluir" onclick="excluirUsuario(${item.id})">Excluir</button>
+                   </td>`;
+        } else {
+          html += `<td>-</td>`;
         }
+        
         html += `</tr>`;
       });
 
@@ -515,10 +611,72 @@ async function excluirPet(id) {
   }
 }
 
-// Gatilho para abrir o modal de cadastro de pet
 function abrirModalCriarPet() {
-  // Caso possua um formulário modal estático mapeado no HTML para criação:
-  document.getElementById("formCriarPet")?.reset();
+  document.getElementById("formCriarPet").reset();
+  document.getElementById("msgCriarPet").textContent = "";
   document.getElementById("modalCriarPet").style.display = "block";
   document.body.classList.add("no-scroll");
+}
+
+function fecharModalCriarPet() {
+  document.getElementById("modalCriarPet").style.display = "none";
+  document.body.classList.remove("no-scroll");
+}
+
+// ==========================================
+// USUÁRIOS
+// ==========================================
+function abrirModalUsuario(id) {
+  const item = dadosTabelaAtual.find(u => Number(u.id) === Number(id));
+  if(item) {
+    document.getElementById("editUsuarioId").value = item.id;
+    document.getElementById("infoUsuarioNome").textContent = item.nome + " " + (item.sobrenome || "");
+    document.getElementById("infoUsuarioEmail").textContent = item.email;
+    document.getElementById("editUsuarioTipo").value = item.tipo;
+    document.getElementById("editUsuarioAtivo").value = item.ativo;
+    
+    document.getElementById("modalUsuario").style.display = "block";
+    document.body.classList.add("no-scroll");
+  }
+}
+
+function fecharModalUsuario() {
+  document.getElementById("modalUsuario").style.display = "none";
+  document.body.classList.remove("no-scroll");
+  document.getElementById("msgEditUsuario").textContent = "";
+}
+
+document.getElementById("formEditarUsuario")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = { 
+    id: document.getElementById("editUsuarioId").value, 
+    tipo: document.getElementById("editUsuarioTipo").value,
+    ativo: document.getElementById("editUsuarioAtivo").value
+  };
+  await enviarAtualizacao(`${BASE_URL}/admin/atualizar_usuario.php`, payload, "msgEditUsuario", fecharModalUsuario, "usuarios");
+});
+
+async function excluirUsuario(id) {
+  // Aviso de alto impacto!
+  if (!confirm("Atenção: A exclusão de um usuário apagará também os seus pets vinculados e inscrições em eventos. Deseja prosseguir?")) return;
+
+  try {
+    const response = await fetch(`${BASE_URL}/admin/excluir_usuario.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${TOKEN}` },
+      body: JSON.stringify({ id: id })
+    });
+
+    if (response.status === 401 || response.status === 403) { fazerLogout(); return; }
+    
+    const resultado = await response.json();
+    if (resultado.success) {
+      carregarDadosTabelaDashboard('usuarios', 'container-tabela-usuarios'); 
+      carregarSecao('usuarios');
+    } else {
+      alert(resultado.message);
+    }
+  } catch (error) {
+    alert("Erro de conexão ao tentar excluir.");
+  }
 }

@@ -853,3 +853,70 @@ h2::after {
     white-space: nowrap; /* Impede que textos longos quebrem em 3 linhas */
   }
 }
+/* =========================================
+   MODAL DO PAINEL ADMIN 
+   ========================================= */
+.modal-admin {
+  display: none; 
+  position: fixed; 
+  z-index: 9999; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(15, 23, 42, 0.7); /* Fundo escurecido */
+  backdrop-filter: blur(4px);
+}
+
+.modal-conteudo {
+  background-color: #fff;
+  margin: 5vh auto; 
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  position: relative;
+  text-align: left;
+  max-height: 85vh; 
+  overflow-y: auto; 
+}
+
+.fechar-modal {
+  color: #aaa;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.fechar-modal:hover {
+  color: #e74c3c;
+}
+
+.modal-conteudo input, 
+.modal-conteudo select, 
+.modal-conteudo textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-family: inherit;
+  background-color: #f8fafc;
+  outline: none;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.modal-conteudo input:focus, 
+.modal-conteudo select:focus, 
+.modal-conteudo textarea:focus {
+  border-color: #6a1b9a;
+  box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.1);
+  background-color: #fff;
+}

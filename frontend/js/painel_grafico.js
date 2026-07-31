@@ -60,167 +60,200 @@ const dashboards = {
       <div id="container-tabela-eventos"></div>
     `
   },
-
-  denuncias: `
-    <h1>Dashboard Denúncias</h1>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3>🚨 Denúncias por tipo</h3>
-        <div id="denunciasTipo"></div>
-      </div>
-      <div class="chart-card">
-        <h3>📍 Mapa de denúncias</h3>
-        <div id="mapaDenuncias"></div>
-      </div>
-      <div class="chart-card">
-        <h3>📋 Status</h3>
-        <div id="statusDenuncias"></div>
-      </div>
-    </div>
-  `,
-
-  inscricoes: `
-    <h1>Dashboard Inscrições</h1>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3>📝 Inscrições por período</h3>
-        <div id="inscricoesPeriodo"></div>
-      </div>
-      <div class="chart-card">
-        <h3>📈 Taxa de aprovação</h3>
-        <div id="taxaAprovacao"></div>
-      </div>
-      <div class="chart-card">
-        <h3>🌐 Origem inscrições</h3>
-        <div id="origemInscricoes"></div>
-      </div>
-    </div>
-  `,
-
-  agendamentos: `
-    <h1>Dashboard Agendamentos</h1>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3>📅 Agendamentos</h3>
-        <div id="agendamentosDia"></div>
-      </div>
-      <div class="chart-card">
-        <h3>⏰ Horários movimentados</h3>
-        <div id="horariosMovimentados"></div>
-      </div>
-      <div class="chart-card">
-        <h3>✅ Comparecimento</h3>
-        <div id="taxaComparecimento"></div>
-      </div>
-    </div>
-  `,
-
-  doacoes: `
-    <h1>Dashboard Doações</h1>
-    <div class="charts-grid">
-      <div class="kpi-card">
-        <h3>💰 Total Arrecadado</h3>
-        <span>R$ 48.750,00</span>
-        <p>+18% em relação ao mês anterior</p>
-      </div>
-      <div class="chart-card">
-        <h3>📈 Doações por mês</h3>
-        <div id="doacoesMes"></div>
-      </div>
-    </div>
-  `,
-
-  usuarios: `
-    <h1>Dashboard Usuários</h1>
-    <div class="charts-grid">
-      <div class="kpi-card">
-        <h3>🔥 Usuários Ativos</h3>
-        <span>1.284</span>
-        <p>+12% em relação ao mês anterior</p>
-      </div>
-      <div class="chart-card">
-        <h3>👥 Crescimento</h3>
-        <div id="crescimentoUsuarios"></div>
-      </div>
-      <div class="chart-card">
-        <h3>📊 Retenção</h3>
-        <div id="retencaoUsuarios"></div>
-      </div>
-      <div class="chart-card">
-        <h3>➗ Distribuição</h3>
-        <div id="distribuicaoPerfis"></div>
-      </div>
-    </div>
-  `,
-
-  configuracoes: `
-    <h1>Dashboard Sistema</h1>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3>⚙️ Uso do sistema</h3>
-        <div id="usoSistema"></div>
-      </div>
-      <div class="chart-card">
-        <h3>🚀 Performance</h3>
-        <div id="performanceSistema"></div>
-      </div>
-      <div class="chart-card">
-        <h3>🛠️ Logs de ações</h3>
-      <div class="timeline">
-      <div class="timeline-item">
-        <span class="time">08:15</span>
-        <div class="content">
-          <h4>Login administrativo</h4>
-          <p>Administrador acessou o sistema.</p>
+  denuncias: {
+    graficos: `
+      <h1>Dashboard Denúncias - Gráficos</h1>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>🚨 Denúncias por tipo</h3>
+          <div id="denunciasTipo"></div>
+        </div>
+        <div class="chart-card">
+          <h3>📍 Mapa de denúncias</h3>
+          <div id="mapaDenuncias"></div>
+        </div>
+        <div class="chart-card">
+          <h3>📋 Status</h3>
+          <div id="statusDenuncias"></div>
         </div>
       </div>
-      <div class="timeline-item">
-        <span class="time">09:40</span>
-        <div class="content">
-          <h4>Nova adoção registrada</h4>
-          <p>Pet "Thor" foi adotado.</p>
+    `,
+    tabelas: `
+      <h1>Dashboard Denúncias - Gerenciamento</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Tratamento de Ocorrências</h2>
+      </div>
+      <div id="container-tabela-denuncias"></div>
+    `
+  },
+  inscricoes: {
+    graficos: `
+      <h1>Dashboard Inscrições - Gráficos</h1>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>📝 Inscrições por período</h3>
+          <div id="inscricoesPeriodo"></div>
+        </div>
+        <div class="chart-card">
+          <h3>📈 Taxa de aprovação</h3>
+          <div id="taxaAprovacao"></div>
+        </div>
+        <div class="chart-card">
+          <h3>🌐 Origem inscrições</h3>
+          <div id="origemInscricoes"></div>
         </div>
       </div>
-      <div class="timeline-item">
-        <span class="time">11:10</span>
-        <div class="content">
-          <h4>Nova denúncia</h4>
-          <p>Denúncia de abandono cadastrada.</p>
+    `,
+    tabelas: `
+      <h1>Dashboard Inscrições - Gerenciamento</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Gerenciar Participantes</h2>
+      </div>
+      <div id="container-tabela-inscricoes"></div>
+    `
+  },
+  agendamentos: {
+    graficos: `
+      <h1>Dashboard Agendamentos - Gráficos</h1>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>📅 Agendamentos</h3>
+          <div id="agendamentosDia"></div>
+        </div>
+        <div class="chart-card">
+          <h3>⏰ Horários movimentados</h3>
+          <div id="horariosMovimentados"></div>
+        </div>
+        <div class="chart-card">
+          <h3>✅ Comparecimento</h3>
+          <div id="taxaComparecimento"></div>
         </div>
       </div>
-      <div class="timeline-item">
-        <span class="time">14:25</span>
-        <div class="content">
-          <h4>Integração WhatsApp</h4>
-          <p>Mensagem automática enviada.</p>
+    `,
+    tabelas: `
+      <h1>Dashboard Agendamentos - Gerenciamento</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Controle de Visitas</h2>
+      </div>
+      <div id="container-tabela-agendamentos"></div>
+    `
+  },
+  doacoes: {
+    graficos: `
+      <h1>Dashboard Doações - Gráficos</h1>
+      <div class="charts-grid">
+        <div class="kpi-card">
+          <h3>💰 Total Arrecadado</h3>
+          <span>R$ 48.750,00</span>
+          <p>+18% em relação ao mês anterior</p>
+        </div>
+        <div class="chart-card">
+          <h3>📈 Doações por mês</h3>
+          <div id="doacoesMes"></div>
         </div>
       </div>
+    `,
+    tabelas: `
+      <h1>Dashboard Doações - Gerenciamento</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Histórico de Transações</h2>
       </div>
-        <div id="logsAcoes"></div>
+      <div id="container-tabela-doacoes"></div>
+    `
+  },
+  usuarios: {
+    graficos: `
+      <h1>Dashboard Usuários - Gráficos</h1>
+      <div class="charts-grid">
+        <div class="kpi-card">
+          <h3>🔥 Usuários Ativos</h3>
+          <span>1.284</span>
+          <p>+12% em relação ao mês anterior</p>
+        </div>
+        <div class="chart-card">
+          <h3>👥 Crescimento</h3>
+          <div id="crescimentoUsuarios"></div>
+        </div>
+        <div class="chart-card">
+          <h3>📊 Retenção</h3>
+          <div id="retencaoUsuarios"></div>
+        </div>
+        <div class="chart-card">
+          <h3>➗ Distribuição</h3>
+          <div id="distribuicaoPerfis"></div>
+        </div>
       </div>
-      <div class="chart-card">
-        <h3>🔗 Integrações</h3>
-        <div id="integracoesAtivas"></div>
-        <div class="integracoes-grid">
-      <div class="integracao-card">
-        <h3>WhatsApp</h3>
-        <p>Status: <strong>Ativo</strong></p>
+    `,
+    tabelas: `
+      <h1>Dashboard Usuários - Gerenciamento</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Controle de Acessos</h2>
       </div>
-      <div class="integracao-card">
-        <h3>E-mail</h3>
-        <p>Status: <strong>Ativo</strong></p>
+      <div id="container-tabela-usuarios"></div>
+    `
+  },
+  configuracoes: {
+    graficos: `
+      <h1>Dashboard Sistema - Gráficos</h1>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>⚙️ Uso do sistema</h3>
+          <div id="usoSistema"></div>
+        </div>
+        <div class="chart-card">
+          <h3>🚀 Performance</h3>
+          <div id="performanceSistema"></div>
+        </div>
+        <div class="chart-card">
+          <h3>🛠️ Logs de ações</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <span class="time">08:15</span>
+              <div class="content">
+                <h4>Login administrativo</h4>
+                <p>Administrador acessou o sistema.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="time">09:40</span>
+              <div class="content">
+                <h4>Nova adoção registrada</h4>
+                <p>Pet "Thor" foi adotado.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="time">11:10</span>
+              <div class="content">
+                <h4>Nova denúncia</h4>
+                <p>Denúncia de abandono cadastrada.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>🔗 Integrações</h3>
+          <div id="integracoesAtivas"></div>
+          <div class="integracoes-grid">
+            <div class="integracao-card">
+              <h3>WhatsApp</h3>
+              <p>Status: <strong>Ativo</strong></p>
+            </div>
+            <div class="integracao-card">
+              <h3>E-mail</h3>
+              <p>Status: <strong>Ativo</strong></p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="integracao-card">
-        <h3>Pagamentos</h3>
-        <p>Status: <strong>Ativo</strong></p>
+    `,
+    tabelas: `
+      <h1>Dashboard Sistema - Gerenciamento</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Registros do Sistema</h2>
       </div>
-      <div class="integracao-card">
-        <h3>Google Maps</h3>
-        <p>Status: <strong>Ativo</strong></p>
-      </div>
-      </div>
-    </div>
-  `
+      <div id="container-tabela-configuracoes"></div>
+    `
+  }
 };
 
 // Inicialização da página padrão (Pets > Gráficos)
@@ -228,7 +261,7 @@ dashboardContent.innerHTML = dashboards.pets.graficos;
 renderPetsCharts();
 document.getElementById('menu-pets').classList.add('open');
 
-// Gerenciador de cliques nos Menus Principais que contêm submenus (Pets e Eventos)
+// Gerenciador de cliques nos Menus Principais que contêm submenus
 document.querySelectorAll('.has-submenu .menu-toggle').forEach(toggle => {
   toggle.addEventListener('click', (e) => {
     const parent = toggle.parentElement;
@@ -249,54 +282,42 @@ document.querySelectorAll('.has-submenu .menu-toggle').forEach(toggle => {
   });
 });
 
-// Seletor geral de cliques para renderização do conteúdo (Itens normais + Itens dos submenus)
-document.querySelectorAll('.nav-links li[data-dashboard], .submenu li[data-dashboard]').forEach(item => {
+// Seletor geral de cliques para renderização do conteúdo dos submenus
+document.querySelectorAll('.submenu li[data-dashboard]').forEach(item => {
   item.addEventListener('click', (e) => {
-    // Impede o clique no subitem de fechar ou bugar o menu pai
     e.stopPropagation();
 
     // Remove a classe active de absolutamente todos os botões
-    document.querySelectorAll('.nav-links li, .submenu li').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.submenu li').forEach(el => el.classList.remove('active'));
     
     // Adiciona classe ativa no item clicado
     item.classList.add('active');
 
     const dashboard = item.dataset.dashboard;
-    const view = item.dataset.view; // 'graficos' ou 'tabelas' (se aplicável)
+    const view = item.dataset.view;
 
-    // Se o clique NÃO foi em um submenu, fecha qualquer submenu que esteja aberto
-    if (!item.closest('.has-submenu')) {
-      document.querySelectorAll('.has-submenu').forEach(menu => menu.classList.remove('open'));
-    }
-
+    // Limpa o dashboard atual
     dashboardContent.replaceChildren();
 
-    // Lógica de Renderização Condicional
-    if (view) {
-      // Se possui visualização específica (Pets ou Eventos)
+    // Lógica de Renderização Dinâmica e Inteligente
+    if (view && dashboards[dashboard]) {
+      // Carrega o esqueleto HTML (Gráfico ou Tabela)
       dashboardContent.innerHTML = dashboards[dashboard][view];
       
-      if (dashboard === 'pets') {
-        if (view === 'graficos') renderPetsCharts();
-        if (view === 'tabelas' && typeof carregarDadosTabelaDashboard === 'function') {
-          carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
-        }
-      } else if (dashboard === 'eventos') {
-        if (view === 'graficos') renderEventsCharts();
-        if (view === 'tabelas' && typeof carregarDadosTabelaDashboard === 'function') {
-          carregarDadosTabelaDashboard('eventos', 'container-tabela-eventos');
-        }
-      }
-    } else {
-      // Dashboards normais (Sem submenu)
-      dashboardContent.innerHTML = dashboards[dashboard];
-      switch (dashboard) {
-        case 'denuncias': renderReportsCharts(); break;
-        case 'inscricoes': renderRegistrationsCharts(); break;
-        case 'agendamentos': renderAppointmentsCharts(); break;
-        case 'doacoes': renderDonationsCharts(); break;
-        case 'usuarios': renderUsersCharts(); break;
-        case 'configuracoes': renderSettingsCharts(); break;
+      // Se a aba for Gráficos, chama a função de renderização correspondente
+      if (view === 'graficos') {
+        if (dashboard === 'pets') renderPetsCharts();
+        else if (dashboard === 'eventos') renderEventsCharts();
+        else if (dashboard === 'denuncias') renderReportsCharts();
+        else if (dashboard === 'inscricoes') renderRegistrationsCharts();
+        else if (dashboard === 'agendamentos') renderAppointmentsCharts();
+        else if (dashboard === 'doacoes') renderDonationsCharts();
+        else if (dashboard === 'usuarios') renderUsersCharts();
+        else if (dashboard === 'configuracoes') renderSettingsCharts();
+      } 
+      // Se a aba for Tabelas, carrega os dados da API para o container correspondente
+      else if (view === 'tabelas' && typeof carregarDadosTabelaDashboard === 'function') {
+        carregarDadosTabelaDashboard(dashboard, `container-tabela-${dashboard}`);
       }
     }
   });
