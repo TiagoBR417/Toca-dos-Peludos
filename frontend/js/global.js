@@ -657,7 +657,7 @@ class GlobalFooter extends HTMLElement {
           <div id="contato_footer">
             <h3>Contatos</h3>
             <a href="mailto:contato@tocadospeludos.org">contato@tocadospeludos.org</a>
-            <a href="tel:+5511999999999">(11) 99999 - 9999</a>
+            <a href="tel:+5511933205642">(11) 93320-5642</a>
             <span>São Paulo, SP</span>
           </div>
         </div>

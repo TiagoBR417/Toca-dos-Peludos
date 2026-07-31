@@ -75,6 +75,49 @@
       .admin-mensagem { margin-top: 10px; font-weight: 600; text-align: center; font-size: 14px; }
       .admin-mensagem.sucesso { color: #10b981; }
       .admin-mensagem.erro { color: #ef4444; }
+
+      .btn-accent-editar{
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        padding: 3px 8px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+        line-height: 1.2;
+        min-height: 24px;
+      }
+      .btn-accent-excluir{
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        padding: 3px 8px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        box-shadow: 0 2px 6px rgba(239, 68, 68, 0.25);
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+        line-height: 1.2;
+        min-height: 24px;
+      }
     </style>
   </head>
   <body>
@@ -120,7 +163,6 @@
           <li class="has-submenu" id="menu-eventos">
             <div class="menu-toggle"><span>🎉</span> Eventos</div>
             <ul class="submenu">
-              <li data-dashboard="eventos" data-view="graficos"><span>📊</span> Gráficos</li>
               <li data-dashboard="eventos" data-view="tabelas"><span>📋</span> Tabelas</li>
             </ul>
           </li>
@@ -134,7 +176,6 @@
           <li class="has-submenu" id="menu-inscricoes">
             <div class="menu-toggle"><span>📝</span> Inscrições</div>
             <ul class="submenu">
-              <li data-dashboard="inscricoes" data-view="graficos"><span>📊</span> Gráficos</li>
               <li data-dashboard="inscricoes" data-view="tabelas"><span>📋</span> Tabelas</li>
             </ul>
           </li>
@@ -145,25 +186,11 @@
               <li data-dashboard="agendamentos" data-view="tabelas"><span>📋</span> Tabelas</li>
             </ul>
           </li>
-          <li class="has-submenu" id="menu-doacoes">
-            <div class="menu-toggle"><span>💰</span> Doações</div>
-            <ul class="submenu">
-              <li data-dashboard="doacoes" data-view="graficos"><span>📊</span> Gráficos</li>
-              <li data-dashboard="doacoes" data-view="tabelas"><span>📋</span> Tabelas</li>
-            </ul>
-          </li>
           <li class="has-submenu" id="menu-usuarios">
             <div class="menu-toggle"><span>👥</span> Usuários</div>
             <ul class="submenu">
               <li data-dashboard="usuarios" data-view="graficos"><span>📊</span> Gráficos</li>
               <li data-dashboard="usuarios" data-view="tabelas"><span>📋</span> Tabelas</li>
-            </ul>
-          </li>
-          <li class="has-submenu" id="menu-configuracoes">
-            <div class="menu-toggle"><span>⚙️</span> Sistema</div>
-            <ul class="submenu">
-              <li data-dashboard="configuracoes" data-view="graficos"><span>📊</span> Gráficos</li>
-              <li data-dashboard="configuracoes" data-view="tabelas"><span>📋</span> Logs</li>
             </ul>
           </li>
         </ul>
@@ -179,7 +206,7 @@
 <div id="modalCriarPet" class="modal-admin">
         <div class="modal-conteudo">
           <span class="fechar-modal" onclick="fecharModalCriarPet()">&times;</span>
-          <h3>Cadastrar Novo Pet</h3>
+          <h3>Cadastrar Novo Pet</h3><br>
           <form id="formCriarPet">
             <label class="label_text required-label">Nome:</label>
             <input type="text" id="novoPetNome" required placeholder="Ex: Thor, Mel...">
@@ -225,7 +252,7 @@
 <div id="modalPet" class="modal-admin">
         <div class="modal-conteudo">
           <span class="fechar-modal" onclick="fecharModalPet()">&times;</span>
-          <h3 id="modalPetTitulo">Detalhes do Pet</h3>
+          <h3 id="modalPetTitulo">Detalhes do Pet</h3><br>
           <form id="formEditarPet">
             <input type="hidden" id="editPetId">
             
@@ -266,7 +293,7 @@
     <div id="modalAgendamento" class="modal-admin">
       <div class="modal-conteudo" style="max-width: 450px;">
         <span class="fechar-modal" onclick="fecharModalAgendamento()">&times;</span>
-        <h3>Gerenciar Visita</h3>
+        <h3>Gerenciar Visita</h3><br>
         
         <p style="margin-bottom: 15px; color: #333;">
           <strong style="color: #6A1B9A;">Pet da visita:</strong> 
@@ -306,7 +333,7 @@
     <div id="modalInscricao" class="modal-admin">
       <div class="modal-conteudo">
         <span class="fechar-modal" onclick="fecharModalInscricao()">&times;</span>
-        <h3>Gerenciar Inscrição</h3>
+        <h3>Gerenciar Inscrição</h3><br>
         <div style="margin: 15px 0; padding: 15px; background: #f9f9f9; border-radius: 8px;">
           <p><strong>Evento:</strong> <span id="inscEvento"></span></p>
           <p><strong>Participante:</strong> <span id="inscNome"></span></p>
@@ -354,7 +381,7 @@
     <div id="modalCriarEvento" class="modal-admin">
       <div class="modal-conteudo">
         <span class="fechar-modal" onclick="fecharModalCriarEvento()">&times;</span>
-        <h3>Cadastrar Novo Evento</h3>
+        <h3>Cadastrar Novo Evento</h3><br>
         <form id="formCriarEvento">
           <label class="label_text required-label">Título:</label>
           <input type="text" id="novoEventoTitulo" required>
@@ -374,7 +401,7 @@
     <div id="modalEvento" class="modal-admin">
       <div class="modal-conteudo">
         <span class="fechar-modal" onclick="fecharModalEvento()">&times;</span>
-        <h3>Gerenciar Evento</h3>
+        <h3>Gerenciar Evento</h3><br>
         <form id="formEditarEvento">
           <input type="hidden" id="editEventoId">
           

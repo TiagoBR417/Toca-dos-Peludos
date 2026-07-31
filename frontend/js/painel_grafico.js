@@ -30,23 +30,6 @@ const dashboards = {
     `
   },
   eventos: {
-    graficos: `
-      <h1>Dashboard Eventos - Gráficos</h1>
-      <div class="charts-grid">
-        <div class="chart-card">
-          <h3>🎉 Conversão</h3>
-          <div id="conversaoEventos"></div>
-        </div>
-        <div class="chart-card">
-          <h3>💰 Arrecadação</h3>
-          <div id="arrecadacaoEventos"></div>
-        </div>
-        <div class="chart-card">
-          <h3>👥 Participação</h3>
-          <div id="participacaoEventos"></div>
-        </div>
-      </div>
-    `,
     tabelas: `
       <h1>Dashboard Eventos - Gerenciamento</h1>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
@@ -79,15 +62,6 @@ denuncias: {
     `
   },
 inscricoes: {
-    graficos: `
-      <h1>Dashboard Inscrições - Gráficos</h1>
-      <div class="charts-grid">
-        <div class="chart-card">
-          <h3>📝 Inscrições por período</h3>
-          <div id="inscricoesPeriodo"></div>
-        </div>
-      </div>
-    `,
     tabelas: `
       <h1>Dashboard Inscrições - Gerenciamento</h1>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
@@ -118,29 +92,6 @@ agendamentos: {
       <div id="container-tabela-agendamentos"></div>
     `
   },
-  doacoes: {
-    graficos: `
-      <h1>Dashboard Doações - Gráficos</h1>
-      <div class="charts-grid">
-        <div class="kpi-card">
-          <h3>💰 Total Arrecadado</h3>
-          <span>R$ 48.750,00</span>
-          <p>+18% em relação ao mês anterior</p>
-        </div>
-        <div class="chart-card">
-          <h3>📈 Doações por mês</h3>
-          <div id="doacoesMes"></div>
-        </div>
-      </div>
-    `,
-    tabelas: `
-      <h1>Dashboard Doações - Gerenciamento</h1>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
-        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Histórico de Transações</h2>
-      </div>
-      <div id="container-tabela-doacoes"></div>
-    `
-  },
 usuarios: {
     graficos: `
       <h1>Dashboard Usuários - Gráficos</h1>
@@ -167,68 +118,6 @@ usuarios: {
       <div id="container-tabela-usuarios"></div>
     `
   },
-  configuracoes: {
-    graficos: `
-      <h1>Dashboard Sistema - Gráficos</h1>
-      <div class="charts-grid">
-        <div class="chart-card">
-          <h3>⚙️ Uso do sistema</h3>
-          <div id="usoSistema"></div>
-        </div>
-        <div class="chart-card">
-          <h3>🚀 Performance</h3>
-          <div id="performanceSistema"></div>
-        </div>
-        <div class="chart-card">
-          <h3>🛠️ Logs de ações</h3>
-          <div class="timeline">
-            <div class="timeline-item">
-              <span class="time">08:15</span>
-              <div class="content">
-                <h4>Login administrativo</h4>
-                <p>Administrador acessou o sistema.</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <span class="time">09:40</span>
-              <div class="content">
-                <h4>Nova adoção registrada</h4>
-                <p>Pet "Thor" foi adotado.</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <span class="time">11:10</span>
-              <div class="content">
-                <h4>Nova denúncia</h4>
-                <p>Denúncia de abandono cadastrada.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="chart-card">
-          <h3>🔗 Integrações</h3>
-          <div id="integracoesAtivas"></div>
-          <div class="integracoes-grid">
-            <div class="integracao-card">
-              <h3>WhatsApp</h3>
-              <p>Status: <strong>Ativo</strong></p>
-            </div>
-            <div class="integracao-card">
-              <h3>E-mail</h3>
-              <p>Status: <strong>Ativo</strong></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    `,
-    tabelas: `
-      <h1>Dashboard Sistema - Gerenciamento</h1>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
-        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #1e293b;">📋 Registros do Sistema</h2>
-      </div>
-      <div id="container-tabela-configuracoes"></div>
-    `
-  }
 };
 
 // Inicialização da página padrão (Pets > Gráficos)
@@ -368,46 +257,6 @@ async function renderPetsCharts() {
         console.error("Erro ao carregar gráficos dinâmicos de pets: ", e);
     }
 }
-// GRÁFICO DOS EVENTOS
-function renderEventsCharts() {
-
-  // EVENTOS: Participação em eventos
-  const participacaoEventos = new ApexCharts(document.querySelector("#participacaoEventos"), {
-
-    chart: {type: 'bar', height: 300},
-    series: [{name: 'Participantes', data: [120, 95, 150, 80]}],
-    xaxis: {categories: ['Feira de Adoção', 'Campanha Solidária', 'Mutirão Pet', 'Evento Beneficente']},
-    colors: ['#7956A6'], 
-    plotOptions: {bar: {borderRadius: 6, columnWidth: '50%'}},
-    dataLabels: {enabled: false}});
-
-  participacaoEventos.render();
-
-  // EVENTOS: Arrecadação por evento
-  const arrecadacaoEventos = new ApexCharts(document.querySelector("#arrecadacaoEventos"), {
-
-    chart: {type: 'bar', height: 300},
-    series: [{name: 'Arrecadação (R$)', data: [3500, 2200, 4800, 1800]}],
-    xaxis: {categories: ['Feira de Adoção', 'Campanha Solidária', 'Mutirão Pet', 'Evento Beneficente']},
-    colors: ['#4CAF50'], 
-    plotOptions: {bar: {borderRadius: 6, horizontal: false, columnWidth: '55%'}},
-    dataLabels: {enabled: false},
-    yaxis: {title: {text: 'Valor arrecadado'}}});
-
-  arrecadacaoEventos.render();
-
-  // EVENTOS: Conversão do evento
-  const conversaoEventos = new ApexCharts(document.querySelector("#conversaoEventos"), {
-
-    chart: {type: 'bar', height: 300},
-    series: [{name: 'Quantidade', data: [200, 120, 45]}],
-    xaxis: {categories: ['Participantes', 'Interessados', 'Adoções/Doações']},
-    colors: ['#E91E63'], 
-    plotOptions: {bar: {horizontal: true, borderRadius: 6, distributed: true, barHeight: '60%'}},
-    dataLabels: {enabled: true},
-    legend: {show: false}});
-
-  conversaoEventos.render()};
 
 // GRÁFICOS DE DENÚNCIAS
 // GRÁFICOS DE DENÚNCIAS
@@ -471,58 +320,6 @@ async function renderReportsCharts() {
 
   } catch (e) {
     console.error("Erro ao carregar gráficos dinâmicos de denúncias: ", e);
-  }
-}
-// GRÁFICOS DE INSCRIÇÕES
-
-async function renderRegistrationsCharts() {
-  try {
-    const response = await fetch(`${BASE_URL}/admin/dashboard_graficos_inscricoes.php`, {
-      headers: { Authorization: `Bearer ${TOKEN}` }
-    });
-    const resultado = await response.json();
-    
-    if (!resultado.success) return;
-    
-    const dados = resultado.data;
-    
-    // Nomes dos meses para formatar o eixo X do gráfico
-    const mesesNomes = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-    
-    // Mapeia os dados do banco para os arrays que o ApexCharts espera
-    const categorias = dados.map(item => `${mesesNomes[item.mes - 1]}/${item.ano.toString().slice(-2)}`);
-    const seriesData = dados.map(item => Number(item.quantidade));
-
-    // Fallback: se não houver dados no banco ainda, exibe um gráfico zerado
-    if (categorias.length === 0) {
-        categorias.push('Sem dados');
-        seriesData.push(0);
-    }
-
-    // Verificador de Segurança para a biblioteca
-    const checarE_Renderizar = () => {
-        if (typeof ApexCharts !== 'undefined') {
-            const inscricoesPeriodo = new ApexCharts(document.querySelector("#inscricoesPeriodo"), {
-              chart: {type: 'line', height: 300},
-              series: [{name: 'Inscrições', data: seriesData}],
-              xaxis: {categories: categorias},
-              stroke: {curve: 'smooth', width: 3},
-              colors: ['#7956A6'], 
-              dataLabels: {enabled: false},
-              grid: {borderColor: '#e0e0e0'}
-            });
-            inscricoesPeriodo.render();
-        } else {
-            // Se o CDN demorou para responder, espera 100ms e tenta novamente
-            setTimeout(checarE_Renderizar, 100);
-        }
-    };
-    
-    // Inicia a função de segurança
-    checarE_Renderizar();
-
-  } catch (e) {
-    console.error("Erro ao carregar gráficos dinâmicos de inscrições: ", e);
   }
 }
 
@@ -600,23 +397,6 @@ async function renderAppointmentsCharts() {
     console.error("Erro ao carregar gráficos dinâmicos de agendamentos: ", e);
   }
 }
-// GRÁFICOS DAS DOAÇÕES  
-function renderDonationsCharts() {
-  
-  // DOAÇÕES: Doações por mês
-  const doacoesMes = new ApexCharts(document.querySelector("#doacoesMes"), {
-
-    chart: {type: 'line', height: 320},
-    series: [{name: 'Doações', data: [4200, 5100, 6200, 5900, 7100, 8450]}],
-    xaxis: {categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']},
-    stroke: {curve: 'smooth', width: 4},
-    colors: ['#4CAF50'],
-    dataLabels: {enabled: false},
-    yaxis: {title: {text: 'Valor arrecadado (R$)'}},
-    grid: {borderColor: '#e0e0e0'},
-    tooltip: {y: {formatter: function (value) {return 'R$ ' + value.toLocaleString('pt-BR');}}}});
-  
-  doacoesMes.render()};
 
 // GRÁFICOS DOS USUÁRIOS
 // GRÁFICOS DOS USUÁRIOS
@@ -687,34 +467,3 @@ async function renderUsersCharts() {
     console.error("Erro ao carregar gráficos dinâmicos de usuários: ", e);
   }
 }
-
-// GRÁFICOS DAS CONFIGURAÇÕES DO SISTEMA
-function renderSettingsCharts() {
-
-  // SISTEMA: Uso do sistema
-  const usoSistema = new ApexCharts(document.querySelector("#usoSistema"), {
-
-    chart: {type: 'line', height: 300},
-    series: [{name: 'Acessos', data: [120, 180, 150, 220, 310, 280, 360]}],
-    xaxis: {categories: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']},
-    stroke: {curve: 'smooth', width: 3},
-    colors: ['#2196F3'],
-    dataLabels: {enabled: false},
-    grid: {borderColor: '#e0e0e0'}});
-
-  usoSistema.render();
-
-  // SISTEMA: Performance do sistema
-  const performanceSistema = new ApexCharts(document.querySelector("#performanceSistema"), {
-
-    chart: {type: 'area', height: 320},
-    series: [{name: 'Tempo de resposta (ms)', data: [120, 140, 110, 180, 150, 130, 100]},
-             {name: 'Uptime (%)', data: [99, 99.2, 99.5, 98.9, 99.8, 99.7, 100]}],
-    xaxis: {categories: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']},
-    colors: ['#7956A6', '#4CAF50'],
-    stroke: {curve: 'smooth', width: 3},
-    fill: {opacity: 0.3},
-    dataLabels: {enabled: false},
-    grid: {borderColor: '#e0e0e0'}});
-
-  performanceSistema.render()};

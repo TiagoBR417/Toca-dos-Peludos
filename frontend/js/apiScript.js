@@ -38,7 +38,7 @@ function atualizarMenuNavegacao() {
     // Se for o Tiago (Admin)
     if (usuarioLogado.tipo === 'admin') {
       areaAuth.innerHTML = `
-        <span style="margin-right: 15px; font-weight: 500; color: #FFFFFF;">Olá, <strong>${primeiroNome}</strong>!</span>
+        <span style="margin-right: 15px; font-weight: 500;">Olá, <strong>${primeiroNome}</strong>!</span>
         <a href="painelteste.html"><button class="btn-accent" style="border: none;">Painel Admin</button></a>
         <button class="btn-accent" onclick="window.fazerLogoutPublico()" style="background-color: #e74c3c; border: none;">Sair</button>
       `;
