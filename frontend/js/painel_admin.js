@@ -538,6 +538,20 @@ async function excluirEvento(id) {
   }
 }
 
+// ==========================================
+// SISTEMA DE TABELAS DINÂMICAS COM PAGINAÇÃO
+// ==========================================
+
+// VARIÁVEIS GLOBAIS PARA CONTROLAR FILTROS E PÁGINAS DA TABELA
+let tabelaState = {
+  dados: [],
+  secao: '',
+  pagina: 1,
+  limite: 10,
+  busca: ''
+};
+
+// FUNÇÃO PRINCIPAL DE CARREGAMENTO
 async function carregarDadosTabelaDashboard(secao, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -556,27 +570,119 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
     const resultado = await response.json();
 
     if (resultado.success && resultado.data.length > 0) {
+      // Atualiza a variável global do escopo admin para modais lerem os dados corretos
       dadosTabelaAtual = resultado.data; 
       
-      const colunas = Object.keys(resultado.data[0]);
-      let html = `<div class="admin-table-wrapper"><table class="admin-table"><thead><tr>`;
+      // Salva os dados no estado do filtro
+      tabelaState.dados = resultado.data;
+      tabelaState.secao = secao;
+      tabelaState.pagina = 1;
+      tabelaState.busca = '';
       
-      colunas.forEach(col => {
-        let nomeFormatado = col.replace(/_/g, ' ').replace(/\w/g, l => l.toUpperCase());
-        html += `<th>${nomeFormatado}</th>`;
-      });
-      html += `<th>Ações</th></tr></thead><tbody>`;
+      // Constrói a barra de pesquisa e limite no HTML
+      container.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <div>
+                <label style="color: #475569; font-weight: 600; font-size: 0.9rem;">Mostrar 
+                    <select onchange="mudarLimiteTabela(this.value, 'tabelaDados_${secao}')" style="padding: 6px; border-radius: 6px; border: 1px solid #cbd5e1; outline: none; cursor: pointer; font-family: inherit;">
+                        <option value="5" ${tabelaState.limite == 5 ? 'selected' : ''}>5</option>
+                        <option value="10" ${tabelaState.limite == 10 ? 'selected' : ''}>10</option>
+                        <option value="20" ${tabelaState.limite == 20 ? 'selected' : ''}>20</option>
+                        <option value="50" ${tabelaState.limite == 50 ? 'selected' : ''}>50</option>
+                    </select> linhas
+                </label>
+            </div>
+            <div>
+                <input type="text" placeholder="🔍 Pesquisar em tudo..." 
+                       oninput="filtrarTabela(this.value, 'tabelaDados_${secao}')"
+                       style="padding: 8px 15px; border-radius: 6px; border: 1px solid #cbd5e1; width: 250px; outline: none; font-family: inherit;">
+            </div>
+        </div>
+        <div id="tabelaDados_${secao}"></div>
+      `;
 
-      resultado.data.forEach(item => {
+      // Renderiza a primeira página da tabela
+      renderizarTabelaFiltrada(`tabelaDados_${secao}`);
+
+    } else {
+      container.innerHTML = `<div class="admin-vazio">Nenhum registro encontrado para a listagem.</div>`;
+    }
+  } catch (error) {
+    container.innerHTML = `<div style="color: red; font-size: 0.9rem;">Erro ao carregar listagem de gerenciamento.</div>`;
+  }
+}
+
+// ==========================================
+// FUNÇÕES DE APOIO PARA A TABELA DINÂMICA
+// ==========================================
+window.mudarLimiteTabela = function(novoLimite, subContainerId) {
+    tabelaState.limite = Number(novoLimite);
+    tabelaState.pagina = 1; 
+    renderizarTabelaFiltrada(subContainerId);
+}
+
+window.filtrarTabela = function(termo, subContainerId) {
+    tabelaState.busca = termo;
+    tabelaState.pagina = 1; 
+    renderizarTabelaFiltrada(subContainerId);
+}
+
+window.mudarPaginaTabela = function(novaPagina, subContainerId) {
+    tabelaState.pagina = novaPagina;
+    renderizarTabelaFiltrada(subContainerId);
+}
+
+function renderizarTabelaFiltrada(subContainerId) {
+    const subContainer = document.getElementById(subContainerId);
+    if (!subContainer) return;
+
+    // 1. Aplica a Busca
+    let dadosFiltrados = tabelaState.dados.filter(item => {
+        if (!tabelaState.busca) return true;
+        // Varre todas as colunas do item procurando a palavra digitada
+        return Object.values(item).some(val => 
+            String(val).toLowerCase().includes(tabelaState.busca.toLowerCase())
+        );
+    });
+
+    // 2. Calcula a Paginação
+    const totalPaginas = Math.ceil(dadosFiltrados.length / tabelaState.limite) || 1;
+    if (tabelaState.pagina > totalPaginas) tabelaState.pagina = totalPaginas;
+    if (tabelaState.pagina < 1) tabelaState.pagina = 1;
+    
+    const inicio = (tabelaState.pagina - 1) * tabelaState.limite;
+    const fim = inicio + tabelaState.limite;
+    const dadosPaginados = dadosFiltrados.slice(inicio, fim);
+
+    if (dadosPaginados.length === 0) {
+        subContainer.innerHTML = `<div class="admin-vazio">Nenhum resultado encontrado para "${tabelaState.busca}".</div>`;
+        return;
+    }
+
+    // 3. Monta o Cabeçalho da Tabela
+    const colunas = Object.keys(dadosPaginados[0]);
+    let html = `<div class="admin-table-wrapper"><table class="admin-table"><thead><tr>`;
+    
+    colunas.forEach(col => {
+        let nomeFormatado = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        html += `<th>${nomeFormatado}</th>`;
+    });
+    html += `<th>Ações</th></tr></thead><tbody>`;
+
+    const secao = tabelaState.secao;
+
+    // 4. Monta as Linhas da Tabela
+    dadosPaginados.forEach(item => {
         html += `<tr>`;
         colunas.forEach(col => {
-          let valor = item[col] || '-';
-          if(col.includes('data') || col.includes('created_at')) {
-              valor = new Date(valor).toLocaleDateString('pt-BR');
-          }
-          html += `<td>${valor}</td>`;
+            let valor = item[col] || '-';
+            if(col.includes('data') || col.includes('created_at')) {
+                valor = new Date(valor).toLocaleDateString('pt-BR');
+            }
+            html += `<td>${valor}</td>`;
         });
 
+        // Aplica os botões correspondentes da seção
         if (secao === 'pets') {
           html += `<td>
                     <button class="btn-accent-editar" onclick="abrirModalPet(${item.id})">Editar</button>
@@ -606,18 +712,67 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
         }
         
         html += `</tr>`;
-      });
+    });
 
-      html += `</tbody></table></div>`;
-      container.innerHTML = html;
-    } else {
-      container.innerHTML = `<div class="admin-vazio">Nenhum registro encontrado para a listagem.</div>`;
+    html += `</tbody></table></div>`;
+
+    // 5. Monta a Lógica de Paginação Avançada (com reticências)
+    let paginacaoHtml = '';
+    
+    // Botão Anterior
+    paginacaoHtml += `<button onclick="mudarPaginaTabela(${tabelaState.pagina - 1}, '${subContainerId}')" 
+                    ${tabelaState.pagina === 1 ? 'disabled' : ''} 
+                    style="padding: 6px 12px; cursor: ${tabelaState.pagina === 1 ? 'not-allowed' : 'pointer'}; border: 1px solid #cbd5e1; background: ${tabelaState.pagina === 1 ? '#f8fafc' : '#fff'}; border-radius: 6px; color: ${tabelaState.pagina === 1 ? '#94a3b8' : '#333'}; font-weight: 600; transition: 0.2s;">
+                Anterior
+            </button>`;
+
+    // Função que calcula quais números devem aparecer
+    function getPaginas(atual, total) {
+        if (total <= 5) return Array.from({length: total}, (_, i) => i + 1);
+        if (atual <= 3) return [1, 2, 3, 4, '...', total];
+        if (atual >= total - 2) return [1, '...', total - 3, total - 2, total - 1, total];
+        return [1, '...', atual - 1, atual, atual + 1, '...', total];
     }
-  } catch (error) {
-    container.innerHTML = `<div style="color: red; font-size: 0.9rem;">Erro ao carregar listagem de gerenciamento.</div>`;
-  }
-}
 
+    const paginasVisiveis = getPaginas(tabelaState.pagina, totalPaginas);
+
+    // Renderiza os botões numéricos e os pontinhos (...)
+    paginasVisiveis.forEach(p => {
+        if (p === '...') {
+            paginacaoHtml += `<span style="padding: 6px 4px; color: #64748b; font-weight: bold;">...</span>`;
+        } else {
+            const isActive = p === tabelaState.pagina;
+            const bg = isActive ? '#6a1b9a' : '#fff';
+            const color = isActive ? '#fff' : '#333';
+            const border = isActive ? '1px solid #6a1b9a' : '1px solid #cbd5e1';
+            
+            paginacaoHtml += `<button onclick="mudarPaginaTabela(${p}, '${subContainerId}')" 
+                                style="padding: 6px 12px; cursor: pointer; border: ${border}; background: ${bg}; border-radius: 6px; color: ${color}; font-weight: 600; transition: 0.2s; box-shadow: ${isActive ? '0 2px 4px rgba(106, 27, 154, 0.2)' : 'none'};">
+                                ${p}
+                              </button>`;
+        }
+    });
+
+    // Botão Próximo
+    paginacaoHtml += `<button onclick="mudarPaginaTabela(${tabelaState.pagina + 1}, '${subContainerId}')" 
+                    ${tabelaState.pagina === totalPaginas ? 'disabled' : ''} 
+                    style="padding: 6px 12px; cursor: ${tabelaState.pagina === totalPaginas ? 'not-allowed' : 'pointer'}; border: 1px solid #cbd5e1; background: ${tabelaState.pagina === totalPaginas ? '#f8fafc' : '#fff'}; border-radius: 6px; color: ${tabelaState.pagina === totalPaginas ? '#94a3b8' : '#333'}; font-weight: 600; transition: 0.2s;">
+                Próximo
+            </button>`;
+
+    // 6. Monta o Rodapé e Injeta na Tela
+    html += `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 10px 0; flex-wrap: wrap; gap: 10px;">
+        <span style="font-size: 0.85rem; color: #64748b; font-weight: 500;">
+            Mostrando ${inicio + 1} a ${Math.min(fim, dadosFiltrados.length)} de ${dadosFiltrados.length} registros
+        </span>
+        <div style="display: flex; gap: 5px; align-items: center;">
+            ${paginacaoHtml}
+        </div>
+    </div>`;
+
+    subContainer.innerHTML = html;
+}
 // ==========================================
 // USUÁRIOS
 // ==========================================
