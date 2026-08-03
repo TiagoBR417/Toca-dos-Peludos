@@ -5,28 +5,24 @@ const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
 if (!usuarioLogado || usuarioLogado.tipo !== "admin" || !usuarioLogado.token) {
   alert("Acesso restrito ao administrador. Faça login.");
   window.location.replace("login.html");
-  // O "throw new Error" faz o papel do "return", parando o script sem dar erro de sintaxe!
   throw new Error("Parando a execução da página. Acesso negado.");
 }
 
 // 3. Salva o token para a API poder carregar as tabelas
 const TOKEN = usuarioLogado.token;
 
-// As chamadas de carregarSecao e carregarResumo já estão sendo feitas 
-// corretamente mais para baixo no DOMContentLoaded, então tiramos elas daqui.
 const ADMIN_ENDPOINTS = {
   pets: `${BASE_URL}/admin/pets.php`,
   eventos: `${BASE_URL}/admin/eventos.php`,
   denuncias: `${BASE_URL}/admin/denuncias.php`,
   inscricoes: `${BASE_URL}/admin/inscricoes.php`,
   agendamentos: `${BASE_URL}/admin/agendamentos.php`,
-  usuarios: `${BASE_URL}/admin/usuarios.php` // <-- ADICIONADO O ENDPOINT DE USUÁRIOS
+  usuarios: `${BASE_URL}/admin/usuarios.php`
 };
 
 let dadosTabelaAtual = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Atualiza o nome do admin no cabeçalho
   const nomeAdminSpan = document.querySelector(".nav-content span");
   if (nomeAdminSpan && usuarioLogado.nome) {
       nomeAdminSpan.innerHTML = `Olá, <strong>${usuarioLogado.nome}</strong>!`;
@@ -35,17 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarResumoDashboard();
   carregarSecao('pets');
 
-// Eventos de clique nos cards do topo
   document.querySelectorAll(".card").forEach(card => {
     card.addEventListener("click", function() {
-    
       document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
       this.classList.add("active");
       
-      // 2. Lê o texto visível dentro do card (converte para minúsculas para evitar erros)
       const textoVisivel = this.textContent.toLowerCase();
 
-      // 3. Procura a palavra-chave no texto e carrega a tabela certa
       if (textoVisivel.includes("evento")) {
         carregarSecao('eventos');
       } else if (textoVisivel.includes("denúncia") || textoVisivel.includes("denuncia")) {
@@ -61,13 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Função para deslogar
 function fazerLogout() {
   localStorage.removeItem("usuarioLogado");
   window.location.href = "login.html";
 }
 
-// 3. CARREGAMENTO DE DADOS (GET COM TOKEN)
 async function carregarResumoDashboard() {
   try {
     const response = await fetch(`${BASE_URL}/admin/dashboard.php`, {
@@ -75,7 +65,6 @@ async function carregarResumoDashboard() {
       headers: { "Authorization": `Bearer ${TOKEN}` }
     });
 
-    // Se o token for inválido, desloga
     if (response.status === 401 || response.status === 403) {
       fazerLogout();
       return;
@@ -146,14 +135,11 @@ async function carregarSecao(secao) {
 
 function renderizarTabela(secao, dados) {
   const container = document.getElementById("adminTabela");
-  
   if (!dados || dados.length === 0) return;
 
   const colunas = Object.keys(dados[0]);
-  
   let html = '';
   
-  // Se for a aba eventos, injeta o botão verde em cima da tabela
   if (secao === 'eventos') {
       html += `<div style="margin-bottom: 15px; text-align: right;">
                  <button class="btn-accent" style="background-color: #4CAF50; padding: 10px 20px;" onclick="abrirModalCriarEvento()">+ Novo Evento</button>
@@ -178,7 +164,6 @@ function renderizarTabela(secao, dados) {
       html += `<td>${valor}</td>`;
     });
 
-    // Botões padronizados
     if (secao === 'pets') {
       html += `<td>
                 <button class="btn-accent-editar" onclick="abrirModalPet(${item.id})">Editar</button>
@@ -215,28 +200,41 @@ function renderizarTabela(secao, dados) {
 }
 
 // 4. MODAIS E ATUALIZAÇÕES (POST COM TOKEN)
-//  PETS 
+
+// PETS 
 function abrirModalPet(idPet) {
   const pet = dadosTabelaAtual.find(p => Number(p.id) === Number(idPet));
   if (pet) {
     document.getElementById("editPetId").value = pet.id;
     document.getElementById("editPetNome").value = pet.nome;
+    document.getElementById("editPetPorte").value = pet.porte || "pequeno";
+    document.getElementById("editPetCor").value = pet.cor || "";
+    document.getElementById("editPetIdade").value = pet.idade || "";
+    document.getElementById("editPetCidade").value = pet.cidade || "";
+    document.getElementById("editPetBairro").value = pet.bairro || "";
     document.getElementById("editPetStatus").value = pet.status;
     document.getElementById("editPetDescricao").value = pet.descricao || "";
     document.getElementById("modalPet").style.display = "block";
     document.body.classList.add("no-scroll");
   }
 }
+
 function fecharModalPet() {
   document.getElementById("modalPet").style.display = "none";
   document.body.classList.remove("no-scroll");
   document.getElementById("msgEditPet").textContent = "";
 }
+
 document.getElementById("formEditarPet")?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const payload = {
     id: document.getElementById("editPetId").value,
     nome: document.getElementById("editPetNome").value,
+    porte: document.getElementById("editPetPorte").value,
+    cor: document.getElementById("editPetCor").value,
+    idade: document.getElementById("editPetIdade").value,
+    cidade: document.getElementById("editPetCidade").value,
+    bairro: document.getElementById("editPetBairro").value,
     status: document.getElementById("editPetStatus").value,
     descricao: document.getElementById("editPetDescricao").value
   };
@@ -248,11 +246,52 @@ document.getElementById("formCriarPet")?.addEventListener("submit", async (e) =>
   const payload = {
     nome: document.getElementById("novoPetNome").value,
     tipo: document.getElementById("novoPetTipo").value,
+    porte: document.getElementById("novoPetPorte").value,
+    cor: document.getElementById("novoPetCor").value,
+    idade: document.getElementById("novoPetIdade").value,
+    cidade: document.getElementById("novoPetCidade").value,
+    bairro: document.getElementById("novoPetBairro").value,
     status: document.getElementById("novoPetStatus").value,
     descricao: document.getElementById("novoPetDescricao").value
   };
   await enviarAtualizacao(`${BASE_URL}/admin/criar_pet.php`, payload, "msgCriarPet", fecharModalCriarPet, "pets");
 });
+
+function abrirModalCriarPet() {
+  document.getElementById("formCriarPet").reset();
+  document.getElementById("msgCriarPet").textContent = "";
+  document.getElementById("modalCriarPet").style.display = "block";
+  document.body.classList.add("no-scroll");
+}
+
+function fecharModalCriarPet() {
+  document.getElementById("modalCriarPet").style.display = "none";
+  document.body.classList.remove("no-scroll");
+}
+
+async function excluirPet(id) {
+  if (!confirm("Tem certeza que deseja remover este pet permanentemente?")) return;
+
+  try {
+    const response = await fetch(`${BASE_URL}/admin/excluir_pet.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${TOKEN}` },
+      body: JSON.stringify({ id: id })
+    });
+
+    if (response.status === 401 || response.status === 403) { fazerLogout(); return; }
+    
+    const resultado = await response.json();
+    if (resultado.success) {
+      carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
+      carregarResumoDashboard();
+    } else {
+      alert(resultado.message);
+    }
+  } catch (error) {
+    alert("Erro de conexão ao tentar excluir o pet.");
+  }
+}
 
 // AGENDAMENTOS
 function abrirModalAgendamento(id) {
@@ -261,15 +300,12 @@ function abrirModalAgendamento(id) {
     document.getElementById("editAgendId").value = item.id;
     document.getElementById("infoAgendPet").textContent = item.nome_pet || "Pet não encontrado";
     
-    // Injeta os valores editáveis
     document.getElementById("editAgendNome").value = item.nome_interessado;
     document.getElementById("editAgendTelefone").value = item.telefone_interessado;
     
-    // Trata a data para o input HTML5 type="date"
     const dataDB = item.data_visita;
     document.getElementById("editAgendData").value = dataDB ? dataDB.split(' ')[0] : '';
     
-    // Trata a hora para o input HTML5 type="time" (Pega só o HH:MM)
     const horarioDB = item.horario_visita;
     document.getElementById("editAgendHorario").value = horarioDB ? horarioDB.substring(0, 5) : '';
 
@@ -298,7 +334,6 @@ document.getElementById("formEditarAgendamento")?.addEventListener("submit", asy
   await enviarAtualizacao(`${BASE_URL}/admin/atualizar_agendamento.php`, payload, "msgEditAgendamento", fecharModalAgendamento, "agendamentos");
 });
 
-// Lógica para excluir o agendamento
 async function excluirAgendamento(id) {
   if (!confirm("Tem certeza que deseja excluir permanentemente este agendamento?")) return;
 
@@ -313,7 +348,6 @@ async function excluirAgendamento(id) {
     
     const resultado = await response.json();
     if (resultado.success) {
-      // Recarrega automaticamente caso esteja em "Tabelas" ou "Gráficos"
       carregarDadosTabelaDashboard('agendamentos', 'container-tabela-agendamentos'); 
       carregarSecao('agendamentos');
       carregarResumoDashboard(); 
@@ -377,7 +411,6 @@ function abrirModalEvento(id) {
     document.getElementById("editEventoId").value = item.id;
     document.getElementById("editEventoTitulo").value = item.titulo;
     
-    // Tratamento para garantir que a data seja lida corretamente pelo input type="date"
     const dataDB = item.data_evento;
     document.getElementById("editEventoData").value = dataDB ? dataDB.split(' ')[0] : '';
     
@@ -408,6 +441,7 @@ document.getElementById("formEditarEvento")?.addEventListener("submit", async (e
 });
 
 // 5. FUNÇÃO AUXILIAR PARA ENVIAR POST COM TOKEN
+// 5. FUNÇÃO AUXILIAR PARA ENVIAR POST COM TOKEN
 async function enviarAtualizacao(url, payload, idMensagem, funcFecharModal, nomeSecao) {
   const msg = document.getElementById(idMensagem);
   msg.textContent = "Atualizando...";
@@ -436,8 +470,13 @@ async function enviarAtualizacao(url, payload, idMensagem, funcFecharModal, nome
       
       setTimeout(() => {
         funcFecharModal();
-        carregarSecao(nomeSecao);
-        carregarResumoDashboard(); 
+        
+        // MÁGICA DO REFRESH: Identifica qual aba está aberta (Ex: Pets > Tabelas)
+        // e "clica" nela para forçar o recarregamento dos dados na mesma hora
+        const abaAtiva = document.querySelector('.submenu li.active');
+        if (abaAtiva) {
+            abaAtiva.click();
+        }
       }, 1000);
     } else {
       msg.textContent = resultado.message;
@@ -449,8 +488,7 @@ async function enviarAtualizacao(url, payload, idMensagem, funcFecharModal, nome
   }
 }
 
-// FUNÇÕES DE CRIAR E EXCLUIR EVENTOS (PITCH)
-// Abrir e Fechar Modal de Criação
+// EVENTOS - CRIAR E EXCLUIR
 function abrirModalCriarEvento() {
   document.getElementById("formCriarEvento").reset();
   document.getElementById("msgCriarEvento").textContent = "";
@@ -463,7 +501,6 @@ function fecharModalCriarEvento() {
   document.body.classList.remove("no-scroll");
 }
 
-// Lógica de Enviar Novo Evento
 document.getElementById("formCriarEvento")?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const payload = {
@@ -475,10 +512,9 @@ document.getElementById("formCriarEvento")?.addEventListener("submit", async (e)
   await enviarAtualizacao(`${BASE_URL}/admin/criar_evento.php`, payload, "msgCriarEvento", fecharModalCriarEvento, "eventos");
 });
 
-// Lógica de Excluir (Com alerta de confirmação nativo para ser rápido)
 async function excluirEvento(id) {
   if (!confirm("Tem certeza que deseja excluir este evento? Esta ação não pode ser desfeita.")) {
-    return; // Se o usuário clicar em "Cancelar", para tudo.
+    return;
   }
 
   try {
@@ -492,17 +528,16 @@ async function excluirEvento(id) {
     
     const resultado = await response.json();
     if (resultado.success) {
-      carregarSecao('eventos'); // Recarrega a tabela na hora!
-      carregarResumoDashboard(); // Atualiza os números no topo
+      carregarSecao('eventos');
+      carregarResumoDashboard();
     } else {
-      alert(resultado.message); // Exibe erro se houver (ex: evento com inscritos)
+      alert(resultado.message);
     }
   } catch (error) {
     alert("Erro de conexão ao tentar excluir.");
   }
 }
 
-// Busca os dados especificamente para os containers injetados abaixo dos gráficos
 async function carregarDadosTabelaDashboard(secao, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -521,7 +556,6 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
     const resultado = await response.json();
 
     if (resultado.success && resultado.data.length > 0) {
-      // Atualiza a variável global do escopo admin para modais lerem os dados corretos
       dadosTabelaAtual = resultado.data; 
       
       const colunas = Object.keys(resultado.data[0]);
@@ -543,7 +577,6 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
           html += `<td>${valor}</td>`;
         });
 
-        // AGORA TODOS OS MÓDULOS TÊM SEUS BOTÕES DE GERENCIAR
         if (secao === 'pets') {
           html += `<td>
                     <button class="btn-accent-editar" onclick="abrirModalPet(${item.id})">Editar</button>
@@ -585,44 +618,6 @@ async function carregarDadosTabelaDashboard(secao, containerId) {
   }
 }
 
-// OPERAÇÃO DE EXCLUSÃO E CRIAÇÃO DE PETS 
-async function excluirPet(id) {
-  if (!confirm("Tem certeza que deseja remover este pet permanentemente?")) return;
-
-  try {
-    const response = await fetch(`${BASE_URL}/admin/excluir_pet.php`, { // Certifique-se que o endpoint existe no seu backend PHP
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${TOKEN}` },
-      body: JSON.stringify({ id: id })
-    });
-
-    if (response.status === 401 || response.status === 403) { fazerLogout(); return; }
-    
-    const resultado = await response.json();
-    if (resultado.success) {
-      // Recarrega dinamicamente a tabela do painel de gráficos atual
-      carregarDadosTabelaDashboard('pets', 'container-tabela-pets');
-      carregarResumoDashboard();
-    } else {
-      alert(resultado.message);
-    }
-  } catch (error) {
-    alert("Erro de conexão ao tentar excluir o pet.");
-  }
-}
-
-function abrirModalCriarPet() {
-  document.getElementById("formCriarPet").reset();
-  document.getElementById("msgCriarPet").textContent = "";
-  document.getElementById("modalCriarPet").style.display = "block";
-  document.body.classList.add("no-scroll");
-}
-
-function fecharModalCriarPet() {
-  document.getElementById("modalCriarPet").style.display = "none";
-  document.body.classList.remove("no-scroll");
-}
-
 // ==========================================
 // USUÁRIOS
 // ==========================================
@@ -657,7 +652,6 @@ document.getElementById("formEditarUsuario")?.addEventListener("submit", async (
 });
 
 async function excluirUsuario(id) {
-  // Aviso de alto impacto!
   if (!confirm("Atenção: A exclusão de um usuário apagará também os seus pets vinculados e inscrições em eventos. Deseja prosseguir?")) return;
 
   try {

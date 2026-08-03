@@ -20,6 +20,8 @@ $nome = htmlspecialchars(strip_tags(trim($dados['nome'] ?? '')), ENT_QUOTES, 'UT
 $porte = htmlspecialchars(strip_tags(trim($dados['porte'] ?? '')), ENT_QUOTES, 'UTF-8');
 $cor = htmlspecialchars(strip_tags(trim($dados['cor'] ?? '')), ENT_QUOTES, 'UTF-8');
 $idade = isset($dados['idade']) && $dados['idade'] !== '' ? (int)$dados['idade'] : null;
+$cidade = htmlspecialchars(strip_tags(trim($dados['cidade'] ?? '')), ENT_QUOTES, 'UTF-8');
+$bairro = htmlspecialchars(strip_tags(trim($dados['bairro'] ?? '')), ENT_QUOTES, 'UTF-8');
 $status = trim($dados['status'] ?? '');
 $descricao = htmlspecialchars(strip_tags(trim($dados['descricao'] ?? '')), ENT_QUOTES, 'UTF-8');
 
@@ -28,12 +30,12 @@ if (!in_array($status, $statusPermitidos)) {
     JsonResponse::send(['success' => false, 'message' => 'Status inválido ou não permitido.'], 400);
 }
 
-if ($id <= 0 || $nome === '' || $status === '') {
+if ($id <= 0 || $nome === '' || $status === '' || $cidade === '' || $bairro === '') {
     JsonResponse::send(['success' => false, 'message' => 'Campos obrigatórios ausentes.'], 400);
 }
 
-$stmt = $conn->prepare("UPDATE pets SET nome = ?, porte = ?, cor = ?, idade = ?, status = ?, descricao = ? WHERE id = ?");
-$stmt->bind_param("sssissi", $nome, $porte, $cor, $idade, $status, $descricao, $id);
+$stmt = $conn->prepare("UPDATE pets SET nome = ?, porte = ?, cor = ?, idade = ?, cidade = ?, bairro = ?, status = ?, descricao = ? WHERE id = ?");
+$stmt->bind_param("sssissssi", $nome, $porte, $cor, $idade, $cidade, $bairro, $status, $descricao, $id);
 
 if (!$stmt->execute()) {
     JsonResponse::send(['success' => false, 'message' => 'Erro ao atualizar o pet no banco de dados.'], 500);
